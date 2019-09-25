@@ -1,0 +1,66 @@
+version: '3'
+
+services: 
+  jsonbackend:
+    build: ./fake-json-backend
+    ports: 
+    - 3333:3333
+
+  grafana:
+    image: grafana/grafana
+    ports: 
+    - 3000:3000
+    volumes: 
+    - grafana-storage:/var/lib/grafana
+    - "./rapidminer-grafana-datasource:/var/lib/grafana/plugins/rapidminer-grafana-datasource"
+  
+  database:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_DB=rapid_server_db
+      - POSTGRES_USER=rapid_server_db_user
+      - POSTGRES_PASSWORD=rapid_server_db_pass
+    volumes:
+      - postgredbvol:/var/lib/postgresql/data
+
+  rapidminer-server:
+    image: rapidminer/rapidminer-server:9.3.0
+    environment:
+      - DBHOST=database
+      - DBSCHEMA=rapid_server_db
+      - DBUSER=rapid_server_db_user
+      - DBPASS=rapid_server_db_pass
+      - BROKER_ACTIVEMQ_USERNAME=some-amq-username
+      - BROKER_ACTIVEMQ_PASSWORD=some-secure-amq-password
+      - JOBSERVICE_AUTH_SECRET=c29tzs1hdxrolxnly3jldao=
+    volumes:
+      - servervol:/persistent-rapidminer-home
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+    links:
+      - database
+      
+  job-agent:
+    image: rapidminer/rapidminer-execution-jobagent:9.3.0
+    environment:
+      - RAPIDMINER_SERVER_HOST=rapidminer-server
+      - RAPIDMINER_SERVER_PORT=8080
+      - RAPIDMINER_SERVER_PROTOCOL=http
+      - JOBAGENT_QUEUE_ACTIVEMQ_URI=failover:(tcp://rapidminer-server:5672)
+      - JOBAGENT_QUEUE_ACTIVEMQ_USERNAME=some-amq-username
+      - JOBAGENT_QUEUE_ACTIVEMQ_PASSWORD=some-secure-amq-password
+      - JOBAGENT_AUTH_SECRET=c29tzs1hdxrolxnly3jldao=
+      - JOBAGENT_CONTAINER_COUNT=1
+      - JOBAGENT_CONTAINER_MEMORYLIMIT=4096
+      - JOB_QUEUE=DEFAULT
+    links:
+      - rapidminer-server
+    depends_on:
+      - rapidminer-server
+
+volumes: 
+  grafana-storage:
+  postgredbvol:
+  servervol:
