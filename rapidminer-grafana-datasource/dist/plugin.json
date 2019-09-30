@@ -1,5 +1,5 @@
 {
-  "name": "RapidMinerDatasource",
+  "name": "RapidMiner",
   "id": "grafana-simple-json-datasource",
   "type": "datasource",
 
