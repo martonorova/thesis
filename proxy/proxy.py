@@ -3,6 +3,7 @@ import requests
 from getpass import getpass
 import json
 import time
+import logging
 
 app = Flask(__name__)
 
@@ -10,6 +11,8 @@ server_host = 'http://rapidminer-server:8080'
 
 @app.route('/')
 def hello_world():
+
+    logging.warning("++++++++++++++++hello")
 
     response = requests.get(server_host)
     if response.status_code == 200:
@@ -19,6 +22,16 @@ def hello_world():
 
 @app.route('/query', methods=['POST'])
 def query():
+
+    
+    logging.warning(str(request.query_string))
+    logging.warning(str(request.url))
+    logging.warning(str(request.data))
+    logging.warning(str(request.json))
+
+
+
+
     response = requests.get(server_host + '/api/rest/process/Predictive_Maintenance_web_service_without_parameters',
                        auth=('admin', 'changeit'))
 
@@ -78,4 +91,4 @@ def get_type(value):
         return 'string'
 
 if __name__ == '__main__':
-    app.run('0.0.0.0')
+    app.run('0.0.0.0', debug=True)
