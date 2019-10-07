@@ -13,6 +13,8 @@ services:
     volumes: 
     - grafana-storage:/var/lib/grafana
     - "./rapidminer-grafana-datasource:/var/lib/grafana/plugins/rapidminer-grafana-datasource"
+    - "./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards"
+    - "./grafana/dashboards:/var/lib/grafana/dashboards"
 
   proxy:
     build: ./proxy
