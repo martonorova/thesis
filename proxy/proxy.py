@@ -23,39 +23,53 @@ def hello_world():
 @app.route('/query', methods=['POST'])
 def query():
 
-    
-    logging.warning(str(request.query_string))
-    logging.warning(str(request.url))
-    logging.warning(str(request.data))
     logging.warning(str(request.json))
 
+    # WARNING this only extracts the first target, it disregards the others, if provided
+    target = request.json['targets'][0]['target']
 
-
-
-    response = requests.get(server_host + '/api/rest/process/Predictive_Maintenance_web_service_without_parameters',
+    response = requests.get(server_host + '/api/rest/process/{}'.format(target),
                        auth=('admin', 'changeit'))
 
     json_data = json.loads(response.text)
+    
+    print("JSON DATA: {}".format(json_data))
 
     columns = []
     rows = []
 
-    for column in json_data[0]:
+    # this is good for many rows
+    if type(json_data) == list:
+        
+        for column in json_data[0]:
 
-        column_obj = {
-            "text": column,
-            "type": get_type(json_data[0][column])
-        }
+            column_obj = {
+                "text": column,
+                "type": get_type(json_data[0][column])
+            }
 
-        columns.append(column_obj)
-    
-    for row in json_data[:5]:
-        new_row = []
-        for column in columns:
-            new_row.append(row[column['text']])
-        rows.append(new_row)
-    
-    print(rows)
+            columns.append(column_obj)
+
+        for row in json_data:
+            new_row = []
+            for column in columns:
+                new_row.append(row[column['text']])
+            rows.append(new_row)
+
+    elif type(json_data) == dict:
+        
+        row = []
+
+        for field in json_data:
+            column_obj = {
+                "text": field,
+                "type": get_type(json_data[field])
+            }
+
+            columns.append(column_obj)
+            row.append(json_data[field])
+        
+        rows.append(row)
 
     result = [
         {
