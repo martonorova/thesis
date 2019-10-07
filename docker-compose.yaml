@@ -18,7 +18,8 @@ services:
     build: ./proxy
     ports:
     - 5000:5000
-  
+    volumes: 
+    - "./proxy/proxy.py:/code/proxy.py"  
   database:
     image: postgres:9.6
     environment:
