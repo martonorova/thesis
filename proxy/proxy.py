@@ -21,8 +21,6 @@ def hello_world():
 @app.route('/query', methods=['POST'])
 def query():
 
-    logging.warning(str(request.json))
-
     # WARNING this only extracts the first target, it disregards the others, if provided
     target = request.json['targets'][0]['target']
 
@@ -80,8 +78,18 @@ def query():
 
 @app.route('/search', methods=['POST'])
 def search():
-    #TODO query web services dynamically
-    return json.dumps(['Predictive_Maintenance_web_service_without_parameters'])
+
+    response = requests.get(server_host + '/api/rest/service/list',
+                       auth=('admin', 'changeit'))
+
+    webservices_json_list = json.loads(response.text)
+    
+    webservice_names = []
+
+    for webservice in webservices_json_list:
+        webservice_names.append(webservice['name'])
+
+    return json.dumps(webservice_names)
 
 @app.route('/annotations', methods=['POST'])
 def annotations():
