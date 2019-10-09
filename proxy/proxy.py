@@ -12,8 +12,6 @@ server_host = 'http://rapidminer-server:8080'
 @app.route('/')
 def hello_world():
 
-    logging.warning("++++++++++++++++hello")
-
     response = requests.get(server_host)
     if response.status_code == 200:
         return 'Hello World'
@@ -33,7 +31,7 @@ def query():
 
     json_data = json.loads(response.text)
     
-    print("JSON DATA: {}".format(json_data))
+    # print("JSON DATA: {}".format(json_data))
 
     columns = []
     rows = []
