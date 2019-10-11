@@ -95,6 +95,7 @@ var GenericDatasource = exports.GenericDatasource = function () {
   }, {
     key: 'metricFindQuery',
     value: function metricFindQuery(query) {
+
       var interpolated = {
         target: this.templateSrv.replace(query, null, 'regex')
       };
@@ -173,6 +174,23 @@ var GenericDatasource = exports.GenericDatasource = function () {
           url: _this3.url + '/tag-values',
           method: 'POST',
           data: options
+        }).then(function (result) {
+          return resolve(result.data);
+        });
+      });
+    }
+
+    // returns the parameters of the given webservice
+
+  }, {
+    key: 'getParameterKeys',
+    value: function getParameterKeys(webserviceName) {
+      var _this4 = this;
+
+      return new Promise(function (resolve, reject) {
+        _this4.doRequest({
+          url: _this4.url + '/parameters?webserviceName=' + webserviceName,
+          method: 'GET'
         }).then(function (result) {
           return resolve(result.data);
         });

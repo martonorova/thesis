@@ -28,6 +28,9 @@ var GenericDatasourceQueryCtrl = exports.GenericDatasourceQueryCtrl = function (
     _this.scope = $scope;
     _this.target.target = _this.target.target || 'select metric';
     _this.target.type = _this.target.type || 'timeserie';
+    // the available parameters for the given webservice
+    _this.target.params = [];
+
     return _this;
   }
 
@@ -45,6 +48,32 @@ var GenericDatasourceQueryCtrl = exports.GenericDatasourceQueryCtrl = function (
     key: 'onChangeInternal',
     value: function onChangeInternal() {
       this.panelCtrl.refresh(); // Asks the panel to refresh data.
+    }
+  }, {
+    key: 'onChangeTarget',
+    value: function onChangeTarget() {
+      var _this2 = this;
+
+      var that = this;
+
+      var data = this.datasource.getParameterKeys(this.target.target);
+      // 'data' is a Promise
+      var parameters = data.then(function (value) {
+        // 'value' is an array
+        // let params = [];
+        // value.forEach(parameter => {
+        //   params.push(parameter);
+        // });
+
+        that.target.params = value;
+      });
+      // this.target.params = parameters.then();
+      console.log(this.target.params);
+      setTimeout(function () {
+        console.log(_this2.target.params);
+      }, 1000);
+
+      this.onChangeInternal();
     }
   }]);
 

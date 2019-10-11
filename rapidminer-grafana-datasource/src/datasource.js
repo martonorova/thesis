@@ -72,6 +72,7 @@ export class GenericDatasource {
   }
 
   metricFindQuery(query) {
+
     var interpolated = {
         target: this.templateSrv.replace(query, null, 'regex')
     };
@@ -139,6 +140,19 @@ export class GenericDatasource {
         url: this.url + '/tag-values',
         method: 'POST',
         data: options
+      }).then(result => {
+        return resolve(result.data);
+      });
+    });
+  }
+
+  // returns the parameters of the given webservice
+  getParameterKeys(webserviceName) {
+
+    return new Promise((resolve, reject) => {
+      this.doRequest({
+        url: this.url + '/parameters?webserviceName=' + webserviceName,
+        method: 'GET',
       }).then(result => {
         return resolve(result.data);
       });
