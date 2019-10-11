@@ -103,6 +103,33 @@ def annotations():
         ]
     )
 
+# returns the parameters for a given webservice
+@app.route('/parameters', methods=['GET'])
+def parameters():
+    if request.args:
+        args = request.args
+        webserviceName = args.get('webserviceName')
+        if webserviceName == None:
+            raise ValueError('No value provided for "webserviceName"')
+
+        # get the list of webservices and get the parameters of the one with the name provided in the query
+        # TODO refactor this, duplicate of /search endpoint
+        response = requests.get(server_host + '/api/rest/service/list',
+                       auth=('admin', 'changeit'))
+
+        webservices_json_list = json.loads(response.text)
+        
+        webservice_params = []
+
+        for webservice in webservices_json_list:
+            if webservice['name'] == webserviceName:
+                webservice_params = webservice['parameters']
+                break
+
+        return json.dumps(webservice_params)
+
+    return 'Please provide a query parameter in the URL'
+
 
 def get_type(value):
     if type(value) == int or type(value) == float:
