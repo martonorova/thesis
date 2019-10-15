@@ -29,7 +29,7 @@ var GenericDatasourceQueryCtrl = exports.GenericDatasourceQueryCtrl = function (
     _this.target.target = _this.target.target || 'select metric';
     _this.target.type = _this.target.type || 'timeserie';
     // the available parameters for the given webservice
-    _this.target.params = [];
+    _this.target.parameters = [];
 
     return _this;
   }
@@ -37,6 +37,9 @@ var GenericDatasourceQueryCtrl = exports.GenericDatasourceQueryCtrl = function (
   _createClass(GenericDatasourceQueryCtrl, [{
     key: 'getOptions',
     value: function getOptions(query) {
+
+      console.log(this.datasource.metricFindQuery(query || ''));
+
       return this.datasource.metricFindQuery(query || '');
     }
   }, {
@@ -47,31 +50,62 @@ var GenericDatasourceQueryCtrl = exports.GenericDatasourceQueryCtrl = function (
   }, {
     key: 'onChangeInternal',
     value: function onChangeInternal() {
+      console.log("ON CHANGE INTERNAL");
       this.panelCtrl.refresh(); // Asks the panel to refresh data.
     }
   }, {
     key: 'onChangeTarget',
     value: function onChangeTarget() {
-      var _this2 = this;
+
+      this.target.parameters = [];
 
       var that = this;
 
       var data = this.datasource.getParameterKeys(this.target.target);
-      // 'data' is a Promise
-      var parameters = data.then(function (value) {
-        // 'value' is an array
-        // let params = [];
-        // value.forEach(parameter => {
-        //   params.push(parameter);
-        // });
+      var parameters = data.then(function (parameterArray) {
 
-        that.target.params = value;
+        parameterArray.forEach(function (element) {
+          element['value'] = null;
+        });
+
+        that.target.parameters = parameterArray;
+        console.log(that.target.parameters);
+      }).finally(function (parameterArray) {
+        that.onChangeInternal();
       });
-      // this.target.params = parameters.then();
-      console.log(this.target.params);
-      setTimeout(function () {
-        console.log(_this2.target.params);
-      }, 1000);
+    }
+  }, {
+    key: 'onChangeTargetParameters',
+    value: function onChangeTargetParameters() {
+      console.log("onChangeTargetParameters");
+      console.log(this.target.parameters);
+      console.log("Before updating the target");
+      console.log(this.target.target);
+
+      // clear the previous query parameter list
+
+      var indexOfQueryParams = this.target.target.indexOf('?');
+      // if there are parameters
+      if (indexOfQueryParams >= 0) {
+        this.target.target = this.target.target.substring(0, indexOfQueryParams);
+      }
+
+      this.target.target = this.target.target.concat('?');
+
+      for (var i = 0; i < this.target.parameters.length; i++) {
+        var parameter = this.target.parameters[i];
+        this.target.target = this.target.target.concat(parameter['key'] + '=' + parameter['value']);
+
+        if (i !== this.target.parameters.length - 1) {
+          this.target.target.concat('&');
+        }
+      }
+
+      console.log("After updating the target");
+      console.log(this.target.target);
+
+      console.log("all targets");
+      console.log(this.target);
 
       this.onChangeInternal();
     }

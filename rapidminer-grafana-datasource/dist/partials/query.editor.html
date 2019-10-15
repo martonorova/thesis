@@ -22,4 +22,16 @@
       <div class="gf-form-label gf-form-label--grow"></div>
     </div>
   </div>
+  <div ng-if="ctrl.target.parameters.length > 0">
+    <div class="gf-form-inline" ng-repeat="parameter in ctrl.target.parameters">
+      <span class="gf-form-label">{{ parameter['key'] }}</span>
+      <input type="text" ng-model="parameter['value']" class="gf-form-input max-width-20" ng-blur="ctrl.onChangeTargetParameters()">
+
+
+
+      <div class="gf-form gf-form--grow">
+        <div class="gf-form-label gf-form-label--grow"></div>
+      </div>
+    </div>
+  </div>
 </query-editor-row>
