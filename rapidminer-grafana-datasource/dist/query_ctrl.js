@@ -38,7 +38,7 @@ var GenericDatasourceQueryCtrl = exports.GenericDatasourceQueryCtrl = function (
     key: 'getOptions',
     value: function getOptions(query) {
 
-      console.log(this.datasource.metricFindQuery(query || ''));
+      // console.log(this.datasource.metricFindQuery(query || ''));
 
       return this.datasource.metricFindQuery(query || '');
     }
@@ -94,10 +94,15 @@ var GenericDatasourceQueryCtrl = exports.GenericDatasourceQueryCtrl = function (
 
       for (var i = 0; i < this.target.parameters.length; i++) {
         var parameter = this.target.parameters[i];
+
+        if (parameter['value'] === null || parameter['value'] === '') {
+          continue;
+        }
+
         this.target.target = this.target.target.concat(parameter['key'] + '=' + parameter['value']);
 
         if (i !== this.target.parameters.length - 1) {
-          this.target.target.concat('&');
+          this.target.target = this.target.target.concat('&');
         }
       }
 
