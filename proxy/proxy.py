@@ -21,6 +21,9 @@ def hello_world():
 @app.route('/query', methods=['POST'])
 def query():
 
+    print("Query Data")
+    print(request.data)
+
     # WARNING this only extracts the first target, it disregards the others, if provided
     target = request.json['targets'][0]['target']
 
@@ -74,6 +77,9 @@ def query():
             "type": 'table'
         }
     ]
+
+    print('Result:')
+    print(json.dumps(result))
     return json.dumps(result)
 
 @app.route('/search', methods=['POST'])
