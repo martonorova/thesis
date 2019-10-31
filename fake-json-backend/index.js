@@ -19,6 +19,17 @@ for (var i = timeserie.length -1; i >= 0; i--) {
   }
 }
 
+function randomizeTimeSerie(timeserie) {
+  for (let i = 0; i < timeserie.length; i++) {
+    let series = timeserie[i];
+    for (let j = 0; j < series.datapoints.length; j++) {
+      series.datapoints[j][0] = (Math.random() * 100);
+    }
+  }
+}
+
+randomizeTimeSerie(timeserie);
+
 var annotation = {
   name : "annotation name",
   enabled: true,
@@ -107,6 +118,8 @@ app.all('/query', function(req, res){
   setCORSHeaders(res);
   console.log(req.url);
   console.log(req.body);
+
+  // randomizeTimeSerie(timeserie);
 
   var tsResult = [];
   let fakeData = timeserie;
