@@ -17,6 +17,7 @@ services:
     - "./grafana/dashboards:/var/lib/grafana/dashboards"
     - "./grafana/plugins/interactive-piechart-panel-master:/var/lib/grafana/plugins/interactive-piechart-panel-master"
     - "./grafana/plugins/NatelEnergy-grafana-plotly-panel:/var/lib/grafana/plugins/NatelEnergy-grafana-plotly-panel"
+    - "./grafana/plugins/graph-dynamic-bar:/var/lib/grafana/plugins/graph-dynamic-bar"
 
   proxy:
     build: ./proxy
