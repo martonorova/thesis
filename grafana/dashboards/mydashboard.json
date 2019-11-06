@@ -22,6 +22,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "RapidMiner",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -54,6 +55,38 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
+      "targets": [
+        {
+          "parameters": [],
+          "refId": "A",
+          "target": "upper_25",
+          "type": "timeserie"
+        },
+        {
+          "parameters": [],
+          "refId": "B",
+          "target": "upper_50",
+          "type": "timeserie"
+        },
+        {
+          "parameters": [],
+          "refId": "C",
+          "target": "upper_75",
+          "type": "timeserie"
+        },
+        {
+          "parameters": [],
+          "refId": "D",
+          "target": "upper_90",
+          "type": "timeserie"
+        },
+        {
+          "parameters": [],
+          "refId": "E",
+          "target": "upper_95",
+          "type": "timeserie"
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -208,13 +241,12 @@
     },
     {
       "aliasColors": {},
+      "bars": true,
       "cacheTimeout": null,
-      "combine": {
-        "label": "Others",
-        "threshold": 0
-      },
-      "fontSize": "80%",
-      "format": "short",
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "RapidMiner",
+      "fill": 1,
       "gridPos": {
         "h": 8,
         "w": 12,
@@ -222,26 +254,97 @@
         "y": 8
       },
       "id": 4,
-      "interval": null,
       "legend": {
-        "show": true,
-        "values": true
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
       },
-      "legendType": "Under graph",
+      "lines": false,
+      "linewidth": 1,
       "links": [],
-      "maxDataPoints": 3,
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
       "options": {},
-      "pieType": "pie",
-      "strokeWidth": 1,
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "parameters": [],
+          "refId": "A",
+          "target": "upper_25",
+          "type": "timeserie"
+        },
+        {
+          "parameters": [],
+          "refId": "B",
+          "target": "upper_50",
+          "type": "timeserie"
+        },
+        {
+          "parameters": [],
+          "refId": "C",
+          "target": "upper_75",
+          "type": "timeserie"
+        },
+        {
+          "parameters": [],
+          "refId": "D",
+          "target": "upper_90",
+          "type": "timeserie"
+        },
+        {
+          "parameters": [],
+          "refId": "E",
+          "target": "upper_95",
+          "type": "timeserie"
+        }
+      ],
+      "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Panel Title",
+      "title": "Dynamic bar chart",
       "tooltip": {
-        "show": true
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
       },
-      "type": "grafana-piechart-panel",
-      "valueName": "current"
+      "type": "graph-panel-template-panel",
+      "xaxis": {
+        "buckets": null,
+        "mode": "series",
+        "name": null,
+        "show": true,
+        "values": [
+          "total"
+        ]
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ]
     },
     {
       "aliasColors": {},
@@ -399,6 +502,7 @@
       ],
       "targets": [
         {
+          "parameters": [],
           "refId": "A",
           "target": "Predictive_Maintenance_web_service_without_parameters",
           "type": "table"
@@ -550,5 +654,5 @@
   "timezone": "",
   "title": "Provisioned",
   "uid": "D3VFMGhWz",
-  "version": 5
+  "version": 8
 }

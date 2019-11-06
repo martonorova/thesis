@@ -15,9 +15,9 @@ services:
     - "./grafana/plugins/rapidminer-grafana-datasource:/var/lib/grafana/plugins/rapidminer-grafana-datasource"
     - "./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards"
     - "./grafana/dashboards:/var/lib/grafana/dashboards"
-    - "./grafana/plugins/interactive-piechart-panel-master:/var/lib/grafana/plugins/interactive-piechart-panel-master"
-    - "./grafana/plugins/NatelEnergy-grafana-plotly-panel:/var/lib/grafana/plugins/NatelEnergy-grafana-plotly-panel"
-    - "./grafana/plugins/graph-dynamic-bar:/var/lib/grafana/plugins/graph-dynamic-bar"
+    - "./grafana/plugins/grafana-graph-panel-master:/var/lib/grafana/plugins/grafana-graph-master"
+    environment: 
+    - GF_LOG_LEVEL=debug
 
   proxy:
     build: ./proxy
