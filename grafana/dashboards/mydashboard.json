@@ -666,17 +666,17 @@
             "rgba(50, 172, 45, 0.97)"
           ],
           "decimals": 2,
-          "pattern": "/.*/",
+          "pattern": "timestamp",
           "thresholds": [],
           "type": "number",
-          "unit": "short"
+          "unit": "dateTimeAsUS"
         }
       ],
       "targets": [
         {
           "parameters": [],
           "refId": "A",
-          "target": "Predictive_Maintenance_web_service_without_parameters",
+          "target": "weather_retrieve_process?city=Toronto",
           "type": "table"
         }
       ],
@@ -726,9 +726,20 @@
       "steppedLine": false,
       "targets": [
         {
-          "parameters": [],
+          "parameters": [
+            {
+              "key": "city",
+              "value": "Vancouver"
+            }
+          ],
           "refId": "A",
-          "target": "weather_retrieve_process",
+          "target": "weather_retrieve_process?city=Vancouver",
+          "type": "timeserie"
+        },
+        {
+          "parameters": [],
+          "refId": "B",
+          "target": "weather_retrieve_process?city=Toronto",
           "type": "timeserie"
         }
       ],
@@ -772,6 +783,98 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "ProxyRM",
+      "fill": 1,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 32
+      },
+      "id": 18,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {},
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "parameters": [
+            {
+              "key": "city",
+              "value": "Vancouver"
+            }
+          ],
+          "refId": "A",
+          "target": "weather_retrieve_process?city=Vancouver",
+          "type": "timeserie"
+        },
+        {
+          "parameters": [],
+          "refId": "B",
+          "target": "weather_retrieve_process?city=Toronto",
+          "type": "timeserie"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Panel Title",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph-panel-template-panel",
+      "xaxis": {
+        "buckets": null,
+        "mode": "series",
+        "name": null,
+        "show": true,
+        "values": [
+          "total"
+        ]
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ]
     }
   ],
   "refresh": false,
@@ -782,8 +885,8 @@
     "list": []
   },
   "time": {
-    "from": "now-2d",
-    "to": "now"
+    "from": "2019-11-11T19:27:42.355Z",
+    "to": "2019-11-12T12:53:50.648Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -802,5 +905,5 @@
   "timezone": "",
   "title": "Provisioned",
   "uid": "D3VFMGhWz",
-  "version": 9
+  "version": 11
 }
