@@ -57,6 +57,14 @@ services:
       - "./mysql/scripts/:/docker-entrypoint-initdb.d"
       - "./mysql/config:/etc/mysql/conf.d"
 
+  weather-api:
+    build: ./weather-api
+    ports: 
+      - 7000:7000
+    volumes: 
+      - "./weather-api/weather_api.py:/code/weather_api.py"
+      - "./data/historical/data_cleaned.csv:/weather-data/data.csv"
+
   rapidminer-server:
     image: rapidminer/rapidminer-server:9.3.0
     environment:
