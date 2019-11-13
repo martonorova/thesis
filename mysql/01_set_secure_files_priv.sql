@@ -1,0 +1,1 @@
+SET GLOBAL secure_file_priv = '/var/lib/mysql-files';

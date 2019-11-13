@@ -23,6 +23,7 @@ services:
     build: ./proxy
     ports:
     - 5000:5000
+    restart: always
     volumes: 
     - "./proxy/proxy.py:/code/proxy.py"
 
@@ -41,6 +42,20 @@ services:
       - 6000:6000
     volumes:
       - "./python-datasource/python-datasource/:/code/python-datasource"
+  
+  mysql:
+    image: mysql
+    ports: 
+      - 3306:3306
+    environment: 
+      - MYSQL_ROOT_PASSWORD=rootpass
+      - MYSQL_DATABASE=weather
+      - MYSQL_USER=weatheruser
+      - MYSQL_PASSWORD=userpass
+    volumes: 
+      - "./data/temperature_newyork_cleaned.csv:/var/lib/mysql-files/weather-data/temperature_newyork.csv"
+      - "./mysql/scripts/:/docker-entrypoint-initdb.d"
+      - "./mysql/config:/etc/mysql/conf.d"
 
   rapidminer-server:
     image: rapidminer/rapidminer-server:9.3.0
