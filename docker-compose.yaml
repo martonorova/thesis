@@ -24,7 +24,8 @@ services:
     ports:
     - 5000:5000
     volumes: 
-    - "./proxy/proxy.py:/code/proxy.py"  
+    - "./proxy/proxy.py:/code/proxy.py"
+
   database:
     image: postgres:9.6
     environment:
@@ -33,6 +34,13 @@ services:
       - POSTGRES_PASSWORD=rapid_server_db_pass
     volumes:
       - postgredbvol:/var/lib/postgresql/data
+
+  python-datasource:
+    build: ./python-datasource
+    ports:
+      - 6000:6000
+    volumes:
+      - "./python-datasource/python-datasource/:/code/python-datasource"
 
   rapidminer-server:
     image: rapidminer/rapidminer-server:9.3.0
