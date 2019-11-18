@@ -2,8 +2,8 @@ FROM python:3.6-alpine
 
 ENV PYTHONUNBUFFERED 1
 
-RUN apk update
-RUN apk add make automake gcc g++ subversion python3-dev
+# RUN apk update
+# RUN apk add make automake gcc g++ subversion python3-dev
 
 RUN mkdir /weather-data
 

@@ -41,7 +41,7 @@ services:
     ports:
       - 6000:6000
     volumes:
-      - "./python-datasource/python-datasource/:/code/python-datasource"
+      - "./python-datasource/python-datasource/datasource.py/:/code/python-datasource/datasource.py"
   
   mysql:
     image: mysql
@@ -54,8 +54,8 @@ services:
       - MYSQL_PASSWORD=userpass
     volumes: 
       - "./data/temperature_newyork_cleaned.csv:/var/lib/mysql-files/weather-data/temperature_newyork.csv"
-      - "./mysql/scripts/:/docker-entrypoint-initdb.d"
-      - "./mysql/config:/etc/mysql/conf.d"
+      - "./mysql-backend/scripts/:/docker-entrypoint-initdb.d"
+      - "./mysql-backend/config:/etc/mysql/conf.d"
 
   weather-api:
     build: ./weather-api
