@@ -8,6 +8,9 @@ verify_ssl = true
 [packages]
 requests = "*"
 flask = "*"
+flask-cors = "*"
+mysql-connector = "*"
+flask-api = "*"
 
 [requires]
 python_version = "3.6"

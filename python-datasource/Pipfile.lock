@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "99a523c47bf09189bf8622d38dbbe8c272c842b56915fbb6416f81b6d98d87f5"
+            "sha256": "ffcf5c7567b583b594160e9a479474a657152cb0bc69b63d3c2b2510fc875335"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -44,6 +44,22 @@
             ],
             "index": "pypi",
             "version": "==1.1.1"
+        },
+        "flask-api": {
+            "hashes": [
+                "sha256:7340db47560883b342f9965d43435eeaf595c2d30e9fc0fe48d37aab4c03942e",
+                "sha256:c0142c53fc4053d866ff3f449dd7f43b4737b6d9a70e5a77fa2b9aaf68bb4364"
+            ],
+            "index": "pypi",
+            "version": "==1.1"
+        },
+        "flask-cors": {
+            "hashes": [
+                "sha256:72170423eb4612f0847318afff8c247b38bd516b7737adfc10d1c2cdbb382d16",
+                "sha256:f4d97201660e6bbcff2d89d082b5b6d31abee04b1b3003ee073a6fd25ad1d69a"
+            ],
+            "index": "pypi",
+            "version": "==3.0.8"
         },
         "idna": {
             "hashes": [
@@ -99,6 +115,13 @@
             ],
             "version": "==1.1.1"
         },
+        "mysql-connector": {
+            "hashes": [
+                "sha256:1733e6ce52a049243de3264f1fbc22a852cb35458c4ad739ba88189285efdf32"
+            ],
+            "index": "pypi",
+            "version": "==2.2.9"
+        },
         "requests": {
             "hashes": [
                 "sha256:11e007a8a2aa0323f5a921e9e6a2d7e4e67d9877e85773fba9ba6419025cbeb4",
@@ -107,12 +130,19 @@
             "index": "pypi",
             "version": "==2.22.0"
         },
+        "six": {
+            "hashes": [
+                "sha256:1f1b7d42e254082a9db6279deae68afb421ceba6158efa6131de7b3003ee93fd",
+                "sha256:30f610279e8b2578cab6db20741130331735c781b56053c59c4076da27f06b66"
+            ],
+            "version": "==1.13.0"
+        },
         "urllib3": {
             "hashes": [
-                "sha256:3de946ffbed6e6746608990594d08faac602528ac7015ac28d33cee6a45b7398",
-                "sha256:9a107b99a5393caf59c7aa3c1249c16e6879447533d0887f4336dde834c7be86"
+                "sha256:a8a318824cc77d1fd4b2bec2ded92646630d7fe8619497b142c84a9e6f5a7293",
+                "sha256:f3c5fd51747d450d4dcf6f923c81f78f811aab8205fda64b0aba34a4e48b0745"
             ],
-            "version": "==1.25.6"
+            "version": "==1.25.7"
         },
         "werkzeug": {
             "hashes": [

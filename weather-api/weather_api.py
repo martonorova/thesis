@@ -20,8 +20,6 @@ def get_single(day_of_the_year):
         return data[day_of_the_year]
     except KeyError:
         raise exceptions.NotFound()
-    
-
 
 def read_data():
 
