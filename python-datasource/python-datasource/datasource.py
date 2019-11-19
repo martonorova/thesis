@@ -5,33 +5,47 @@ import requests
 import mysql.connector
 from mysql.connector import Error
 import json
+from collections import OrderedDict
+import time
 
 app = Flask(__name__)
 CORS(app)
 
 weather_api_host = 'http://weather-api:7000'
 
-table = {
-    'columns': [
-        {'text': 'Month', 'type': 'string'},
-        {'text': 'Close Maxs', 'type': 'number'},
-        {'text': 'Close Mins', 'type': 'number'}
-    ],
-    'rows': [],
-    'type': 'table'
-}
-
 @app.route('/')
 def test_datasource():
     return "Test success"
 
-@app.route('/search')
+@app.route('/search', methods=['POST'])
 def search():
-    pass
+    return json.dumps(['weather-table'])
 
-@app.route('/query')
+
+@app.route('/annotations', methods=['POST'])
+def annotations():
+    return json.dumps(
+        [
+            {
+                "annotation": 'test annotation',
+                "time": int(time.time() * 1000),
+                "title": 'test title'
+            }
+        ]
+    )
+
+@app.route('/query', methods=['POST'])
 def query():
-    return "QUERY"
+    # print("ALL TIME RECORDS")
+    # print(get_all_time_records())
+    # print("DB DATA")
+    # print(read_data_from_db())
+    # print("TABLE")
+    # create_table_data()
+    print("QUERY")
+    table_data = create_table_data()
+    print(table_data)
+    return json.dumps(table_data)
     
 
 def get_all_time_records():
@@ -44,12 +58,57 @@ def get_all_time_records():
 
 def create_table_data():
 
-    delta = 0.2
+    delta = 2
+
+    table = {
+    'columns': [
+        {'text': 'Month', 'type': 'string'},
+        {'text': 'Close Maxs', 'type': 'number'},
+        {'text': 'Close Mins', 'type': 'number'}
+    ],
+    'rows': [],
+    'type': 'table'
+    }
+
+    table_rows_dict = OrderedDict()
 
     all_time_records = get_all_time_records()
     new_data = read_data_from_db()
 
-    for record in all_time_records:
+    for row in new_data:
+        date = row['date']
+        day_of_the_year = row['day_of_the_year']
+        daily_max_temp = float(row['max_temp'])
+        daily_min_temp = float(row['min_temp'])
+
+        alltime_record = all_time_records[str(day_of_the_year)]
+        alltime_max_temp = float(alltime_record['alltime_max'])
+        alltime_min_temp = float(alltime_record['alltime_min'])
+
+        monthname = date.strftime('%B')
+        year = date.year
+        key = f'{year} {monthname}'
+
+        if key in table_rows_dict:
+            # TODO maybe a function for this
+            if daily_max_temp > alltime_max_temp - delta:
+                table_rows_dict[key][1] += 1
+            if daily_min_temp < alltime_min_temp + delta:
+                table_rows_dict[key][2] += 1
+        else:
+            table_row = [key, 0, 0]
+            if daily_max_temp > alltime_max_temp + delta:
+                table_row[1] = 1
+            if daily_min_temp < alltime_min_temp + delta:
+                table_row[2] = 1
+            table_rows_dict[key] = table_row
+    
+    for row_key in table_rows_dict:
+        table['rows'].append(table_rows_dict[row_key])
+    # print(table)
+
+    # need the list because of JSON datasource format
+    return [table]
         
 
 

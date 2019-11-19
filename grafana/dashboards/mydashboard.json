@@ -19,7 +19,7 @@
   "panels": [
     {
       "columns": [],
-      "datasource": "RapidMiner",
+      "datasource": "Python",
       "fontSize": "100%",
       "gridPos": {
         "h": 8,
@@ -27,14 +27,14 @@
         "x": 0,
         "y": 0
       },
-      "id": 14,
-      "options": {},
+      "id": 20,
+      "links": [],
       "pageSize": null,
       "scroll": true,
       "showHeader": true,
       "sort": {
-        "col": 0,
-        "desc": true
+        "col": null,
+        "desc": false
       },
       "styles": [
         {
@@ -62,19 +62,13 @@
         {
           "parameters": [],
           "refId": "A",
-          "target": "upper_25",
-          "type": "table"
-        },
-        {
-          "parameters": [],
-          "refId": "B",
-          "target": "upper_50",
+          "target": "weather-table",
           "type": "table"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Panel Title",
+      "title": "Python datasource",
       "transform": "table",
       "type": "table"
     },
@@ -196,14 +190,13 @@
       "dashes": false,
       "datasource": "RapidMiner",
       "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 0,
         "y": 8
       },
-      "id": 6,
+      "id": 14,
       "legend": {
         "avg": false,
         "current": false,
@@ -216,9 +209,6 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -238,24 +228,6 @@
           "parameters": [],
           "refId": "B",
           "target": "upper_50",
-          "type": "timeserie"
-        },
-        {
-          "parameters": [],
-          "refId": "C",
-          "target": "upper_75",
-          "type": "timeserie"
-        },
-        {
-          "parameters": [],
-          "refId": "D",
-          "target": "upper_90",
-          "type": "timeserie"
-        },
-        {
-          "parameters": [],
-          "refId": "E",
-          "target": "upper_95",
           "type": "timeserie"
         }
       ],
@@ -415,35 +387,36 @@
     },
     {
       "aliasColors": {},
-      "bars": true,
-      "cacheTimeout": null,
+      "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "RapidMiner",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 0,
         "y": 16
       },
-      "id": 4,
+      "id": 6,
       "legend": {
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "show": true,
         "total": false,
         "values": false
       },
-      "lines": false,
+      "lines": true,
       "linewidth": 1,
-      "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
-      "pointradius": 5,
+      "pointradius": 2,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
@@ -484,22 +457,21 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
-      "title": "Dynamic bar chart",
+      "title": "Panel Title",
       "tooltip": {
-        "shared": false,
+        "shared": true,
         "sort": 0,
         "value_type": "individual"
       },
-      "type": "graph-panel-template-panel",
+      "type": "graph",
       "xaxis": {
         "buckets": null,
-        "mode": "series",
+        "mode": "time",
         "name": null,
         "show": true,
-        "values": [
-          "total"
-        ]
+        "values": []
       },
       "yaxes": [
         {
@@ -518,7 +490,11 @@
           "min": null,
           "show": true
         }
-      ]
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
     {
       "aliasColors": {},
@@ -632,59 +608,111 @@
       }
     },
     {
-      "columns": [],
-      "datasource": "ProxyRM",
-      "fontSize": "100%",
+      "aliasColors": {},
+      "bars": true,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "RapidMiner",
+      "fill": 1,
       "gridPos": {
-        "h": 9,
+        "h": 8,
         "w": 12,
         "x": 0,
         "y": 24
       },
-      "id": 2,
-      "options": {},
-      "pageSize": null,
-      "scroll": true,
-      "showHeader": true,
-      "sort": {
-        "col": 0,
-        "desc": true
+      "id": 4,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
       },
-      "styles": [
-        {
-          "alias": "Time",
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "pattern": "Time",
-          "type": "date"
-        },
-        {
-          "alias": "",
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "decimals": 2,
-          "pattern": "timestamp",
-          "thresholds": [],
-          "type": "number",
-          "unit": "dateTimeAsUS"
-        }
-      ],
+      "lines": false,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {},
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
       "targets": [
         {
           "parameters": [],
           "refId": "A",
-          "target": "weather_retrieve_process?city=Toronto",
-          "type": "table"
+          "target": "upper_25",
+          "type": "timeserie"
+        },
+        {
+          "parameters": [],
+          "refId": "B",
+          "target": "upper_50",
+          "type": "timeserie"
+        },
+        {
+          "parameters": [],
+          "refId": "C",
+          "target": "upper_75",
+          "type": "timeserie"
+        },
+        {
+          "parameters": [],
+          "refId": "D",
+          "target": "upper_90",
+          "type": "timeserie"
+        },
+        {
+          "parameters": [],
+          "refId": "E",
+          "target": "upper_95",
+          "type": "timeserie"
         }
       ],
+      "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Table data from RM WebService",
-      "transform": "table",
-      "type": "table"
+      "title": "Dynamic bar chart",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph-panel-template-panel",
+      "xaxis": {
+        "buckets": null,
+        "mode": "series",
+        "name": null,
+        "show": true,
+        "values": [
+          "total"
+        ]
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ]
     },
     {
       "aliasColors": {},
@@ -785,6 +813,61 @@
       }
     },
     {
+      "columns": [],
+      "datasource": "ProxyRM",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 32
+      },
+      "id": 2,
+      "options": {},
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "date"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "timestamp",
+          "thresholds": [],
+          "type": "number",
+          "unit": "dateTimeAsUS"
+        }
+      ],
+      "targets": [
+        {
+          "parameters": [],
+          "refId": "A",
+          "target": "weather_retrieve_process?city=Toronto",
+          "type": "table"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Table data from RM WebService",
+      "transform": "table",
+      "type": "table"
+    },
+    {
       "aliasColors": {},
       "bars": true,
       "dashLength": 10,
@@ -878,7 +961,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 19,
+  "schemaVersion": 18,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -900,10 +983,21 @@
       "1h",
       "2h",
       "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
     ]
   },
   "timezone": "",
   "title": "Provisioned",
   "uid": "D3VFMGhWz",
-  "version": 11
+  "version": 6
 }
