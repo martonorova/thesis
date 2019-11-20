@@ -42,9 +42,9 @@ def query():
     # print(read_data_from_db())
     # print("TABLE")
     # create_table_data()
-    print("QUERY")
+    # print("QUERY")
     table_data = create_table_data()
-    print(table_data)
+    # print(table_data)
     return json.dumps(table_data)
     
 

@@ -233,7 +233,15 @@ function graphDirective(timeSrv, popoverSrv, contextSrv) {
           if (panel.xaxis.mode === 'series') {
             for (let j = 0; j < data.length; j++) {
               const series = data[j];
+
+              // reset stats
               series.stats.total = 0;
+              series.stats.max = - Number.MAX_VALUE;
+              series.stats.min = Number.MAX_VALUE;
+              series.stats.avg = null;
+              series.stats.range = null;
+              series.stats.count = 0;
+              
 
               for (let k = 0; k < series.datapoints.length; k++) {
                 currentValue = series.datapoints[k][0];
@@ -243,10 +251,21 @@ function graphDirective(timeSrv, popoverSrv, contextSrv) {
 
                 if (currentTime >= from && currentTime <= to && currentValue !== null) {
                   if (_.isNumber(currentValue)) {
+                    
+                    series.stats.count += 1
                     series.stats.total += currentValue;
+
+                    if (currentValue > series.stats.max) {
+                      series.stats.max = currentValue;
+                    }
+                    if (currentValue < series.stats.min) {
+                      series.stats.min = currentValue;
+                    }
                   }
                 }
               }
+              series.stats.avg = series.stats.total / series.stats.count
+              series.stats.range = series.stats.max - series.stats.min
             }
           }
         }
