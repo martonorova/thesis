@@ -108,8 +108,8 @@ app.all('/search', function(req, res){
 
 app.all('/annotations', function(req, res) {
   setCORSHeaders(res);
-  console.log(req.url);
-  console.log(req.body);
+  // console.log(req.url);
+  // console.log(req.body);
 
   res.json(annotations);
   res.end();
@@ -117,10 +117,8 @@ app.all('/annotations', function(req, res) {
 
 app.all('/query', function(req, res){
   setCORSHeaders(res);
-  console.log(req.url);
-  console.log(req.body);
-
-  // randomizeTimeSerie(timeserie);
+  // console.log(req.url);
+  // console.log(req.body);
 
   var tsResult = [];
   let fakeData = timeserie;
@@ -143,8 +141,8 @@ app.all('/query', function(req, res){
     }
   });
 
-  console.log('FakeJSONBackend Response:');
-  console.log(tsResult);
+  // console.log('FakeJSONBackend Response:');
+  // console.log(tsResult);
  
   res.json(tsResult);
   res.end();
@@ -152,8 +150,8 @@ app.all('/query', function(req, res){
 
 app.all('/tag[\-]keys', function(req, res) {
   setCORSHeaders(res);
-  console.log(req.url);
-  console.log(req.body);
+  // console.log(req.url);
+  // console.log(req.body);
 
   res.json(tagKeys);
   res.end();
@@ -161,8 +159,8 @@ app.all('/tag[\-]keys', function(req, res) {
 
 app.all('/tag[\-]values', function(req, res) {
   setCORSHeaders(res);
-  console.log(req.url);
-  console.log(req.body);
+  // console.log(req.url);
+  // console.log(req.body);
 
   if (req.body.key == 'City') {
     res.json(cityTagValues);

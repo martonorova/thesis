@@ -23,8 +23,8 @@ def hello_world():
 @app.route('/query', methods=['POST'])
 def query():
 
-    print("Query Data")
-    print(request.data)
+    # print("Query Data")
+    # print(request.data)
 
     request_json = request.json
     result = []
@@ -39,7 +39,7 @@ def query():
         json_data = json.loads(response.text)
 
         if target_type == 'timeserie':
-            print("TIMESERIES")
+            # print("TIMESERIES")
             target_result = convert_to_series(json_data, target_name)
             result.append(target_result)
 
@@ -50,8 +50,8 @@ def query():
         else:
             raise ValueError('Unknown target type: {}'.format(target_type))
 
-    print('Result:')
-    print(json.dumps(result))
+    # print('Result:')
+    # print(json.dumps(result))
     return json.dumps(result)
 
 

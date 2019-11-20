@@ -119,8 +119,11 @@ def read_data_from_db():
             host='mysql',
             database='weather',
             user='weatheruser',
-            password='userpass'
+            password='userpass',
+            auth_plugin='mysql_native_password'
         )
+
+        # time.sleep(2)
 
         sql_select_records_query = "SELECT * FROM newyork"
         cursor = connection.cursor()
