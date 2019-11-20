@@ -11,7 +11,7 @@
 		\item XML
 		\item other??
 	\end{itemize}
-	\item datasources and their features
+	\item data sources and their features, use-cases, pros/cons?
 	\begin{itemize}
 		\item relational db
 		\item timeseries
@@ -25,26 +25,103 @@
 \section{Grafana}
 %--
 
+% from grafana.com
+Grafana is one of the most popular open source analytics and monitoring solution that can be connected to the majority of the main data sources out-of-the-box. It allows its users to query, visualize and alert on the collected metrics. 
+
+Altough Grafana has got plenty of useful feature, only those relevant to the scope of the thesis project will be briefly explained here
+
+%--
+
+%---
+%https://grafana.com/docs/guides/basic_concepts/#data-source
+\subsection{Data Source}
+
+Grafana supports many different storage backends (Data Source). Each Data Source has a specific Query Editor (see later) that is customized for the features and capabilities that the particular Data Source exposes. Of course, this leads to the fact that the query language and capacity of each Data Source are obviously very different.
+
+Grafana mainly favors time series data (e.g. from Prometheus or InfluxDB), but it can work with other types of data source (e.g. relational databases (MySQL, PostgreSQL, MSSQL), logging and document databases (Loki, Elasticsearch)).
+
+% https://grafana.com/docs/guides/basic_concepts/#panel
+\subsection{Panel}
+
+The Panel is the basic visualization building block in Grafana. Each Panel provides a so called Query Editor (dependent on the Data Source selected in the panel) that allows the user to create data source specific queries (e.g. an SQL query for a MySQL data source) in order to extract the desired metrics as precisely as possible.
+
+There are multiple built-in Panel types available in Grafana, however, custom panels made by the open source community are also accessible. Probably the most widely used Panel types are the Graph, Table, Singlestat and Gauge.
+
+\begin{center}
+	--- TODO insert example picture ---
+\end{center}
+
+\subsection{Query Editor}
+
+The Query Editor exposes the capabilities of the Data Source and allows the user to query the metrics that it contains. The queries created in the Query Editor of a panel determine what data will be displayed on the panel.
+
+\begin{center}
+	--- TODO insert example picture
+\end{center}
+
+%---
+\subsection{Dashboard}
+%---
+The Dashboard is where all the previously mentioned building blocks come together. Dashboards can be thought of as an organized set of Panels.
+
+We can use the Dashboard to visualize different metrics in one, easily manageable place. This is quite useful, when many aspects must be taken into account in order to be able to thoroughly understand our currently inspected data set.
+
+\begin{center}
+	--- TODO insert example picture
+\end{center}
+
+%---
+\subsection{Interactivity in general}
+%---
+When working with and visualizing massive amount of data is a major part of one's profession, it can be quite convenient if the tools can provide the ability to allow some user-interaction. Meaning that the user do not have to work with static diagrams or rewrite complex configurations so that he or she is capable of further analyzing the collected data.
+
+% retelabor2 vizualis adatelemzes (http://docs.inf.mit.bme.hu/remo-jegyzet/vizualis-adatelemzes-konyvfejezet.pdf)
+Commonly available interactivity options can be the followings:
+\begin{itemize}
+	\item \emph{statistic indicators} - easily accessible statistic information (e.g. average value, spread-diagram) about individual objects shown on the diagram (this is usually achieved by mouse-hovering)
+	\item \emph{local interactions} - changing the outlook of a diagram without affecting other displayed objects (e.g. reordering the bars on a bar-chart, rescaling the axis on a graph or other diagram-specific modifications)
+	\item \emph{selection and linked highlighting} - when we have multiple diagrams displaying different views of the same data set, selecting a subset of the data on one diagram (e.g. a bar on a bar-chart) highlights that particular part of the data on another diagrama (e.g. a set of points on a scatter-plot)
+	\item \emph{linked analysis}- for example, selecting a subset of the data triggers a reactive analysis, creating a statistic model (regression, scatter-plot, spread-diagram) using that specific data set
+\end{itemize}
+
+%---
+\subsection{Interactivity in Grafana}
+%---
+
+While it is hard to find a tool, which possesses all the before-mentioned interactivity capabilities, Grafana provides certain features to enable efficient user-interaction for the good of solid understanding of the data.
+
+
+% https://grafana.com/docs/reference/timerange/
+%---
+\subsubsection{Time Range Controls}
+%---
+
+Grafana provides numerous ways to interactively manage the time ranges of the data being visualized, both at the Dashboard-level and the Panel-level.
+
+
 \begin{itemize}
 	\item what is Grafana?
 	\begin{itemize}
 		\item dashboard
 		\item panel
 		\item datasource
-		\item user management
 		\item queries
+		\item query editor (because of extended ui - dynamic parameter listing))
 	\end{itemize}
 	\item connects with many main datasources
 	\item customizable, can wtite own plugins (panel, datasource, app)
 	\item interactivity features
 	\begin{itemize}
-		\item variables
+		\item what can be meant as interactivity in this context (retelab2 lab segedlet)
+		\item variables, templating
 		\item setting the time-range
 		\item customizing builtin Graph Panel
 		\item data-links in Graph Panel
 		\item drill-down links
 	\end{itemize}
 \end{itemize}
+
+
 
 %--
 \section{JSON}
