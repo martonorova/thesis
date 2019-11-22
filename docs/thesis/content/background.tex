@@ -16,6 +16,7 @@
 		\item relational db
 		\item timeseries
 		\item key-value
+		\item document
 	\end{itemize}
 	\item with examples!
 \end{itemize}
@@ -96,7 +97,76 @@ While it is hard to find a tool, which possesses all the before-mentioned intera
 \subsubsection{Time Range Controls}
 %---
 
-Grafana provides numerous ways to interactively manage the time ranges of the data being visualized, both at the Dashboard-level and the Panel-level.
+Grafana provides numerous ways to interactively manage the time ranges of the data being visualized.
+
+On the Dashboard-level, the 'Current time range' selector can be used to change the dashboard time. Doing this refreshes the whole dashboard with each panel on it. Those panels, which display time-dependent information, will only show data-points which timestamps are in the newly set time range.
+
+\begin{center}
+	--- TODO insert example picture
+\end{center}
+
+If there is a Graph Panel on the dashboard, there is another possibility to change the Dashboard-level time range. We can select a time range on the Graph Panel with the cursor. This method is quite effective in case, when we would like to swiftly zoom into our data to review more refined details.
+
+\begin{center}
+	--- TODO insert example picture
+\end{center}
+
+% https://grafana.com/docs/reference/templating/
+%---
+\subsubsection{Variables and Templating}
+%---
+
+Variables in Grafana allow for more interactive and dynamic dashboards. We can use variables in metric queries and in panel titles.
+
+Their role is similar to that of 'conventional' variables in programming languages. Instead of hard-coding things into the program, we can use them to create algorithms, that operate on a more abstract level, resulting in more effortlessly maintainable softwares.
+
+In Grafana, we can use the variables to write generalized metric queries. For example, if we have multiple servers and we have metric data from all of them, we could store the name or address of the servers in a variable, rather than defining numerous queries, which only differ in the server name. Variables are shown as dropdown select boxes at the top of the dashboard. These dropdowns make it easy to change the value of each available variable, thus to adjust the data being displayed in the dashboard.
+
+\begin{center}
+	--- TODO insert example picture of variable dropdown
+\end{center}
+
+% https://grafana.com/docs/reference/templating/#variable-types
+There are different types of variable that can be used to make dashboards more dynamic.
+\begin{itemize}
+	\item \emph{Query} - This variable type allows for writing a data source query that usually returns a list of metric names. For example, a query that returns a list of server names, sensor ids, or data centers.
+	\item \emph{Interval} - This variable can represent time spans. We can use them, when we need to aggregate data-points by time or date.
+	\item \emph{Data source} - This type makes it possible to quickly change the data source for an entire Dashboard. This feature can be quite suitable, when we have multiple instances of a data source in for example different environments.
+	\item \emph{Custom} - This variable can be used to manually define the value options for the given variable.
+	\item \emph{Constant} - This variable can be handy for example to easily declare metric path prefixes. 
+	\item \emph{Text box} - This variable type displays as a free text input field with an optional default value.
+	\item \emph{Ad hoc filters} - It is a quite special kind of variable that only works with some data sources (e.g. InfluxDB, Elasticsearch). It allows the user to add key/value filters that will automatically be added to all metric queries the use the specified data source.
+\end{itemize}
+
+%---
+\subsubsection{Basic statistic values in legend}
+%---
+
+Statistic indicators were already mentioned above, where we discussed interactivity in general. In Grafana, we can display some basic statistic values (minimum, maximum, average, total) in the Graph Panel.
+
+\begin{center}
+	--- TODO insert example picture of this legend values
+\end{center}
+
+% https://grafana.com/docs/features/panels/graph/#data-link
+% https://grafana.com/blog/2019/08/06/grafana-v6.3-released/#data-links
+%---
+\subsubsection{Data links}
+%---
+
+Data links provide a way to add dynamic links to the visualization. These links can link to either other dashboards or to an external URL. when using data links, additional built-in variables become available that enable creating dynamic links.
+
+These variables are:
+\begin{itemize}
+	\item \emph{\char`_\char`_series\char`_name} - the name of the series or the table
+	\item \emph{\char`_\char`_value\char`_time} - the timestamp of the point that is clicked on (in millisecond epoch)
+	\item \emph{\char`_\char`_url\char`_time\char`_range} - The current time range
+	\item \emph{\char`_\char`_all\char`_variables} - Adds all current variables and their current values to the URL
+\end{itemize}
+
+%---
+\subsubsection{Creating custom interactivity}
+%---
 
 
 \begin{itemize}
@@ -117,7 +187,7 @@ Grafana provides numerous ways to interactively manage the time ranges of the da
 		\item setting the time-range
 		\item customizing builtin Graph Panel
 		\item data-links in Graph Panel
-		\item drill-down links
+		\item panel links (formerly drill-down links)
 	\end{itemize}
 \end{itemize}
 
