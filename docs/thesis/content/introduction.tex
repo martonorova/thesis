@@ -6,23 +6,26 @@
 A bevezető szokás szerint a diplomaterv felépítésével záródik, azaz annak rövid leírásával, hogy melyik fejezet mivel foglalkozik.}
 
 
-Nowadays, the question of storing, processing and displaying the data is becoming more and more important throughout every industry. The time, when the collected data was only useful for computers and specialists, passed. Today, the need for showing the data in an easily understandable form is significant. It is no wonder, people through the whole hierarchy of a company would like to be well-informed about the results and the ongoing processes. In addition, it is getting highly valuable to be able to display vast amount of data in a way that even outsiders can comprehend.
+Nowadays, the question of storing, processing and displaying the data is becoming more and more important throughout every industry. The time, when the collected data was only useful for computers and specialists, passed. Today, the need for showing data in an easily understandable form is significant. It is no wonder, people through the whole hierarchy of a company would like to be well-informed about the results and the ongoing processes. In addition, it is getting highly valuable to be able to display vast amount of data in a way that even outsiders can comprehend.
 
 Because of this trend, many technologies attempting to solve these problems have
 appeared, creating a wide variety of tools which organizations can use.
 
-In enterprise-grade environments, the use of complex systems - so called data-pipelines - are becoming increasingly common. These tools provide an integrated solution for transforming and querying data coming from data sources built with different technologies. With the help of these data-pipelines, it is possible to collect many types of data, no matter the format or the frequency. All these things for one reason, to prepare the data for machine or human decision-making.
+In enterprise-grade environments, the use of complex systems - so called data-pipelines - are becoming increasingly common. These tools provide an integrated solution for transforming and querying data coming from data sources built with different technologies. With the help of these data-pipelines, it is possible to collect many types of data, no matter the format or the frequency.
+
+All these things for one reason, to prepare the data for machine or human decision-making.
 
 %---
 \section{Problem definition}
 %---
 
-\begin{itemize}
-	\item many types of datasources, many ways of customizing them -> integration challenges
-	\item standards made by the industry (data formats, accessing data, visualization) -> permeability is not easy
-\end{itemize}
+Every organization needs to manage the sometimes cumbersome task of managing data. It is common, that this data does not come from one place, but from multiple sources, which can present various problems, especially if at some point, merging all the available data is necessary. It can happen for example, if the organization wants to visualization of the data to be in one place.
 
+The most fundamental one is maybe the issue of the data format and the way of accessing the data. There are already numerous industrial standards available, however, using these together can cause difficulties.
 
+In addition, each of these heterogeneous components need to be configured in different ways, with varying set of parameters. This can produce a heavy overhead for the data-specialists.
+
+Thus, we can establish the notion, that an universal tool for integrating different types of data sources is highly desired.
 
 %---
 \section{Motivation}
@@ -54,4 +57,11 @@ In enterprise-grade environments, the use of complex systems - so called data-pi
 	\item implement a POC data-gateway for connecting a Python based and a RapidMiner based datasource
 	\item present the advantages and disadvantages of the created gateway
 \end{itemize}
+
+
+There are a couple objectives to achieve during this thesis project.
+
+first of all, an investigation is needed about the mainly available data sources and their varying features. This is necessary to get into context and to establish further decisions concerning this work.
+
+
 
