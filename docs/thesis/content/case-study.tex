@@ -1,0 +1,32 @@
+\chapter{Case study}
+
+It is certainly evident by now that this thesis is rather a practical implementation and integration problem, than a research project. As one of the main goals is to combine different kind of data sources, it seems to be convenient to have some data to work with from several aspects. It makes the development easier, because we can see immediately, if the components can handle the data or that in what way they change it. The possession of sample inputs can also help to demonstrate the results and provides the capability of some independent verification.
+
+% https://www.kaggle.com/selfishgene/historical-hourly-weather-data
+I used the Historical Hourly Weather data set from Kaggle.com that contains hourly measurement results of various weather attributes, such as temperature, humidity, air pressure, etc. The data is available from several cities from the USA, Canada and Israel from October 2012 to November 2017.
+
+\begin{center}
+	--- TODO insert extract from the data set
+\end{center}
+
+%---
+\section{RapidMiner source}
+%---
+
+The RapidMiner Server exposes a process that provides the temperature data from the sample data set. It accepts a parameter determining from which city the user wants to acquire this information. In short, it presents a filtering option by city.
+
+%---
+\section{Python source}
+%---
+
+Although Grafana has multiple built-in plugins to communicate with databases, there exists some use-cases, when having a custom component between the data source and the visualization tool is feasible.
+
+With an extra component in the middle, we have extra control over the data which travels from the data storage backend (in our case, MySQL) to the visualization platform. This means that we do not have to rely solely on the capabilities of the database, which can lead to simpler queries, smaller communication overhead with the database.
+
+Having a custom middleware makes it possible to implement the business logic in a separate component and only display business-relevant information with the visualization tool.
+
+It also enables us to aggregate information from different backends and provide only one kind of interface towards visualization which can result in better maintainability.
+
+In this project I demonstrate a proof-of-concept use-case, when this extra components reads information from a database and also from an external API service. To be more precise, in the database I store the measured daily minimum and maximum temperature data from 2012 to 2017 in New York. Concerning the the API part, I created a small web application with a REST API that exposes historical highest and lowest temperature values for a given day of the year, also in New York. In the middleware written in Python, I implemented an example business logic which counts on how many days in a month (from October 2012 to November 2017) the measured temperature got close to the all-time records. I have to mention, that the calculation of these historical highest and lowest values is also heuristic. I only took data from January 1959 to September 2012 into account.
+
+I believe, that this is a quite common problem, to have some data in one's storage, but for a better business competence, the usage of external services is also necessary. Hence, this example set-up could serve as an applicable demonstration for further possibilities.
