@@ -36,6 +36,8 @@ export class GenericDatasourceQueryCtrl extends QueryCtrl {
 
     var that = this;
 
+    //REWORK here to promise chain
+
     let data = this.datasource.getParameterKeys(this.target.target);
     let parameters = data.then(function(parameterArray) {
 
