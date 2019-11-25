@@ -185,8 +185,8 @@
       "datasource": "ProxyRM",
       "fill": 1,
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 9,
+        "w": 4,
         "x": 0,
         "y": 8
       },
@@ -196,7 +196,7 @@
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -214,23 +214,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "parameters": [
-            {
-              "key": "city",
-              "value": "Vancouver"
-            }
-          ],
+          "parameters": [],
           "refId": "A",
           "target": "weather_retrieve_process?city=Vancouver",
           "type": "timeserie"
         },
         {
-          "parameters": [
-            {
-              "key": "city",
-              "value": "New York"
-            }
-          ],
+          "parameters": [],
           "refId": "B",
           "target": "weather_retrieve_process?city=New York",
           "type": "timeserie"
@@ -250,7 +240,7 @@
         "buckets": null,
         "mode": "series",
         "name": null,
-        "show": true,
+        "show": false,
         "values": [
           "count"
         ]
@@ -283,18 +273,18 @@
       "fill": 1,
       "gridPos": {
         "h": 9,
-        "w": 5,
-        "x": 12,
+        "w": 4,
+        "x": 4,
         "y": 8
       },
       "id": 18,
       "legend": {
-        "alignAsTable": true,
+        "alignAsTable": false,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "rightSide": true,
+        "rightSide": false,
         "show": true,
         "total": false,
         "values": false
@@ -313,23 +303,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "parameters": [
-            {
-              "key": "city",
-              "value": "$city1"
-            }
-          ],
+          "parameters": [],
           "refId": "A",
           "target": "weather_retrieve_process?city=$city1",
           "type": "timeserie"
         },
         {
-          "parameters": [
-            {
-              "key": "city",
-              "value": "$city2"
-            }
-          ],
+          "parameters": [],
           "refId": "B",
           "target": "weather_retrieve_process?city=$city2",
           "type": "timeserie"
@@ -338,7 +318,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Dynamic bar chart RM Webservice data (Total)",
+      "title": "Dynamic bar chart RM Webservice (total)",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -382,8 +362,8 @@
       "fill": 1,
       "gridPos": {
         "h": 9,
-        "w": 7,
-        "x": 17,
+        "w": 4,
+        "x": 8,
         "y": 8
       },
       "id": 22,
@@ -392,7 +372,7 @@
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -410,23 +390,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "parameters": [
-            {
-              "key": "city",
-              "value": "$city1"
-            }
-          ],
+          "parameters": [],
           "refId": "A",
           "target": "weather_retrieve_process?city=$city1",
           "type": "timeserie"
         },
         {
-          "parameters": [
-            {
-              "key": "city",
-              "value": "$city2"
-            }
-          ],
+          "parameters": [],
           "refId": "B",
           "target": "weather_retrieve_process?city=$city2",
           "type": "timeserie"
@@ -446,9 +416,183 @@
         "buckets": null,
         "mode": "series",
         "name": null,
-        "show": true,
+        "show": false,
         "values": [
           "avg"
+        ]
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ]
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "ProxyRM",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 12,
+        "y": 8
+      },
+      "id": 26,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {},
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "parameters": [],
+          "refId": "A",
+          "target": "weather_retrieve_process?city=$city1",
+          "type": "timeserie"
+        },
+        {
+          "parameters": [],
+          "refId": "B",
+          "target": "weather_retrieve_process?city=$city2",
+          "type": "timeserie"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Dynamic bar chart RM Webservice (min)",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph-panel-template-panel",
+      "xaxis": {
+        "buckets": null,
+        "mode": "series",
+        "name": null,
+        "show": false,
+        "values": [
+          "min"
+        ]
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ]
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "ProxyRM",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 18,
+        "y": 8
+      },
+      "id": 28,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {},
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "parameters": [],
+          "refId": "A",
+          "target": "weather_retrieve_process?city=$city1",
+          "type": "timeserie"
+        },
+        {
+          "parameters": [],
+          "refId": "B",
+          "target": "weather_retrieve_process?city=$city2",
+          "type": "timeserie"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Dynamic bar chart RM Webservice (max)",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph-panel-template-panel",
+      "xaxis": {
+        "buckets": null,
+        "mode": "series",
+        "name": null,
+        "show": false,
+        "values": [
+          "max"
         ]
       },
       "yaxes": [
@@ -482,7 +626,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 16
+        "y": 17
       },
       "id": 6,
       "legend": {
@@ -586,7 +730,7 @@
       "datasource": "ProxyRM",
       "fontSize": "100%",
       "gridPos": {
-        "h": 9,
+        "h": 8,
         "w": 12,
         "x": 12,
         "y": 17
@@ -597,8 +741,8 @@
       "scroll": true,
       "showHeader": true,
       "sort": {
-        "col": 0,
-        "desc": true
+        "col": 1,
+        "desc": false
       },
       "styles": [
         {
@@ -653,7 +797,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 24
+        "y": 25
       },
       "id": 4,
       "legend": {
@@ -794,7 +938,7 @@
     ]
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
