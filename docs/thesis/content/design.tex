@@ -1,13 +1,5 @@
 \chapter{Design}
 
-\begin{center}
-	--- TODO ---
-	\begin{itemize}
-		\item extended API for SimpleJSON datasource
-		\subitem querying available paramaters for a webservice
-	\end{itemize}
-\end{center}
-
 \section{Architecture}
 
 The designed architecture of the project can be observed in the figure \ref{fig:arch}. There are three data sources connected to Grafana through an extended version of the official SimpleJson data source plugin. Each data source access the data it provides in different ways; through an outside service, from a database or from memory.
@@ -31,20 +23,29 @@ In this section, each component is presented, focusing on their responsibilities
 
 Grafana uses data source plugins to connect to different data storage backends. Each data source plugin exposes a Grafana specific interface which allows Grafana to communicate with each data source plugin the same way.
 
+% https://github.com/grafana/simple-json-datasource
+The SimpleJSON datasource is made by the Grafana team and is available on GitHub (insert reference HERE).
+
+It has two main purposes. One is to act as an example implementation to make writing custom data source plugins easier for the community. The other is to enable Grafana to read data from services that expose data in JSON format (which is widely popular thorough the industry).
+
+For this thesis project, the latter role seems to be more important, as it possible to create a tool that receives data from different kind of formats and translates them into JSON. This way, we can send the transformed data to Grafana, which as a result would be able to display the collected data in one place that originally came from various sources.
+
+In order to introduce additional interactivity capabilities, when integrating the RapidMiner Webservice, the SimpleJSON data source plugin needs to be extended. 
+
+\begin{center}
+	--- TODO ---
+	\begin{itemize}
+		\item extended API for SimpleJSON datasource
+		\subitem querying available paramaters for a RM webservice
+	\end{itemize}
+\end{center}
+
 
 %---
 \subsection{Proxy}
 %---
 
 The main responsibility of this component is to translate between the RapidMiner Web service which the RapidMiner Server exposes and the SimpleJSON datasource plugin. The problem is that RapidMiner Server exposes its result in JSON, but is in another format that the SimpleJSON datasource plugin accepts.
-
-%---
-\subsection{RapidMiner components}
-%---
-% https://docs.rapidminer.com/latest/server/overview/scalable-architecture.html
-
-The RapidMiner Server acts as a data source for Grafana with the help of the proxy component. In addition to its numerous features, with RapidMiner Server we can store and expose data science processes, like model building, predictions, data ETL operations, etc. Long-running jobs are executed externally via Job Agents. The RapidMiner Server stores its data in an external database.
-The Server can expose certain processes that can be called via REST API requests. These are the so called Web services which we use to get the results of the RapidMiner processes and transfer them to Grafana.
 
 %---
 \subsection{JSON backend}
@@ -56,15 +57,10 @@ This component is a example backend implementation for the SimpleJSON data sourc
 \subsection{Python data source}
 %---
 
-Although Grafana has a built-in plugin to communicate with a MySQL database, there exists some use-cases, when having a custom component between the data source and the visualization tool is feasible.
+\begin{center}
+	--- TODO ---
+\end{center}
 
-With an extra component in the middle, we have extra control over the data which travels from the data storage backend (in our case, MySQL) to the visualization platform. This means that we do not have to rely solely on the capabilities of the database, which can lead to simpler queries, smaller communication overhead with the database.
-
-Having a custom middleware makes it possible to implement the business logic in a separate component and only display business-relevant information with the visualization tool.
-
-It also enables us to aggregate information from different backends and provide only one kind of interface towards visualization which can result in better maintainability.
-
-In this project I demonstrate a proof-of-concept use-case, when this extra components reads information from a database and also from an external API service. I believe, that this is a quite common problem, to have some data in one's storage, but for a better business competence, the usage of external services is also necessary.
 
 %---
 \subsection{Weather API}
@@ -110,7 +106,7 @@ The Python datasource uses this database component to read some sample data from
 	\item Grafana datasource plugin (extended API - parameters)
 	\begin{itemize}
 		\item extended API for asking for available parameters
-		\item extended GUI, that dynamically lists available parameters
+		\item extended GUI, that dynamically lists available parameters (specify SOURCE!!!!!!!)
 	\end{itemize}
 	\item Grafana extended panel plugin
 \end{itemize}

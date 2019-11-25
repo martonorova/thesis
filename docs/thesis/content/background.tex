@@ -196,9 +196,35 @@ As a part of my thesis project, I successfully extended the built-in Graph Panel
 %\end{itemize}
 
 %---
-\section{Relevant RapidMiner components}
+\section{RapidMiner}
 %---
 
+% https://rapidminer.com/us/
+% https://en.wikipedia.org/wiki/RapidMiner
+% https://docs.rapidminer.com/latest/server/overview/scalable-architecture.html
+
+RapidMiner is a data science software platform that provides an integrated environment for data preparation, machine learning, deep learning, text mining and predictive analytics.
+
+RapidMiner includes several components, however, only the ones with relevant features to this thesis project are introduced briefly in this section.
+
+%---
+\subsection{RapidMiner Server}
+%--- 
+
+RapidMiner Server is the central component in the architecture. Users can interact with it via a web interface or via RapidMiner Studio.
+
+Its main responsibilities are to store and expose data science processes, like model building, predictions, data ETL (Extract, Transform, Load) operations, etc. Long-running jobs are executed externally via Job Agents. The RapidMiner Server stores its data in an external database.
+
+%---
+\subsubsection{Web services}
+%---
+The Server can expose certain processes that can be invoked via simple HTTP requests. These are the so called web services which can be used to run predictions or any other application of models, where the need for a real-time response is paramount. In order to make this service more dynamic, additional parameters can be sent with the requests to get more accurate information. The user can acquire the results of these processes through the same API in JSON format.
+
+%---
+\subsection{Job Agent}
+%---
+
+RapidMiner Server offers a queue system for long-running jobs, which are executed externally via Job Agents. The computing power of the stack can be increased by adding more Job Agents.
 
 %--
 \section{JSON}
@@ -223,3 +249,5 @@ As a part of my thesis project, I successfully extended the built-in Graph Panel
 %--
 \section{REST API}
 %--
+
+is an explanation of this is needed?
