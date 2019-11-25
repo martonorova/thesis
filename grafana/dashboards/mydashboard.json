@@ -15,6 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
+  "iteration": 1574689432026,
   "links": [],
   "panels": [
     {
@@ -69,7 +70,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Python datasource",
+      "title": "Python datasource (New York close to alltime records)",
       "transform": "table",
       "type": "table"
     },
@@ -113,20 +114,25 @@
       "steppedLine": false,
       "targets": [
         {
-          "parameters": [],
+          "parameters": [
+            {
+              "key": "city",
+              "value": "$city1"
+            }
+          ],
           "refId": "A",
-          "target": "weather_retrieve_process?city=Vancouver",
+          "target": "weather_retrieve_process?city=$city1",
           "type": "timeserie"
         },
         {
           "parameters": [
             {
               "key": "city",
-              "value": "New York"
+              "value": "$city2"
             }
           ],
           "refId": "B",
-          "target": "weather_retrieve_process?city=New York",
+          "target": "weather_retrieve_process?city=$city2",
           "type": "timeserie"
         }
       ],
@@ -307,20 +313,25 @@
       "steppedLine": false,
       "targets": [
         {
-          "parameters": [],
+          "parameters": [
+            {
+              "key": "city",
+              "value": "$city1"
+            }
+          ],
           "refId": "A",
-          "target": "weather_retrieve_process?city=Vancouver",
+          "target": "weather_retrieve_process?city=$city1",
           "type": "timeserie"
         },
         {
           "parameters": [
             {
               "key": "city",
-              "value": "New York"
+              "value": "$city2"
             }
           ],
           "refId": "B",
-          "target": "weather_retrieve_process?city=New York",
+          "target": "weather_retrieve_process?city=$city2",
           "type": "timeserie"
         }
       ],
@@ -399,15 +410,25 @@
       "steppedLine": false,
       "targets": [
         {
-          "parameters": [],
+          "parameters": [
+            {
+              "key": "city",
+              "value": "$city1"
+            }
+          ],
           "refId": "A",
-          "target": "weather_retrieve_process?city=Vancouver",
+          "target": "weather_retrieve_process?city=$city1",
           "type": "timeserie"
         },
         {
-          "parameters": [],
+          "parameters": [
+            {
+              "key": "city",
+              "value": "$city2"
+            }
+          ],
           "refId": "B",
-          "target": "weather_retrieve_process?city=New York",
+          "target": "weather_retrieve_process?city=$city2",
           "type": "timeserie"
         }
       ],
@@ -603,9 +624,14 @@
       ],
       "targets": [
         {
-          "parameters": [],
+          "parameters": [
+            {
+              "key": "city",
+              "value": "$city1"
+            }
+          ],
           "refId": "A",
-          "target": "weather_retrieve_process?city=Toronto",
+          "target": "weather_retrieve_process?city=$city1",
           "type": "table"
         }
       ],
@@ -728,11 +754,48 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "text": "Vancouver",
+          "value": "Vancouver"
+        },
+        "hide": 0,
+        "label": null,
+        "name": "city1",
+        "options": [
+          {
+            "text": "Vancouver",
+            "value": "Vancouver"
+          }
+        ],
+        "query": "Vancouver",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "text": "New York",
+          "value": "New York"
+        },
+        "hide": 0,
+        "label": null,
+        "name": "city2",
+        "options": [
+          {
+            "text": "New York",
+            "value": "New York"
+          }
+        ],
+        "query": "New York",
+        "skipUrlSync": false,
+        "type": "textbox"
+      }
+    ]
   },
   "time": {
-    "from": "2019-11-17T19:42:53.625Z",
-    "to": "2019-11-17T20:13:08.563Z"
+    "from": "now-2d",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -762,5 +825,5 @@
   "timezone": "",
   "title": "Provisioned",
   "uid": "D3VFMGhWz",
-  "version": 13
+  "version": 15
 }
