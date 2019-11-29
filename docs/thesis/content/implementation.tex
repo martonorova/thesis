@@ -1,16 +1,39 @@
 \chapter{Implementation}
 
-\begin{itemize}
+In this chapter, the previously described components are explained in further details, focusing on how they are implemented, what technologies were used and in addition, some additional fine tunes are presented which demonstrate the extendability of the open source Grafana.
+
+\begin{center}
+	\begin{itemize}
+		content...
+	\end{itemize}
 	\item docker-compose
 	\item communication flow between components
 	\item interfaces API endpoints
 	\item data formats
-\end{itemize}
+\end{center}
+
+\section{Architecture}
+
+In order to be able to set up an architecture as the one described in section \ref{arch-design}, I used Docker Compose. It showed numerous advantages during the project. For example with Docker Compose it is easy to set up separate components, services, which operate in the same network, thus they can connect to each other quite simply from a user's perspective. Also, if all the necessary files are correctly version controlled, it is possible with Docker Compose to simply set up the whole architecture, no matter where we are, provided there is a running Docker Engine ton the machine.
+
+The \texttt{docker-compose.yml} for the project can be found in the \texttt{Git} repository of the thesis project. It defines all the needed components with configuration.
 
 \section{Gateway}
+
+It was described in section \ref{proxy-design} that the Gateway component must be able to handle requests from Grafana, as well as be able to forward these requests to the RapidMiner Server after the format translation. 
+
+% https://www.palletsprojects.com/p/flask/
+% https://realpython.com/python-requests/
+For this task, I implemented the Gateway in Python using the \texttt{flask} and the \texttt{requests} packages and ran it in a Docker container. Flask is a lightweight web application framework library that enables quick and simple development. Requests can be thought of as the de facto standard for making HTTP requests in Python. It abstracts the complexities of making requests behind a simple API.
+
+
 
 \section{Pros}
 
 \section{Cons}
 
 \section{Additional fine tunes}
+
+\subsection{Customized Grafana GUI}
+
+\subsection{Dynamic bar chart in Grafana}

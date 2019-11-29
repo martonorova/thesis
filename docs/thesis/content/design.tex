@@ -1,8 +1,16 @@
 \chapter{Design}
 
-\section{Architecture}
+\section{Architecture} \label{arch-design}
 
-The designed architecture of the project can be observed in the figure \ref{fig:arch}. There are three data sources connected to Grafana through an extended version of the official SimpleJson data source plugin. Each data source access the data it provides in different ways; through an outside service, from a database or from memory.
+The designed architecture of the project can be observed in the figure \ref{fig:arch}. There are three data sources connected to Grafana through an extended version of the official SimpleJSON data source plugin:
+
+\begin{itemize}
+	\item RapidMiner Server
+	\item JSON backend
+	\item Python data source
+\end{itemize}
+
+Each data source accesses the data it provides to Grafana in different ways; through an outside service, from a database or from memory.
 
 \begin{figure}[h]
 	\centering
@@ -15,10 +23,10 @@ The designed architecture of the project can be observed in the figure \ref{fig:
 \section{Components}
 %---
 
-In this section, each component is presented, focusing on their responsibilities.
+In this section, each component's design is presented, focusing on their responsibilities.
 
 %---
-\subsection{Extended SimpleJSON datasource plugin}
+\subsection{Extended SimpleJSON datasource plugin} \label{simplejson-design}
 %---
 
 Grafana uses data source plugins to connect to different data storage backends. These components usually poll their backends, sending query requests to acquire the recorded information. Each data source plugin exposes a Grafana specific interface which allows Grafana to communicate with each data source plugin the same way.
@@ -50,32 +58,33 @@ This means that the plugin has to be able to send another type of request to the
 	\item \emph{/parameters} - This endpoint is used for acquiring the available query parameters exposed by the backend.
 \end{itemize}
 
-\begin{center}
-	--- TODO ---
-	\begin{itemize}
-		\item extended API for SimpleJSON datasource
-		\subitem querying available paramaters for a RM webservice
-		\item explain how the datasource communicates with the backend
-		\item show the requested/returned data formats? -> rather implementation
-	\end{itemize}
-\end{center}
-
+During operation, this data source plugin will periodically poll its connected data sources for data, sending HTTP requests to the above described endpoints. The time-interval between the pools depends on the settings in Grafana.
 
 %---
-\subsection{Proxy}
+\subsection{Proxy} \label{proxy-design}
 %---
 
 The main responsibility of this component is to translate between the RapidMiner Web service which the RapidMiner Server exposes and the SimpleJSON datasource plugin. The problem is that RapidMiner Server exposes its result in JSON, but is in another format that the SimpleJSON data source plugin accepts.
 
-To accomplish that this proxy component could communicate with Grafana, it must implement the endpoints required by the SimpleJSON plugin. These were explained in the section describing the plugin.
+To accomplish that this proxy component could communicate with Grafana, it must implement the endpoints required by the SimpleJSON plugin. These were explained in the section \ref{simplejson-design} describing the plugin.
 
 So the gateway component should be able to handle HTTP requests from SimpleJSON as well as forwarding them to RapidMiner after the translation. For this reason, it must be a constantly available service.
 
 There are some RapidMiner web service specific considerations which need to be taken into account while designing the gateway component. We have to define the actions made by the proxy towards the RapidMiner Server in an abstract way, in order to properly implement the component.
 
-When accepting requests on the \texttt{/search} endpoint the gateway should return with the names of the available RapidMiner web services in a format that the data source plugin accepts. For that, it must send a request to the RapidMiner Server, asking for these names each time, so it is ensured that the information is always up-to-date. This is crucial, as the name of the RapidMiner web service determines the address where the gateway has to send the query requests later.
+%---
+\subsubsection{Searching the targets}
+%---
 
-The \texttt{/parameters} endpoint should return the parameters exposed by the given web services. This information also falls in the category that should not be cached, as the possession of false knowledge can lead to failed queries that ends in no data displayed in Grafana.
+In order for Grafana to be able to make queries to request data, it needs to know where this data can come from, what is the address of the service that exposes the recorded information. For that, Grafana (and indirectly the SimpleJSON data source plugin) first asks for the available targets of the given data source backend. As it was mentioned in section \ref{simplejson-design}, SimpleJSON uses the \texttt{/search} endpoint for acquiring this information.
+
+In our case, the Proxy component connects to RapidMiner Server which exposes its data providing processes through web services. Thus, when accepting requests on the \texttt{/search} endpoint the gateway should return with the names of the available RapidMiner web services in a format that the data source plugin accepts. For that, it must send a request to the RapidMiner Server, asking for these names each time, so it is ensured that the information is always up-to-date. This is crucial, as the name of the RapidMiner web service determines the address where the gateway has to send the query requests later.
+
+%---
+\subsubsection{Acquiring the parameters}
+%---
+
+To enable the customization of the queries, the Proxy's \texttt{/parameters} endpoint should return the parameters exposed by a given web services. This information also falls in the category that should not be cached, as the possession of false knowledge can lead to failed queries that ends in no data displayed in Grafana.
 
 After we have the name of the web service and its available parameters, we can finally request the actual data. For that, we use the \texttt{/query} endpoint. This is the place when the translation of different different data formats happens.
 
@@ -85,30 +94,42 @@ After we have the name of the web service and its available parameters, we can f
 % https://github.com/bergquist/fake-simple-json-datasource
 This component is a example backend implementation for the SimpleJSON data source plugin. It serves as a base for creating other backends for the data source plugin. It also further expresses the general usability of the SimpleJSON plugin.
 
+As this component can work with the SimpleJSON data source plugin out-of-the-box, I used it during the thesis project mainly for testing purposes. For example to check if the connection is still healthy between the components, or to inspect the specific data formats which are sent to or received from the SimpleJSON plugin.
+
 %---
 \subsection{Python data source}
 %---
 
-Similarly as the Proxy component, the Python data source also needs to have those endpoints required by the SimpleJSON data source plugin, so this part is analogous to that in the Proxy. The effects of invoking them are slightly different than in case of the Proxy, because this Python source uses two components as backends, an 'external' API service and a separate database as described in section \ref{case-study-python-source}.
+Although Grafana has multiple built-in plugins to communicate with databases, there exists some use-cases, when having a custom component between the data source and the visualization tool is feasible.
 
+With an additional component in the middle, we have extra control over the data which travels from the data storage backend (in our case, MySQL) to the visualization platform. This means that we do not have to rely solely on the capabilities of the database, which can lead to simpler queries, smaller communication overhead with the database.
 
-\begin{center}
-	--- TODO ---
-\end{center}
+Having a custom middleware also makes it possible to implement the business logic in a separate component and only display business-relevant information with the visualization tool.
 
+It also enables us to aggregate information from different backends and provide only one kind of interface towards visualization which can result in better maintainability. For example in our case, the Weather API component acts as a second backend.
+
+Similarly as the Proxy component, the Python data source also needs to have those endpoints which are required by the SimpleJSON data source plugin, so this part is analogous to that in the Proxy. The effects of invoking them are slightly different than in case of the Proxy, because this Python source uses two components as backends, the 'external' API service and a separate database as described in section \ref{case-study-python-source}. So in order to get the requested data, the Python data source has to turn both of its backends. This means, that the Python data source has to posses more sophisticated communication capabilities. It needs to be able to handle requests from Grafana, send them back, make connections to the database and query its contents and to send requests to the 'external' API service and accept the results from it.
 
 %---
 \subsection{Weather API}
 %---
 
+As it was already described in section \ref{case-study-python-source} describing the sample use-case, I implemented a simple service, that can return the all-time (calculated in a heuristic way, as it was already mentioned) maximum and minimum temperatures measured in New York for a given day of the year.
+
 This component represents the previously mentioned external service. Its responsibility is to expose a service that can be utilized by other softwares in order to acquire additional business-relevant information.
+
+It is worth to mention, that there are already several publicly available APIs that can be used to retrieve weather related data. However, these services are usually not free or only offer a free trial version which lasts a couple a days long. This is why I decided to make an own API service that can be used during the whole time of preparing the thesis project.
+
+\begin{center}
+	--- TODO ---
+	examples for weather APIs
+\end{center}
 
 %---
 \subsection{MySQL database}
 %---
 
-The Python datasource uses this database component to read some sample data from it.
-
+In section \ref{case-study-python-source}, it was stated, that one the backends used by the Python data source is a separate database. This database stores the data of the measured daily maximum and minimum temperatures in New York throughout a couple of years.
 
 %\begin{itemize}
 %	\item why do we need a gateway
@@ -123,25 +144,25 @@ The Python datasource uses this database component to read some sample data from
 %\end{itemize}
 
 
-\begin{itemize}
-	\item Grafana
-	\item proxy/gateway
-	\item python-datasource
-	\begin{itemize}
-		\item python-datasource
-		\item mysql
-		\item weather-api
-	\end{itemize}
-	\item RapidMiner stack
-	\begin{itemize}
-		\item rapidminer-server
-		\item job-agent
-		\item database
-	\end{itemize}
-	\item Grafana datasource plugin (extended API - parameters)
-	\begin{itemize}
-		\item extended API for asking for available parameters
-		\item extended GUI, that dynamically lists available parameters (specify SOURCE!!!!!!!)
-	\end{itemize}
-	\item Grafana extended panel plugin
-\end{itemize}
+%\begin{itemize}
+%	\item Grafana
+%	\item proxy/gateway
+%	\item python-datasource
+%	\begin{itemize}
+%		\item python-datasource
+%		\item mysql
+%		\item weather-api
+%	\end{itemize}
+%	\item RapidMiner stack
+%	\begin{itemize}
+%		\item rapidminer-server
+%		\item job-agent
+%		\item database
+%	\end{itemize}
+%	\item Grafana datasource plugin (extended API - parameters)
+%	\begin{itemize}
+%		\item extended API for asking for available parameters
+%		\item extended GUI, that dynamically lists available parameters (specify SOURCE!!!!!!!)
+%	\end{itemize}
+%	\item Grafana extended panel plugin
+%\end{itemize}
