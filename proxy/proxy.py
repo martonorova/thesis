@@ -12,12 +12,12 @@ server_host = 'http://rapidminer-server:8080'
 
 
 @app.route('/')
-def hello_world():
+def check_connection():
 
     response = requests.get(server_host)
     if response.status_code == 200:
-        return 'Hello World'
-    return "Sad"
+        return 'Server connection OK'
+    return "Server connection error"
 
 
 @app.route('/query', methods=['POST'])
