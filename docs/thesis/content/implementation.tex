@@ -1,30 +1,112 @@
 \chapter{Implementation}
 
-In this chapter, the previously described components are explained in further details, focusing on how they are implemented, what technologies were used and in addition, some additional fine tunes are presented which demonstrate the extendability of the open source Grafana.
+In this chapter, the previously described components are explained in further details, focusing on how they are implemented, what technologies were used and in addition, some extra fine tunes are presented which demonstrate the extendability of the open source Grafana.
 
 \begin{center}
 	\begin{itemize}
-		content...
+		\item docker-compose
+		\item communication flow between components
+		\item interfaces API endpoints
+		\item data formats
 	\end{itemize}
-	\item docker-compose
-	\item communication flow between components
-	\item interfaces API endpoints
-	\item data formats
+	
 \end{center}
 
 \section{Architecture}
+
+\subsection{Docker}
+\subsection{Docker Compose}
 
 In order to be able to set up an architecture as the one described in section \ref{arch-design}, I used Docker Compose. It showed numerous advantages during the project. For example with Docker Compose it is easy to set up separate components, services, which operate in the same network, thus they can connect to each other quite simply from a user's perspective. Also, if all the necessary files are correctly version controlled, it is possible with Docker Compose to simply set up the whole architecture, no matter where we are, provided there is a running Docker Engine ton the machine.
 
 The \texttt{docker-compose.yml} for the project can be found in the \texttt{Git} repository of the thesis project. It defines all the needed components with configuration.
 
+\begin{center}
+	--- TODO insert part of docker.compose.yml
+\end{center}
+
 \section{Gateway}
 
-It was described in section \ref{proxy-design} that the Gateway component must be able to handle requests from Grafana, as well as be able to forward these requests to the RapidMiner Server after the format translation. 
+It was established in the design section \ref{proxy-design}, that the main responsibility of the Gateway component is to translate between the JSON data formats used by the RapidMiner Server and the Grafana SimpleJSON data source plugin. For this task,... 
+
+\begin{center}
+	=== TODO research XSLT for JSON
+\end{center}
+
+As it was described in section \ref{proxy-design}, the Gateway component must be able to handle requests from Grafana, as well as be able to forward these requests to the RapidMiner Server after the format translation. 
 
 % https://www.palletsprojects.com/p/flask/
 % https://realpython.com/python-requests/
 For this task, I implemented the Gateway in Python using the \texttt{flask} and the \texttt{requests} packages and ran it in a Docker container. Flask is a lightweight web application framework library that enables quick and simple development. Requests can be thought of as the de facto standard for making HTTP requests in Python. It abstracts the complexities of making requests behind a simple API.
+
+%---
+\subsection{Endpoints}
+%---
+
+As it was explained in section \ref{proxy-design}, the Gateway component has to expose the endpoints that are required by the SimpleJSON data source plugin.
+
+With the \texttt{requests} package, it is quite convenient to implement these endpoints, since we only have to declare a decorated function for each endpoint, as it is shown in the code snippet \ref{lst:proxy-test-conn}.
+
+\begin{lstlisting}[language=Python, caption={Test the connection to the server}, label={lst:proxy-test-conn}]]
+	@app.route('/')
+	def check_connection():
+	  response = requests.get(server_host)
+	    if response.status_code == 200:
+	      return 'Server connection OK'
+	  return "Server connection error"
+\end{lstlisting}
+
+%---
+\subsubsection{Searching the targets}
+%---
+
+To be able to get the names of the available RapidMiner web services, the Gateway component should use the \texttt{/api/rest/service/list} endpoint of the RapidMiner Server. This endpoint returns the names and parameters of the web services in JSON format. The Gateway extracts the names of the services transforms this data into a format that SimpleJSON can understand.
+
+The endpoint is implemented as displayed in the following \ref{lst:proxy-search} code snippet. 
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=Python, caption={Get the names of the web services}, label={lst:proxy-search}]]
+@app.route('/search', methods=['POST'])
+def search():
+  response = requests.get(server_host + '/api/rest/service/list',
+                          auth=('admin', 'changeit'))
+  webservices_json_list = json.loads(response.text)
+  webservice_names = []
+  for webservice in webservices_json_list:
+    webservice_names.append(webservice['name'])
+  return json.dumps(webservice_names)
+\end{lstlisting}
+\end{minipage}
+%---
+\subsubsection{Acquiring the parameters}
+%---
+
+To get the available parameters of the exposed web services, the Gateway component uses the same endpoint of the RapidMiner Server (\texttt{/api/rest/service/list}), as for searching the targets.
+
+The reason for that these two features are separated, even though they use the same endpoint, is that concerning the Gateway, the functionality of exposing the available targets is required by the SimpleJSON by default while querying the parameters is an extra feature. This means that SimpleJSON expects a specific data format, which only includes the names of the targets. Thus returning also the parameters with the targets would break the compatibility between the Gateway component and the SimpleJSON data source plugin.
+
+\begin{minipage}{\linewidth}
+	\begin{lstlisting}[language=Python, caption={Get the parameters for a given web service}, label={lst:proxy-params}]]
+	@app.route('/parameters', methods=['GET'])
+	def parameters():
+	if request.args:
+	args = request.args
+	webserviceName = args.get('webserviceName')
+	if webserviceName == None:
+	raise ValueError('No value provided for "webserviceName"')
+	# get the list of webservices and get the parameters of the one with the name provided in the query
+	response = requests.get(server_host + '/api/rest/service/list',
+	auth=('admin', 'changeit'))
+	webservices_json_list = json.loads(response.text)
+	webservice_params = []
+	for webservice in webservices_json_list:
+	if webservice['name'] == webserviceName:
+	webservice_params = webservice['parameters']
+	break
+	return json.dumps(webservice_params)
+	return 'Please provide a query parameter in the URL'
+	\end{lstlisting}
+\end{minipage}
 
 
 

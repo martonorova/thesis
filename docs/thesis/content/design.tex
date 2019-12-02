@@ -66,6 +66,10 @@ During operation, this data source plugin will periodically poll its connected d
 
 The main responsibility of this component is to translate between the RapidMiner Web service which the RapidMiner Server exposes and the SimpleJSON datasource plugin. The problem is that RapidMiner Server exposes its result in JSON, but is in another format that the SimpleJSON data source plugin accepts.
 
+\begin{center}
+	=== TODO research on declarative data transformation
+\end{center}
+
 To accomplish that this proxy component could communicate with Grafana, it must implement the endpoints required by the SimpleJSON plugin. These were explained in the section \ref{simplejson-design} describing the plugin.
 
 So the gateway component should be able to handle HTTP requests from SimpleJSON as well as forwarding them to RapidMiner after the translation. For this reason, it must be a constantly available service.
