@@ -13,7 +13,6 @@ server_host = 'http://rapidminer-server:8080'
 
 @app.route('/')
 def check_connection():
-
     response = requests.get(server_host)
     if response.status_code == 200:
         return 'Server connection OK'
@@ -22,9 +21,6 @@ def check_connection():
 
 @app.route('/query', methods=['POST'])
 def query():
-
-    # print("Query Data")
-    # print(request.data)
 
     request_json = request.json
     result = []
@@ -39,7 +35,6 @@ def query():
         json_data = json.loads(response.text)
 
         if target_type == 'timeserie':
-            # print("TIMESERIES")
             target_result = convert_to_series(json_data, target_name)
             result.append(target_result)
 
@@ -50,8 +45,6 @@ def query():
         else:
             raise ValueError('Unknown target type: {}'.format(target_type))
 
-    # print('Result:')
-    # print(json.dumps(result))
     return json.dumps(result)
 
 
@@ -93,7 +86,6 @@ def parameters():
             raise ValueError('No value provided for "webserviceName"')
 
         # get the list of webservices and get the parameters of the one with the name provided in the query
-        # TODO refactor this, duplicate of /search endpoint
         response = requests.get(server_host + '/api/rest/service/list',
                                 auth=('admin', 'changeit'))
 
@@ -118,8 +110,6 @@ def get_type(value):
         return 'string'
 
 # converts data from RM wevservice (a single target) to table format
-
-
 def convert_to_table(json_data):
     columns = []
     rows = []
