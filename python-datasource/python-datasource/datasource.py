@@ -13,9 +13,11 @@ CORS(app)
 
 weather_api_host = 'http://weather-api:7000'
 
+
 @app.route('/')
 def test_datasource():
     return "Test success"
+
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -34,19 +36,12 @@ def annotations():
         ]
     )
 
+
 @app.route('/query', methods=['POST'])
 def query():
-    # print("ALL TIME RECORDS")
-    # print(get_all_time_records())
-    # print("DB DATA")
-    # print(read_data_from_db())
-    # print("TABLE")
-    # create_table_data()
-    # print("QUERY")
     table_data = create_table_data()
-    # print(table_data)
     return json.dumps(table_data)
-    
+
 
 def get_all_time_records():
     response = requests.get(weather_api_host + '/all')
@@ -61,13 +56,13 @@ def create_table_data():
     delta = 2
 
     table = {
-    'columns': [
-        {'text': 'Month', 'type': 'string'},
-        {'text': 'Close Maxs', 'type': 'number'},
-        {'text': 'Close Mins', 'type': 'number'}
-    ],
-    'rows': [],
-    'type': 'table'
+        'columns': [
+            {'text': 'Month', 'type': 'string'},
+            {'text': 'Close Maxs', 'type': 'number'},
+            {'text': 'Close Mins', 'type': 'number'}
+        ],
+        'rows': [],
+        'type': 'table'
     }
 
     table_rows_dict = OrderedDict()
@@ -102,14 +97,12 @@ def create_table_data():
             if daily_min_temp < alltime_min_temp + delta:
                 table_row[2] = 1
             table_rows_dict[key] = table_row
-    
+
     for row_key in table_rows_dict:
         table['rows'].append(table_rows_dict[row_key])
-    # print(table)
 
     # need the list because of JSON datasource format
     return [table]
-        
 
 
 # https://pynative.com/python-mysql-select-query-to-fetch-data/
@@ -123,15 +116,10 @@ def read_data_from_db():
             auth_plugin='mysql_native_password'
         )
 
-        # time.sleep(2)
-
         sql_select_records_query = "SELECT * FROM newyork"
         cursor = connection.cursor()
         cursor.execute(sql_select_records_query)
         records = cursor.fetchall()
-
-        # print(type(records))
-        # print(records)
 
         data = []
 
@@ -143,12 +131,6 @@ def read_data_from_db():
                 'min_temp': float(row[3])
             }
             data.append(record)
-        
-        # print(data)
-        # print(type(data[0]['date']))
-        # print(type(int(data[0]['day_of_the_year'])))
-        # print(type(data[0]['max_temp']))
-        # print(type(data[0]['min_temp']))
 
         return data
 
@@ -157,9 +139,7 @@ def read_data_from_db():
     finally:
         if (connection.is_connected()):
             connection.close()
-            #cursor.close()
             print("MySQL connection closed")
-
 
 
 if __name__ == '__main__':
