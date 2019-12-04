@@ -2,35 +2,68 @@
 
 In this chapter, the previously described components are explained in further details, focusing on how they are implemented, what technologies were used and in addition, some extra fine tunes are presented which demonstrate the extendability of the open source Grafana.
 
+The source code for the thesis project is available and can be viewed in my GitHub repository.
+
 \begin{center}
-	\begin{itemize}
-		\item docker-compose
-		\item communication flow between components
-		\item interfaces API endpoints
-		\item data formats
-	\end{itemize}
-	
+	 ==TODO reference REPO==
 \end{center}
 
 \section{Architecture}
 
+%---
 \subsection{Docker}
-\subsection{Docker Compose}
+%---
+% https://www.docker.com/resources/what-container
 
-In order to be able to set up an architecture as the one described in section \ref{arch-design}, I used Docker Compose. It showed numerous advantages during the project. For example with Docker Compose it is easy to set up separate components, services, which operate in the same network, thus they can connect to each other quite simply from a user's perspective. Also, if all the necessary files are correctly version controlled, it is possible with Docker Compose to simply set up the whole architecture, no matter where we are, provided there is a running Docker Engine ton the machine.
+Throughout this project, I run the different components using Docker containers. For this reason, it seems appropriate to briefly introduce this technology.
 
-The \texttt{docker-compose.yml} for the project can be found in the \texttt{Git} repository of the thesis project. It defines all the needed components with configuration.
+A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
+
+Container images become containers at runtime and in the case of Docker containers - images become containers when they run on Docker Engine. Available for both Linux and Windows-based applications, containerized software will always run the same, regardless of the infrastructure. Containers isolate software from its environment and ensure that it works uniformly despite differences for instance between development and staging.
 
 \begin{center}
-	--- TODO insert part of docker.compose.yml
+	=== TODO insert reference of Docker
 \end{center}
 
-\section{Gateway}
 
-It was established in the design section \ref{proxy-design}, that the main responsibility of the Gateway component is to translate between the JSON data formats used by the RapidMiner Server and the Grafana SimpleJSON data source plugin. For this task,... 
+\subsection{Docker Compose}
+
+In order to be able to set up an architecture as the one described in section \ref{arch-design}, I used Docker Compose.
+
+% https://docs.docker.com/compose/
+
+Docker Compose is a tool for defining and running multi-container Docker applications. With Compose, we can use a YAML file to configure application’s services. Then, with a single command, we can create and start all the services from the configuration.
+
+The \texttt{docker-compose.yml} file for the project can be found in the GitHub repository of the thesis project. It defines all the necessary components with the appropriate configuration.
+
+\begin{minipage}{\linewidth}
+	\begin{lstlisting}[language=docker-compose-proxy, caption={Extract of the \texttt{docker-compose.yml}}, label={lst:proxy-docker-compose}]]	
+	  proxy:
+	    build: ./proxy
+	    ports:
+	    - 5000:5000
+	    restart: always
+	    volumes: 
+	    - "./proxy/proxy.py:/code/proxy.py"
+	\end{lstlisting}
+\end{minipage}
 
 \begin{center}
-	=== TODO research XSLT for JSON
+	\begin{itemize}
+		\item === TODO insert reference of docker compose
+	\end{itemize}
+\end{center}
+
+\section{Gateway} \label{proxy-impl}
+
+It was established in the design section \ref{proxy-design}, that the main responsibility of the Gateway component is to translate between the JSON data formats used by the RapidMiner Server and the Grafana SimpleJSON data source plugin.
+
+For this task, I had two possibilities. One is to use tool which to define the transformation in a declarative way. For example, I could use XLST, which is able to convert a JSON format into another. The other option was to implement an own algorithm which handles the transformation of the data format. I chose the latter alternative as the structure of the data was not exceptionally complex, thus it was quite simple to implement a function for this job . The other reason was that this way, I did not have to integrate another tool and call it every time to transform a simple JSON object, which in general reduced the number of possible sources for errors.
+
+% https://www.xml.com/articles/2017/02/14/why-you-should-be-using-xslt-30/
+
+\begin{center}
+	=== TODO reference XSLT tutorial
 \end{center}
 
 As it was described in section \ref{proxy-design}, the Gateway component must be able to handle requests from Grafana, as well as be able to forward these requests to the RapidMiner Server after the format translation. 
@@ -47,6 +80,7 @@ As it was explained in section \ref{proxy-design}, the Gateway component has to 
 
 With the \texttt{requests} package, it is quite convenient to implement these endpoints, since we only have to declare a decorated function for each endpoint, as it is shown in the code snippet \ref{lst:proxy-test-conn}.
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=Python, caption={Test the connection to the server}, label={lst:proxy-test-conn}]]
 	@app.route('/')
 	def check_connection():
@@ -55,7 +89,7 @@ With the \texttt{requests} package, it is quite convenient to implement these en
 	      return 'Server connection OK'
 	  return "Server connection error"
 \end{lstlisting}
-
+\end{minipage}
 %---
 \subsubsection{Searching the targets}
 %---
@@ -85,34 +119,146 @@ To get the available parameters of the exposed web services, the Gateway compone
 
 The reason for that these two features are separated, even though they use the same endpoint, is that concerning the Gateway, the functionality of exposing the available targets is required by the SimpleJSON by default while querying the parameters is an extra feature. This means that SimpleJSON expects a specific data format, which only includes the names of the targets. Thus returning also the parameters with the targets would break the compatibility between the Gateway component and the SimpleJSON data source plugin.
 
+Acquiring the parameters is implemented the following way, as the code snippet \ref{lst:proxy-params}.
+
 \begin{minipage}{\linewidth}
 	\begin{lstlisting}[language=Python, caption={Get the parameters for a given web service}, label={lst:proxy-params}]]
 	@app.route('/parameters', methods=['GET'])
 	def parameters():
-	if request.args:
-	args = request.args
-	webserviceName = args.get('webserviceName')
-	if webserviceName == None:
-	raise ValueError('No value provided for "webserviceName"')
-	# get the list of webservices and get the parameters of the one with the name provided in the query
-	response = requests.get(server_host + '/api/rest/service/list',
-	auth=('admin', 'changeit'))
-	webservices_json_list = json.loads(response.text)
-	webservice_params = []
-	for webservice in webservices_json_list:
-	if webservice['name'] == webserviceName:
-	webservice_params = webservice['parameters']
-	break
-	return json.dumps(webservice_params)
-	return 'Please provide a query parameter in the URL'
+	  if request.args:
+	    args = request.args
+	    webserviceName = args.get('webserviceName')
+	    if webserviceName == None:
+	      raise ValueError('No value provided for "webserviceName"')
+	    # get the list of webservices and get the parameters of the one with the name provided in the query
+	    response = requests.get(server_host + '/api/rest/service/list',
+	    auth=('admin', 'changeit'))
+	    webservices_json_list = json.loads(response.text)
+	    webservice_params = []
+	    for webservice in webservices_json_list:
+	      if webservice['name'] == webserviceName:
+	        webservice_params = webservice['parameters']
+	        break
+	    return json.dumps(webservice_params)
+	  return 'Please provide a query parameter in the URL'
 	\end{lstlisting}
 \end{minipage}
 
+%---
+\subsubsection{Querying the data}
+%---
+When Grafana sends a request to the Gateway component, it specifies the data format, in which it excepts to receive the results. This can be a time series format or a table format which can be seen in the code snippets below.
 
+\begin{minipage}[b]{0.45\linewidth}
+	\centering
+	\begin{lstlisting}[language=Python, frame=single, numbers=left, mathescape,%
+	caption={Time series format}, label=lst:timeseries-format]
+	[
+	 {
+	    "target":"weather_retrieve_process?city=Vancouver",
+	    "datapoints":[
+	      [284.63, 1573882025382],
+	      [284.62904131, 1573885625382],
+	      [284.626997923, 1573889225382],
+	      [284.624954535, 1573892890284],
+	      [284.622911147, 1573896490284]
+	    ]
+	 }
+	]
+	\end{lstlisting}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.45\linewidth}
+	\centering
+	\begin{lstlisting}[language=Python, frame=single, mathescape,%
+	caption={Table format}, label=lst:table-format]
+	[
+	 {
+	   "columns":[
+	     {"text":"Month","type":"string"},
+	     {"text":"Maxs","type":"number"}
+	   ],
+	   "rows":[
+	     ['2012 October', 1],
+	     ['2012 November', 1]
+	   ],
+	   "type":"table"
+	 }
+	]
+	\end{lstlisting}
+\end{minipage}
 
-\section{Pros}
+The time series response format contains the target name, which in this case is the name of the RapidMiner web service with an additional parameter attached and the data points. The first value in a data point is the value, the second is the timestamp in UNIX Epoch time in milliseconds.
 
-\section{Cons}
+The table format describes the name and the type of each column in the \texttt{columns} array. The actual data is in the \texttt{rows} array, every row is defined with a list of values in an order that is correspondent to that of the columns.
+
+%---
+\section{Python data source}
+%---
+
+As it was mentioned in section \ref{case-study-python-source} and section \ref{proxy-design}, the Python data source communicates with a database and a separate API service in order to prepare the requested data for Grafana.
+
+The Python data source is also connected to Grafana, so it needs to expose the endpoints that are needed by the SimpleJSON data source plugin (discussed in section \ref{simplejson-design}), which are implemented similarly as in the Gateway.
+
+The differing ability of the Python data source compared to the Gateway component, that it can connect to a MySQL database and an external API to get the requested data by Grafana. To be able to implement these features, I used the \texttt{requests} and the \texttt{mysql.connector} packages along with the \texttt{flask} library, which is needed to be able HTTP requests (as in the case of the Gateway component).
+
+% # https://pynative.com/python-mysql-select-query-to-fetch-data/
+
+Reading the data from the MySQL database is implemented as the following pseudo code shows (\ref{lst:mysql-conn}).
+
+\begin{minipage}[b]{\linewidth}
+	\centering
+	\begin{lstlisting}[language=Python, frame=single, mathescape,%
+	caption={Reading data from MySQL}, label=lst:mysql-conn]
+	def read_data_from_db():
+	  try:
+	    connection = mysql.connector.connect(
+	      <credentials>
+	    )
+	    sql_select_records_query = "SELECT * FROM newyork"
+	    cursor = connection.cursor()
+	    cursor.execute(sql_select_records_query)
+	    records = cursor.fetchall()
+	    data = []
+	    for row in records:
+	      record = {
+	        <parse data from a record>
+	      }
+	      data.append(record)
+	    return data
+	  except Error as error:
+	    print("Error reading data from MySQL ", error)
+	  finally:
+	    <close the connection to the database>
+	\end{lstlisting}
+\end{minipage}
+
+Getting the recorded information from the 'external' Weather API is much simpler thanks to the level of abstraction the \texttt{requests} package provides. (\ref{lst:weather-conn})
+
+\begin{minipage}[b]{\linewidth}
+	\centering
+	\begin{lstlisting}[language=Python, frame=single, mathescape,%
+	caption={Reading data from the Weather API}, label=lst:weather-conn]
+	def get_all_time_records():
+	  response = requests.get(weather_api_host + '/all')
+	  json_data = json.loads(response.text)
+	  return json_data
+	\end{lstlisting}
+\end{minipage}
+
+After the Python data source possesses the data both from the MySQL and the Weather API, it aggregates the collected information (\texttt{create\char`_table\char`_data()} function) according to the sample business-logic already discussed in section \ref{case-study-python-source} and then exposes it on its \texttt{/query} endpoint. (\ref{lst:python-query})
+
+\begin{minipage}[b]{\linewidth}
+	\centering
+	\begin{lstlisting}[language=Python, frame=single, mathescape,%
+	caption={Exposing the prepared data}, label=lst:python-query]
+	@app.route('/query', methods=['POST'])
+	def query():
+	  table_data = create_table_data()
+	  return json.dumps(table_data)
+	\end{lstlisting}
+\end{minipage}
+
 
 \section{Additional fine tunes}
 
