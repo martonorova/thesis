@@ -91,5 +91,19 @@
 	tabsize=2
 }
 
+\lstdefinelanguage{docker-compose-proxy}{
+	keywords={version, volumes, services, proxy, restart, build, ports},
+	keywordstyle=\color{blue}\bfseries,
+	%keywords=[2]{image, environment, ports, container_name, ports, links, build},
+	keywordstyle=[2]\color{olive}\bfseries,
+	identifierstyle=\color{black},
+	sensitive=false,
+	comment=[l]{\#},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+
 
 %---
