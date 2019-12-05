@@ -7,7 +7,7 @@
 % https://www.talend.com/resources/data-source/
 % https://www.techopedia.com/definition/30323/data-source
 
-A data source is what its name suggests, a location where the data that is being used originates from. A data source can be for example a database or a dynamic stream of data service such as constantly collecting the measured temperature in a room. In the context of this thesis project, we focus on database-like data sources, because in general, a visualization tool needs to be able to read the data to be displayed from a backend storage.
+A data source is what its name suggests, a location where the data that is being used originates from. A data source can be for example a database or a dynamic stream of data service such as constantly collecting the measured temperature in a room. In the context of this thesis project, we focus on database-like data sources, because in general, a visualization tool needs to be able to read the data to be displayed from a backend storage. \cite{talend-datasource} \cite{techopedia-datasource}
 
 Concerning the types of databases, there are different categories, each with varying features and purposes. In the following sections, I briefly introduce some of the most used types of databases.
 
@@ -16,7 +16,7 @@ Concerning the types of databases, there are different categories, each with var
 %---
 
 % https://www.oracle.com/database/what-is-a-relational-database/
-Probably the most popular type of databases is the relational database. It stores data points that are related to one another. Relational databases are based on a relational model, representing the data in tables. They are widely utilized in cases, when related data points need to be stored and managed in a secure, rules-based, consistent way.
+Probably the most popular type of databases is the relational database. It stores data points that are related to one another. Relational databases are based on a relational model, representing the data in tables. They are widely utilized in cases, when related data points need to be stored and managed in a secure, rules-based, consistent way. \cite{relational-database-oracle}
 
 %---
 \section{Time series database}
@@ -24,7 +24,7 @@ Probably the most popular type of databases is the relational database. It store
 
 %https://www.influxdata.com/time-series-database/
 
-A time series database is optimized for storing time-stamped or time series data. Time series data are measurements that are tracked and aggregated over time. This could be metrics about servers, application performance, network data, etc. A time series database possesses enhanced capabilities to handle the measurement of change over time compared to other types of databases.
+A time series database is optimized for storing time-stamped or time series data. Time series data are measurements that are tracked and aggregated over time. This could be metrics about servers, application performance, network data, etc. A time series database possesses enhanced capabilities to handle the measurement of change over time compared to other types of databases. \cite{timeseries-database-influxdata}
 
 %---
 \section{Key-Value database}
@@ -32,7 +32,7 @@ A time series database is optimized for storing time-stamped or time series data
 
 % https://aws.amazon.com/nosql/key-value/
 
-A key-value database is type of nonrelational database that uses a simple key-value method to store data. The data is stored as a collection of key-value pairs in which the key fulfills the role of a unique identifier. Both the keys and the values can have any type, simple objects, like number or string or even complex compound objects. This means that the schema of the data is defined per item, instead of on a collection or table level, like in the case of relational databases. Key-value databases are mostly utilized for cache management or storing information in session-oriented applications.
+A key-value database is type of nonrelational database that uses a simple key-value method to store data. The data is stored as a collection of key-value pairs in which the key fulfills the role of a unique identifier. Both the keys and the values can have any type, simple objects, like number or string or even complex compound objects. This means that the schema of the data is defined per item, instead of on a collection or table level, like in the case of relational databases. Key-value databases are mostly utilized for cache management or storing information in session-oriented applications. \cite{keyvalue-database-aws}
 
 %---
 \section{Document database}
@@ -40,7 +40,7 @@ A key-value database is type of nonrelational database that uses a simple key-va
 
 % https://aws.amazon.com/nosql/document/
 
-Document databases are another type of nonrelational database that is designed to store and query the recorded information as flexible, semistructured JSON-like documents. They make it easier for developers to handle data in the database by using the same document-model format they use in their application code. Document databases allow flexible indexing and powerful ad hoc queries.
+Document databases are another type of nonrelational database that is designed to store and query the recorded information as flexible, semistructured JSON-like documents. They make it easier for developers to handle data in the database by using the same document-model format they use in their application code. Document databases allow flexible indexing and powerful ad hoc queries. \cite{document-database-aws}
 
 %\begin{itemize}
 %	\item data sources and their features, use-cases, pros/cons?
@@ -69,14 +69,14 @@ Altough Grafana has got plenty of useful feature, only those relevant to the sco
 %https://grafana.com/docs/guides/basic_concepts/#data-source
 \subsection{Data Source}
 
-Grafana supports many different storage backends (Data Source). Each Data Source has a specific Query Editor (see later) that is customized for the features and capabilities that the particular Data Source exposes. Of course, this leads to the fact that the query language and capacity of each Data Source are obviously very different.
+Grafana supports many different storage backends (Data Source). Each Data Source has a specific Query Editor (see later in section \ref*{query-editor}) that is customized for the features and capabilities that the particular Data Source exposes. Of course, this leads to the fact that the query language and capacity of each Data Source are obviously very different. \cite{grafana-datasource}
 
 Grafana mainly favors time series data (e.g. from Prometheus or InfluxDB), but it can work with other types of data source (e.g. relational databases (MySQL, PostgreSQL, MSSQL), logging and document databases (Loki, Elasticsearch)).
 
 % https://grafana.com/docs/guides/basic_concepts/#panel
 \subsection{Panel}
 
-The Panel is the basic visualization building block in Grafana. Each Panel provides a so called Query Editor (dependent on the Data Source selected in the panel) that allows the user to create data source specific queries (e.g. an SQL query for a MySQL data source) in order to extract the desired metrics as precisely as possible.
+The Panel is the basic visualization building block in Grafana. Each Panel provides a so called Query Editor (dependent on the Data Source selected in the panel) that allows the user to create data source specific queries (e.g. an SQL query for a MySQL data source) in order to extract the desired metrics as precisely as possible. \cite{grafana-panel}
 
 There are multiple built-in Panel types available in Grafana, however, custom panels made by the open source community are also accessible. Probably the most widely used Panel types are the Graph, Table, Singlestat and Gauge. An example of the Graph Panel can be viewed in Figure \ref{fig:graph-panel}.
 
@@ -87,9 +87,10 @@ There are multiple built-in Panel types available in Grafana, however, custom pa
 	\label{fig:graph-panel}
 \end{figure}
 
-\subsection{Query Editor}
+%https://grafana.com/docs/grafana/latest/guides/basic_concepts/#query-editor
+\subsection{Query Editor}\label{query-editor}
 
-The Query Editor exposes the capabilities of the Data Source and allows the user to query the metrics that it contains. The queries created in the Query Editor of a panel determine what data will be displayed on the panel. An example Query Editor is shown in Figure \ref{fig:query-editor}.
+The Query Editor exposes the capabilities of the Data Source and allows the user to query the metrics that it contains. The queries created in the Query Editor of a panel determine what data will be displayed on the panel. \cite{grafana-queryeditor} An example Query Editor is shown in Figure \ref{fig:query-editor}.
 
 \begin{figure}[H]
 	\centering
@@ -101,7 +102,8 @@ The Query Editor exposes the capabilities of the Data Source and allows the user
 %---
 \subsection{Dashboard}
 %---
-The Dashboard is where all the previously mentioned building blocks come together. Dashboards can be thought of as an organized set of Panels.
+% https://grafana.com/docs/grafana/latest/guides/basic_concepts/#dashboard
+The Dashboard is where all the previously mentioned building blocks come together. Dashboards can be thought of as an organized set of Panels. \cite{grafana-dashboard}
 
 We can use the Dashboard to visualize different metrics in one, easily manageable place. This is quite useful, when many aspects must be taken into account in order to be able to thoroughly understand our currently inspected data set. An example Dashboard about a Kubernetes cluster can be viewed in Figure \ref{fig:dashboard}.
 
@@ -123,7 +125,7 @@ We can use the Dashboard to visualize different metrics in one, easily manageabl
 When working with and visualizing massive amount of data is a major part of one's profession, it can be quite convenient if the tools can provide the ability to allow some user-interaction. Meaning that the user do not have to work with static diagrams or rewrite complex configurations so that he or she is capable of further analyzing the collected data.
 
 % retelabor2 vizualis adatelemzes (http://docs.inf.mit.bme.hu/remo-jegyzet/vizualis-adatelemzes-konyvfejezet.pdf)
-Commonly available interactivity options can be the followings:
+Commonly available interactivity options can be the followings \cite{visual-analysis}:
 \begin{itemize}
 	\item \emph{statistic indicators} - easily accessible statistic information (e.g. average value, spread-diagram) about individual objects shown on the diagram (this is usually achieved by mouse-hovering)
 	\item \emph{local interactions} - changing the outlook of a diagram without affecting other displayed objects (e.g. reordering the bars on a bar-chart, rescaling the axis on a graph or other diagram-specific modifications)
@@ -143,7 +145,7 @@ While it is hard to find a tool, which possesses all the before-mentioned intera
 \subsubsection{Time Range Controls}
 %---
 
-Grafana provides numerous ways to interactively manage the time ranges of the data being visualized.
+Grafana provides numerous ways to interactively manage the time ranges of the data being visualized. \cite{grafana-time-range-controls}
 
 On the Dashboard-level, the 'Current time range' selector can be used to change the dashboard time. Doing this refreshes the whole dashboard with each panel on it. Those panels, which display time-dependent information, will only show data-points which timestamps are in the newly set time range.
 
@@ -165,19 +167,19 @@ Variables in Grafana allow for more interactive and dynamic dashboards. We can u
 
 Their role is similar to that of 'conventional' variables in programming languages. Instead of hard-coding things into the program, we can use them to create algorithms, that operate on a more abstract level, resulting in more effortlessly maintainable softwares.
 
-In Grafana, we can use the variables to write generalized metric queries. For example, if we have multiple servers and we have metric data from all of them, we could store the name or address of the servers in a variable, rather than defining numerous queries, which only differ in the server name. Variables are shown as dropdown select boxes at the top of the dashboard. These dropdowns make it easy to change the value of each available variable, thus to adjust the data being displayed in the dashboard. An example of that can bee seen in Figure \ref{fig:variable-dropdown}.
+In Grafana, we can use the variables to write generalized metric queries. For example, if we have multiple servers and we have metric data from all of them, we could store the name or address of the servers in a variable, rather than defining numerous queries, which only differ in the server name. Variables are shown as dropdown select boxes at the top of the dashboard. These dropdowns make it easy to change the value of each available variable, thus to adjust the data being displayed in the dashboard.\cite{grafana-variables} An example of that can bee seen in Figure \ref{fig:variable-dropdown}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=130mm, keepaspectratio]{figures/variable-dropdown.png}
-	\caption{Variable dropdown https://grafana.com/static/img/docs/v50/variables\char`_dashboard.png}
+	\caption{Variable dropdown \cite{grafana-variables-dashboard-image}}
 	\label{fig:variable-dropdown}
 \end{figure}
 
 % https://grafana.com/static/img/docs/v50/variables_dashboard.png
 
 % https://grafana.com/docs/reference/templating/#variable-types
-There are different types of variable that can be used to make dashboards more dynamic.
+There are different types of variable that can be used to make dashboards more dynamic.\cite{grafana-variables-types}
 \begin{itemize}
 	\item \emph{Query} - This variable type allows for writing a data source query that usually returns a list of metric names. For example, a query that returns a list of server names, sensor ids, or data centers.
 	\item \emph{Interval} - This variable can represent time spans. We can use them, when we need to aggregate data-points by time or date.
@@ -202,12 +204,11 @@ Statistic indicators were already mentioned above, where we discussed interactiv
 \end{figure}
 
 % https://grafana.com/docs/features/panels/graph/#data-link
-% https://grafana.com/blog/2019/08/06/grafana-v6.3-released/#data-links
 %---
 \subsubsection{Data links}
 %---
 
-Data links provide a way to add dynamic links to the visualization. These links can link to either other dashboards or to an external URL. when using data links, additional built-in variables become available that enable creating dynamic links.
+Data links provide a way to add dynamic links to the visualization. These links can link to either other dashboards or to an external URL. When using data links, additional built-in variables become available that enable creating dynamic links.\cite{grafana-graph-datalink}
 
 These variables are:
 \begin{itemize}
@@ -222,8 +223,6 @@ These variables are:
 %---
 
 As Grafana is a fully open source project, it is possible for the community, to develop custom objects in Grafana or to extend built-in ones. This way, it is achievable to create custom interactivity features according to the needs of the user.
-
-As a part of my thesis project, I successfully extended the built-in Graph Panel with some time-dependency related interactivity that is explained in detail in section ......... .
 
 
 %\begin{itemize}
