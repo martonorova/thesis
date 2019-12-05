@@ -1,25 +1,52 @@
 \chapter{Background}
 
 %---
-\section{Datasource}
+\section{Data sources}
 %---
 
-\begin{itemize}
-	\item data formats
-	\begin{itemize}
-		\item JSON
-		\item XML
-		\item other??
-	\end{itemize}
-	\item data sources and their features, use-cases, pros/cons?
-	\begin{itemize}
-		\item relational db
-		\item timeseries
-		\item key-value
-		\item document
-	\end{itemize}
-	\item with examples!
-\end{itemize}
+% https://www.talend.com/resources/data-source/
+% https://www.techopedia.com/definition/30323/data-source
+
+A data source is what its name suggests, a location where the data that is being used originates from. A data source can be for example a database or a dynamic stream of data service such as constantly collecting the measured temperature in a room. In the context of this thesis project, we focus on database-like data sources, because in general, a visualization tool needs to be able to read the data to be displayed from a backend storage.
+
+Concerning the types of databases, there are different categories, each with varying features and purposes. In the following sections, I briefly introduce some of the most used types of databases.
+
+%---
+\section{Relational database}
+%---
+
+% https://www.oracle.com/database/what-is-a-relational-database/
+Probably the most popular type of databases is the relational database. It stores data points that are related to one another. Relational databases are based on a relational model, representing the data in tables. They are widely utilized in cases, when related data points need to be stored and managed in a secure, rules-based, consistent way.
+
+%---
+\section{Time series database}
+%---
+
+%https://www.influxdata.com/time-series-database/
+
+%---
+\section{Key-Value database}
+%---
+
+% https://aws.amazon.com/nosql/key-value/
+
+%---
+\section{Document database}
+%---
+
+% https://aws.amazon.com/nosql/document/
+
+
+%\begin{itemize}
+%	\item data sources and their features, use-cases, pros/cons?
+%	\begin{itemize}
+%		\item relational db
+%		\item timeseries
+%		\item key-value
+%		\item document
+%	\end{itemize}
+%	\item with examples!
+%\end{itemize}
 
 
 %--
@@ -46,30 +73,44 @@ Grafana mainly favors time series data (e.g. from Prometheus or InfluxDB), but i
 
 The Panel is the basic visualization building block in Grafana. Each Panel provides a so called Query Editor (dependent on the Data Source selected in the panel) that allows the user to create data source specific queries (e.g. an SQL query for a MySQL data source) in order to extract the desired metrics as precisely as possible.
 
-There are multiple built-in Panel types available in Grafana, however, custom panels made by the open source community are also accessible. Probably the most widely used Panel types are the Graph, Table, Singlestat and Gauge.
+There are multiple built-in Panel types available in Grafana, however, custom panels made by the open source community are also accessible. Probably the most widely used Panel types are the Graph, Table, Singlestat and Gauge. An example of the Graph Panel can be viewed in Figure \ref{fig:graph-panel}.
 
-\begin{center}
-	--- TODO insert example picture ---
-\end{center}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=130mm, keepaspectratio]{figures/graph-panel-medium.png}
+	\caption{Graph Panel}
+	\label{fig:graph-panel}
+\end{figure}
 
 \subsection{Query Editor}
 
-The Query Editor exposes the capabilities of the Data Source and allows the user to query the metrics that it contains. The queries created in the Query Editor of a panel determine what data will be displayed on the panel.
+The Query Editor exposes the capabilities of the Data Source and allows the user to query the metrics that it contains. The queries created in the Query Editor of a panel determine what data will be displayed on the panel. An example Query Editor is shown in Figure \ref{fig:query-editor}.
 
-\begin{center}
-	--- TODO insert example picture
-\end{center}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=130mm, keepaspectratio]{figures/query-editor.png}
+	\caption{Query Editor}
+	\label{fig:query-editor}
+\end{figure}
 
 %---
 \subsection{Dashboard}
 %---
 The Dashboard is where all the previously mentioned building blocks come together. Dashboards can be thought of as an organized set of Panels.
 
-We can use the Dashboard to visualize different metrics in one, easily manageable place. This is quite useful, when many aspects must be taken into account in order to be able to thoroughly understand our currently inspected data set.
+We can use the Dashboard to visualize different metrics in one, easily manageable place. This is quite useful, when many aspects must be taken into account in order to be able to thoroughly understand our currently inspected data set. An example Dashboard about a Kubernetes cluster can be viewed in Figure \ref{fig:dashboard}.
 
-\begin{center}
-	--- TODO insert example picture
-\end{center}
+%\begin{center}
+%	--- TODO insert reference for img
+%	% https://grafana.com/grafana/dashboards/8670
+%\end{center}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=130mm, keepaspectratio]{figures/dashboard-small.png}
+	\caption{Dashboard https://grafana.com/grafana/dashboards/8670}
+	\label{fig:dashboard}
+\end{figure}
 
 %---
 \subsection{Interactivity in general}
@@ -101,15 +142,14 @@ Grafana provides numerous ways to interactively manage the time ranges of the da
 
 On the Dashboard-level, the 'Current time range' selector can be used to change the dashboard time. Doing this refreshes the whole dashboard with each panel on it. Those panels, which display time-dependent information, will only show data-points which timestamps are in the newly set time range.
 
-\begin{center}
-	--- TODO insert example picture
-\end{center}
+If there is a Graph Panel on the dashboard, there is another possibility to change the Dashboard-level time range. We can select a time range on the Graph Panel with the cursor. This method is quite effective in case, when we would like to swiftly zoom into our data to review more refined details. An example for that feature is displayed in Figure \ref{fig:select-time}.
 
-If there is a Graph Panel on the dashboard, there is another possibility to change the Dashboard-level time range. We can select a time range on the Graph Panel with the cursor. This method is quite effective in case, when we would like to swiftly zoom into our data to review more refined details.
-
-\begin{center}
-	--- TODO insert example picture
-\end{center}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=130mm, keepaspectratio]{figures/select-time.png}
+	\caption{Zoom into the time range}
+	\label{fig:select-time}
+\end{figure}
 
 % https://grafana.com/docs/reference/templating/
 %---
@@ -120,11 +160,16 @@ Variables in Grafana allow for more interactive and dynamic dashboards. We can u
 
 Their role is similar to that of 'conventional' variables in programming languages. Instead of hard-coding things into the program, we can use them to create algorithms, that operate on a more abstract level, resulting in more effortlessly maintainable softwares.
 
-In Grafana, we can use the variables to write generalized metric queries. For example, if we have multiple servers and we have metric data from all of them, we could store the name or address of the servers in a variable, rather than defining numerous queries, which only differ in the server name. Variables are shown as dropdown select boxes at the top of the dashboard. These dropdowns make it easy to change the value of each available variable, thus to adjust the data being displayed in the dashboard.
+In Grafana, we can use the variables to write generalized metric queries. For example, if we have multiple servers and we have metric data from all of them, we could store the name or address of the servers in a variable, rather than defining numerous queries, which only differ in the server name. Variables are shown as dropdown select boxes at the top of the dashboard. These dropdowns make it easy to change the value of each available variable, thus to adjust the data being displayed in the dashboard. An example of that can bee seen in Figure \ref{fig:variable-dropdown}.
 
-\begin{center}
-	--- TODO insert example picture of variable dropdown
-\end{center}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=130mm, keepaspectratio]{figures/variable-dropdown.png}
+	\caption{Variable dropdown https://grafana.com/static/img/docs/v50/variables\char`_dashboard.png}
+	\label{fig:variable-dropdown}
+\end{figure}
+
+% https://grafana.com/static/img/docs/v50/variables_dashboard.png
 
 % https://grafana.com/docs/reference/templating/#variable-types
 There are different types of variable that can be used to make dashboards more dynamic.
@@ -142,11 +187,14 @@ There are different types of variable that can be used to make dashboards more d
 \subsubsection{Basic statistic values in legend}
 %---
 
-Statistic indicators were already mentioned above, where we discussed interactivity in general. In Grafana, we can display some basic statistic values (minimum, maximum, average, total) in the Graph Panel.
+Statistic indicators were already mentioned above, where we discussed interactivity in general. In Grafana, we can display some basic statistic values (minimum, maximum, average, total) in the Graph Panel. An illustration of this feature is displayed in Figure \ref{fig:basic-statistics}.
 
-\begin{center}
-	--- TODO insert example picture of this legend values
-\end{center}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=130mm, keepaspectratio]{figures/basic-statistics.png}
+	\caption{Basic statistic values on Graph Panel}
+	\label{fig:basic-statistics}
+\end{figure}
 
 % https://grafana.com/docs/features/panels/graph/#data-link
 % https://grafana.com/blog/2019/08/06/grafana-v6.3-released/#data-links
