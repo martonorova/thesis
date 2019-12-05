@@ -24,11 +24,15 @@ Probably the most popular type of databases is the relational database. It store
 
 %https://www.influxdata.com/time-series-database/
 
+A time series database is optimized for storing time-stamped or time series data. Time series data are measurements that are tracked and aggregated over time. This could be metrics about servers, application performance, network data, etc. A time series database possesses enhanced capabilities to handle the measurement of change over time compared to other types of databases.
+
 %---
 \section{Key-Value database}
 %---
 
 % https://aws.amazon.com/nosql/key-value/
+
+A key-value database is type of nonrelational database that uses a simple key-value method to store data. The data is stored as a collection of key-value pairs in which the key fulfills the role of a unique identifier. Both the keys and the values can have any type, simple objects, like number or string or even complex compound objects. This means that the schema of the data is defined per item, instead of on a collection or table level, like in the case of relational databases. Key-value databases are mostly utilized for cache management or storing information in session-oriented applications.
 
 %---
 \section{Document database}
@@ -36,6 +40,7 @@ Probably the most popular type of databases is the relational database. It store
 
 % https://aws.amazon.com/nosql/document/
 
+Document databases are another type of nonrelational database that is designed to store and query the recorded information as flexible, semistructured JSON-like documents. They make it easier for developers to handle data in the database by using the same document-model format they use in their application code. Document databases allow flexible indexing and powerful ad hoc queries.
 
 %\begin{itemize}
 %	\item data sources and their features, use-cases, pros/cons?
@@ -281,24 +286,25 @@ RapidMiner Server offers a queue system for long-running jobs, which are execute
 % https://www.json.org/json-en.html
 % https://www.w3schools.com/whatis/whatis_json.asp
 
-%\begin{itemize}
-%	\item JavaScript Object Notation
-%	\item lightweight format for storing and transporting data (w3school)
-%	\item often used when data is sent from a server to a web page (w3school)
-%	\item "self-describing" and easy to understand
-%	\item syntax rules (need good source, currently w3school)
-%	\begin{itemize}
-%		\item data is in name/value pairs
-%		\item data is separated by commas
-%		\item curly braces hold objects
-%		\item square brackets hold arrays
-%	\end{itemize}
-%	\item example
-%\end{itemize}
-
 In this thesis project, I use the JSON data-interchange format to send information between the various components. For this reason, a brief description of the JSON format is appropriate in this chapter.
 
-The JSON stands for Javascript Object Notation and it is a lightweight format for storing and transporting data. We can say that JSON is easily read by both humans and machines, as a JSON object is merely an unordered set of name/value pairs. The name is a string and the values can be different types of data, for example a number, a string, an array or another object. These types are supported in all modern programming languages in one form or another, thus despite what its name suggest, the JSON format can be regarded as an universal data structure.
+The JSON stands for Javascript Object Notation and it is a lightweight format for storing and transporting data. We can say that JSON is easily read by both humans and machines, as a JSON object is merely an unordered set of name/value pairs. The name is a string and the values can be different types of data, for example a number, a string, an array or another object. These types are supported in all modern programming languages in one form or another, thus despite what its name suggest, the JSON format can be regarded as an universal data structure. An example JSON object can be seen in the code snippet Listing \ref{lst:json-example}.
+
+\begin{center}
+	\begin{minipage}{0.6\linewidth}
+		\begin{lstlisting}[language=Python, caption={Example JSON}, label={lst:json-example}]]
+		{
+		  "name": "Test",
+		  "age": 23,
+		  "car": {
+		    "type": "van"
+		  },
+		  "languages": ["english", "french"]
+		}
+		\end{lstlisting}
+	\end{minipage}
+\end{center}
+
 
 
 
