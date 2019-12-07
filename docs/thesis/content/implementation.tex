@@ -283,7 +283,7 @@ This means that the user does not have to be familiar with the exact name or amo
 \end{figure}
 
 %---
-\subsection{Dynamic bar chart in Grafana}
+\subsection{Dynamic bar chart in Grafana} \label{dynamic-barchart}
 %---
 % https://github.com/CorpGlory/grafana-graph-panel
 
@@ -296,10 +296,25 @@ However, I noticed, that when I change the time range of the Dashboard, these ba
 
 To solve this issue, as a part of my thesis project, I successfully extended the built-in Graph Panel, so it calculates the aggregated values only from the data points that are in the time interval of the dashboard. This feature enables a more interactive and valuable insight of the visualized data.
 
-To accomplish this, I used the source code of the built-in Graph Panel configured with the \texttt{webpack} module bundler which enabled the simple integration of this customized panel as a separate plugin for Grafana. https://github.com/CorpGlory/grafana-graph-panel
+To accomplish this, I used the source code of the built-in Graph Panel configured with the \texttt{webpack} module bundler which enabled the simple integration of this customized panel as a separate plugin for Grafana.
+
+https://github.com/CorpGlory/grafana-graph-panel
 
 %---
 \section{Grafana Dashboard}
 %---
 
-As a final, easy to demonstrate result of the integration task of this project, I created a Dashboard in Grafana to display the collected data from various sources.
+As a final, easy to demonstrate result of the integration task of this project, I created a Dashboard in Grafana to display the collected data from various sources that can be seen in Figure \ref{fig:dashboard-final}. As it was already expressed in chapter \ref{case-study}, I used a sample data set containing information about weather in different cities in order to be able to visualize the results of the created architecture.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth, keepaspectratio]{figures/final-dashboard.png}
+	\caption{Dashboard showing the results}
+	\label{fig:dashboard-final}
+\end{figure}
+
+The Graph Panel in the middle shows the same two time series data as the five bar-chart diagrams that display some basic statistical indices in a time-dependent manner as discussed before in section \ref{dynamic-barchart} introducing the dynamic bar-chart.
+
+All the visualized data on this Dashboard comes from the RapidMiner Server component through exposed web services, expect for the table in the top-left corner, which shows recorded information originating from the Python data source unit.
+
+On the top of the Dashboard, two templating variables can be seen, which determine the
