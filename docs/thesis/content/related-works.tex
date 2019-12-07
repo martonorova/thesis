@@ -1,14 +1,36 @@
 \chapter{Related works}
 
-the need for integrating data from different sources is not new
+%the need for integrating data from different sources is not new
+%
+%grafana data source plugins -> they integrate different kind of backends with grafana
+% these are not so good for bases for a custom data source plugin, as e
+%
+%before this project, there was no solution for integrating RapidMiner Server with Grafana
+%
 
-grafana data source plugins -> they integrate different kind of backends with grafana
 
-before this project, there was no solution for integrating RapidMiner Server with Grafana
+%---
+\section{RapidMiner and Grafana}
+%---
 
-GUI
+The need for retrieving and integrating data from various information sources is not new. Grafana was designed in a way to enable uncomplicated extendability capabilities through its plugin framework.
 
-interactive-piechart-panel (github/eastcirclek)
-see notebook
 
+% https://grafana.com/grafana/plugins?orderBy=weight&direction=asc&type=datasource
+
+Regarding the integration of RapidMiner Server with Grafana, there was no solution for this task before this thesis work.
+
+However, there are already multiple data source plugins available to install with Grafana. As it is an open source project, developers can inspect these plugins in order to help them during the creation of other custom plugins. Still, since each data source has its own special features and communication protocols, these data source plugins rather serve as a demonstration for the achievable capabilities aside from a sample implementation of the interfaces required by Grafana.
+
+%---
+\section{Interactive Grafana Panels}
+%---
+%GUI
+%
+%interactive-piechart-panel (github/eastcirclek)
+%see notebook
+
+Concerning the created dynamic bar-chart discussed in section \ref{dynamic-barchart}, there were already some implementations aiming at further extending the interactivity capabilities of a Grafana Dashboard.
+
+For example, an interactive pie chart plugin that has two main features. The pie chart panel can display aggregated values of multiple time series. When we click on a slice of the pie chart the corresponding time series is displayed in or removed from a list of Graph Panels. The other feature is that when we hover over a Graph Panel that displays an aggregated value of multiple series over time, we can inspect the proportion of each time series on a pie chart corresponding to given time defined by the position of the mouse-cursor.
 
