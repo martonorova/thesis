@@ -2,6 +2,10 @@
 
 In this chapter, some possibilities for future development are discussed concerning the implemented components of this thesis project.
 
+First of all, it must be mentioned that during this thesis project, writing optimal code for the various implementations was not priority, as the main focus of this work was the integration of different tools. Hence, a feasible enhancement could be to rewrite the custom parts and components with
+
+\section{Gateway}
+
 One possible development of the Gateway component could be to integrate it with the SimpleJSON data source plugin in order to create one tool to connect RapidMiner Server with Grafana. This would introduce several advantages compared to the current architectural setup.
 
 Merging the Gateway component with SimpleJSON would mean, that the data format translation between these units could happen directly in Grafana. Thus, the communication overhead of the system could be reduced, as there would not be an extra component on the path of the data to be collected.
@@ -11,8 +15,12 @@ Merging the Gateway component with SimpleJSON would mean, that the data format t
 
 Another advantage of having one component instead of two is in regard of packaging and distribution. As it was already stated, Grafana is an open source project, meaning it heavily relies on the contribution of the community. Grafana allows the development of custom Data Sources - and Panels also - that can be published on the Grafana plugin marketplace. With an integrated component it would be easier to accomplish to have a publicly available data source plugin specifically for RapidMiner Server. 
 
-\begin{center}
-	\begin{itemize}
-		publishing optimized dynamic barchart, extending it for histogram
-	\end{itemize}
-\end{center}
+%---
+\section{Dynamic Graph Panel}
+%---
+
+Concerning the time-dependent bar-chart visualization mode in the modified Graph Panel, there are also some alternatives to improve it in the future.
+
+Currently, the extended Graph Panel displays the series defined in its Query Editor according to the time interval of the Dashboard only, when its selected visualization mode is graph-diagram (Time mode) or bar-chart (Series mode). But there exists a third mode, called Histogram. The possible improvement of this Panel could be to modifiy the Histogram to be time-dependent too.
+
+Another potential enhancement would be to implement a feature that enables the possibility to switch between the time-dependent mode and the original static mode of calculating the basic statistical indices of the time series data. This would lead to the result that only one Graph Panel type would be needed, as right now, the user can choose between to original Graph Panel and the extended one, however, looking at their capabilities in general, they offer the same features.
