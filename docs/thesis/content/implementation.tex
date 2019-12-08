@@ -54,11 +54,11 @@ The \texttt{docker-compose.yml} file for the project can be found in the GitHub 
 	\end{itemize}
 \end{center}
 
-\section{Gateway} \label{proxy-impl}
+\section{Proxy (Gateway)} \label{proxy-impl}
 
 It was established in the design section \ref{proxy-design}, that the main responsibility of the Gateway component is to translate between the JSON data formats used by the RapidMiner Server and the Grafana SimpleJSON data source plugin.
 
-For this task, I had two possibilities. One is to use tool which to define the transformation in a declarative way. For example, I could use XLST, which is able to convert a JSON format into another. The other option was to implement an own algorithm which handles the transformation of the data format. I chose the latter alternative as the structure of the data was not exceptionally complex, thus it was quite simple to implement a function for this job . The other reason was that this way, I did not have to integrate another tool and call it every time to transform a simple JSON object, which in general reduced the number of possible sources for errors.
+For this task, I had two possibilities. One is to use a tool, which defines the transformation in a declarative way. For example, I could use XLST, which is able to convert a JSON format into another. The other option was to implement an own algorithm which handles the transformation of the data format. I chose the latter alternative as the structure of the data was not exceptionally complex, thus it was quite simple to implement a function for this job . The other reason was that this way, I did not have to integrate another tool and call it every time to transform a simple JSON object, which in general reduced the number of possible sources for errors.
 
 % https://www.xml.com/articles/2017/02/14/why-you-should-be-using-xslt-30/
 
@@ -117,9 +117,9 @@ def search():
 
 To get the available parameters of the exposed web services, the Gateway component uses the same endpoint of the RapidMiner Server (\texttt{/api/rest/service/list}), as for searching the targets.
 
-The reason for that these two features are separated, even though they use the same endpoint, is that concerning the Gateway, the functionality of exposing the available targets is required by the SimpleJSON by default while querying the parameters is an extra feature. This means that SimpleJSON expects a specific data format, which only includes the names of the targets. Thus returning also the parameters with the targets would break the compatibility between the Gateway component and the SimpleJSON data source plugin.
+The reason for that these two features are separated, even though they use the same endpoint, is that concerning the Gateway, the functionality of exposing the available targets is required by the SimpleJSON by default while querying the parameters is an extra feature. This means that SimpleJSON expects a specific data format, which only includes the names of the targets. Thus returning the parameters additionally with the targets would break the compatibility between the Gateway component and the SimpleJSON data source plugin.
 
-Acquiring the parameters is implemented the following way, as the code snippet \ref{lst:proxy-params}.
+Acquiring the parameters is implemented the following way, as in the code snippet \ref{lst:proxy-params}.
 
 \begin{minipage}{\linewidth}
 	\begin{lstlisting}[language=Python, caption={Get the parameters for a given web service}, label={lst:proxy-params}]]
@@ -188,7 +188,7 @@ When Grafana sends a request to the Gateway component, it specifies the data for
 	\end{lstlisting}
 \end{minipage}
 
-The time series response format contains the target name, which in this case is the name of the RapidMiner web service with an additional parameter attached and the data points. The first value in a data point is the value, the second is the timestamp in UNIX Epoch time in milliseconds.
+The time series response format contains the target name, which in this case is the name of the RapidMiner web service with an additional parameter attached to it and the data points. The first value in a data point is the actual value, the second is the timestamp in UNIX Epoch time in milliseconds.
 
 The table format describes the name and the type of each column in the \texttt{columns} array. The actual data is in the \texttt{rows} array, every row is defined with a list of values in an order that is correspondent to that of the columns.
 
@@ -200,7 +200,7 @@ As it was mentioned in section \ref{case-study-python-source} and section \ref{p
 
 The Python data source is also connected to Grafana, so it needs to expose the endpoints that are needed by the SimpleJSON data source plugin (discussed in section \ref{simplejson-design}), which are implemented similarly as in the Gateway.
 
-The differing ability of the Python data source compared to the Gateway component, that it can connect to a MySQL database and an external API to get the requested data by Grafana. To be able to implement these features, I used the \texttt{requests} and the \texttt{mysql.connector} packages along with the \texttt{flask} library, which is needed to be able HTTP requests (as in the case of the Gateway component).
+The differing ability of the Python data source compared to the Gateway  component is that it can connect to a MySQL database and an external API to get the requested data by Grafana. To be able to implement these features, I used the \texttt{requests} and the \texttt{mysql.connector} packages along with the \texttt{flask} library, which is needed to be able to send HTTP requests (as in the case of the Gateway component).
 
 % # https://pynative.com/python-mysql-select-query-to-fetch-data/
 
@@ -246,7 +246,7 @@ Getting the recorded information from the 'external' Weather API is much simpler
 	\end{lstlisting}
 \end{minipage}
 
-After the Python data source possesses the data both from the MySQL and the Weather API, it aggregates the collected information (\texttt{create\char`_table\char`_data()} function) according to the sample business-logic already discussed in section \ref{case-study-python-source} and then exposes it on its \texttt{/query} endpoint. (\ref{lst:python-query})
+After the Python data source possesses the data both from the MySQL database and the Weather API, it aggregates the collected information (\texttt{create\char`_table\char`_data()} function) according to the sample business-logic already discussed in section \ref{case-study-python-source} and then exposes it on its \texttt{/query} endpoint. (\ref{lst:python-query})
 
 \begin{minipage}[b]{\linewidth}
 	\centering
@@ -290,9 +290,9 @@ This means that the user does not have to be familiar with the exact name or amo
 In section \ref{grafana-time-range-controls}, it was already discussed, that it is possible to change the time interval of the whole Dashboard by selecting a time range on a Graph Panel.
 
 % https://grafana.com/docs/grafana/latest/features/panels/graph/
-Graph Panel offers other display possibilities as well apart from the graph diagram. It can visualize time series data with bar-charts and histogram.I focused on the bar-chart format, which groups the data by series and not time, so with this type of diagram, we can display aggregated information about the series. For example the total value, the average, the maximum or the count of the data points.
+The Graph Panel offers other display possibilities as well apart from the graph diagram. It can visualize time series data with bar-charts and histograms. I focused on the bar-chart format, which groups the data by series and not time, so with this type of diagram, we can display aggregated information about the series. For example the total value, the average, the maximum or the count of the data points.
 
-However, I noticed, that when I change the time range of the Dashboard, these basic statistical indices do not get refreshed based on the new time interval. They keep their original values that was calculated for the whole time series when Grafana received the information from one of its data sources. This phenomenon can be quite misleading in cases when we have multiple Graph Panels with the same querying settings, but with different visualization modes.
+However, I noticed, that when I change the time range of the Dashboard, these basic statistical indices do not get refreshed based on the new time interval. They keep their original values that were calculated for the whole time series when Grafana received the information from one of its data sources. This phenomenon can be quite misleading in cases when we have multiple Graph Panels with the same querying settings, but with different visualization modes.
 
 To solve this issue, as a part of my thesis project, I successfully extended the built-in Graph Panel, so it calculates the aggregated values only from the data points that are in the time interval of the dashboard. This feature enables a more interactive and valuable insight of the visualized data.
 
@@ -317,4 +317,4 @@ The Graph Panel in the middle shows the same two time series data as the five ba
 
 All the visualized data on this Dashboard comes from the RapidMiner Server component through exposed web services, expect for the table in the top-left corner, which shows recorded information originating from the Python data source unit.
 
-On the top of the Dashboard, two templating variables can be seen, which determine the
+On the top of the Dashboard, two templating variables can be seen, which determine the two cities that we use to filter the displayed data.

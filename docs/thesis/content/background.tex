@@ -115,12 +115,12 @@ We can use the Dashboard to visualize different metrics in one, easily manageabl
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=130mm, keepaspectratio]{figures/dashboard-small.png}
-	\caption{Dashboard https://grafana.com/grafana/dashboards/8670}
+	\caption{Dashboard \cite{grafana-dashboard-img}}
 	\label{fig:dashboard}
 \end{figure}
 
 %---
-\subsection{Interactivity in general}
+\subsection{Interactivity in general} \label{interactivity-general}
 %---
 When working with and visualizing massive amount of data is a major part of one's profession, it can be quite convenient if the tools can provide the ability to allow some user-interaction. Meaning that the user do not have to work with static diagrams or rewrite complex configurations so that he or she is capable of further analyzing the collected data.
 
@@ -130,14 +130,14 @@ Commonly available interactivity options can be the followings \cite{visual-anal
 	\item \emph{statistic indicators} - easily accessible statistic information (e.g. average value, spread-diagram) about individual objects shown on the diagram (this is usually achieved by mouse-hovering)
 	\item \emph{local interactions} - changing the outlook of a diagram without affecting other displayed objects (e.g. reordering the bars on a bar-chart, rescaling the axis on a graph or other diagram-specific modifications)
 	\item \emph{selection and linked highlighting} - when we have multiple diagrams displaying different views of the same data set, selecting a subset of the data on one diagram (e.g. a bar on a bar-chart) highlights that particular part of the data on another diagrama (e.g. a set of points on a scatter-plot)
-	\item \emph{linked analysis}- for example, selecting a subset of the data triggers a reactive analysis, creating a statistic model (regression, scatter-plot, spread-diagram) using that specific data set
+	\item \emph{linked analysis} - for example, selecting a subset of the data triggers a reactive analysis, creating a statistic model (regression, scatter-plot, spread-diagram) using that specific data set
 \end{itemize}
 
 %---
 \subsection{Interactivity in Grafana}
 %---
 
-While it is hard to find a tool, which possesses all the before-mentioned interactivity capabilities, Grafana provides certain features to enable efficient user-interaction for the good of solid understanding of the data.
+While it is hard to find a tool, which possesses all the before-mentioned interactivity capabilities in section \ref{interactivity-general}, Grafana supports certain features to enable efficient user-interaction for the purpose of solid understanding of the data.
 
 
 % https://grafana.com/docs/reference/timerange/
@@ -167,7 +167,7 @@ Variables in Grafana allow for more interactive and dynamic dashboards. We can u
 
 Their role is similar to that of 'conventional' variables in programming languages. Instead of hard-coding things into the program, we can use them to create algorithms, that operate on a more abstract level, resulting in more effortlessly maintainable softwares.
 
-In Grafana, we can use the variables to write generalized metric queries. For example, if we have multiple servers and we have metric data from all of them, we could store the name or address of the servers in a variable, rather than defining numerous queries, which only differ in the server name. Variables are shown as dropdown select boxes at the top of the dashboard. These dropdowns make it easy to change the value of each available variable, thus to adjust the data being displayed in the dashboard.\cite{grafana-variables} An example of that can bee seen in Figure \ref{fig:variable-dropdown}.
+In Grafana, we can use the variables to write more generalized metric queries. For example, if we have multiple servers and we collect metric data from all of them, we could store the names or addresses of the servers in a variable, rather than defining numerous queries, which only differ in the server name. Variables are shown as dropdown select boxes at the top of the dashboard. These dropdowns make it easy to change the value of each available variable, thus to adjust the data being displayed in the dashboard.\cite{grafana-variables} An example of that can bee seen in Figure \ref{fig:variable-dropdown}.
 
 \begin{figure}[H]
 	\centering
@@ -222,7 +222,7 @@ These variables are:
 \subsubsection{Creating custom interactivity}
 %---
 
-As Grafana is a fully open source project, it is possible for the community, to develop custom objects in Grafana or to extend built-in ones. This way, it is achievable to create custom interactivity features according to the needs of the user.
+As Grafana is a fully open source project, it is possible for the community, to develop unique objects in Grafana or to extend built-in ones. This way, it is achievable to create custom interactivity features according to the needs of the user.
 
 
 %\begin{itemize}
