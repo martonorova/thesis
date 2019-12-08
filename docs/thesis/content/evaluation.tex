@@ -1,7 +1,40 @@
 \chapter{Evaluation}
 
+In this chapter, I present an evaluation of the implemented components, introducing their advantages and disadvantages.
+
+%---
+\section{Proxy (Gateway)}
+%---
+
+%---
+\subsection{Advantages}
+%---
+
+The Gateway component I created successfully suits the declared requirements discussed in section \ref{goals} and \ref{proxy-design}.
+
+It implements the necessary interfaces in order to be able to communicate with Grafana (specifically, with the SimpleJSON data source plugin). It can also send requests to its backend storage, which is a RapidMiner Server exposing multiple web services.
+
+It conforms to the expectations of having the capabilities to transform between the data format that the RapidMiner Server uses to provide its results and the format that the SimpleJSON data source plugin requires so it can parse the requested data in order for it to be visualized in Grafana.
+
+Furthermore, the Gateway component introduced a new feature to the built-in SimpleJSON. It enabled the querying of  the available parameters for each web service, which made it possible to dynamically list them for the user, who know does not to be familiar with the details of customizing the queries. This ability enforces the many interactivity features of Grafana.
+
+Regarding the effectiveness of this component, there is also an operations related convenience that needs to be mentioned among its advantages. The created Gateway runs in a Docker container, which enables the simple portability of this tool, enhancing it usability in various types of environments.
+
+%---
+\subsection{Disadvantages} \label{proxy-cons}
+%---
+% production ready webserver
+% use of decarative data tranformation in case of more complex data structure in the future
+% in case of static processes, which result do not change over time, or just daily, cache the results, this needs improvement, more meta information from the RM side too ->>> querying the possible parameter values
+
+% to fill out the city variable, one has to know, which cities are in the dataset, --> enable querying meta information about the data set, e.g. the name of the columns
+
+% security credentials are hard-coded, improvements on this side, at least read them from an environment variable that is included in the container on startup
+
+Despite that the Proxy component conforms to all of the expressed requirements, there are also some disadvantages that present room for further improvements.
+
+First of all, the way it is currently realized is that it runs on a \texttt{flask} development server that enables quick progress during the implementation phase, however, it does not provide favorable performance in a production grade environment.
+
+Concerning the data format transformation, it was discussed in section \ref{proxy-impl} why I did not choose an existing tool that enables defining JSON transformations in a declarative way. Yet, in order to prepare for more complex data structures in the future, it would be profitable to integrate such a tool instead of further extending my own algorithm.
 
 
-\section{Pros}
-
-\section{Cons}
