@@ -2,26 +2,16 @@
 
 Nowadays, organizations must handle the challenging task of managing data coming from all kinds of sources with varying features including the data format, the frequency of new information records and the peculiarity of the different technologies they are built with. There are plenty of reasons why merging the data from various sources is so profitable, for example it enables the visualization of the collected data in one place in order to provide a clean, understandable way of overseeing the ongoing processes and results in a company.
 
-In this thesis, I first conducted a brief research on different types of data sources, introducing their distinctive characteristic and the main use-cases, where they proved to be the most effective.
+In this thesis, I first conducted a brief research on the different types of data sources, introducing their distinctive characteristics and the main use-cases, where they prove to be the most effective.
 
-Following that, I inspected the the features of Grafana, an industry standard open source visualization platform, focusing on its interactivity capabilities. I discovered several means in it that allows its user to make various interactions with the displayed data ranging from zooming into time intervals to template variables. In addition, I discovered the requirements for creating custom plugins for Grafana, which grant the power of implementing custom features.
+Following that, I inspected the features of Grafana, an industry standard open source visualization platform, focusing on its interactivity capabilities. I discovered several means in it that allows its user to make various interactions with the displayed data ranging from zooming into time intervals to template variables. In addition, I discovered the requirements for creating custom plugins for Grafana, which grant the power of implementing unique features.
 
-Afterwards, I designed and implemented an architecture with a gateway that allowed using RapidMiner Server as a data source for Grafana. I extended the built-in SimpleJSON data source plugin with the ability to query the available parameters of an exposed process in order to further increase the level of interactivity on the user side. I also created a component in Python that served as a data source for Grafana demonstrating the usability and the reasoning of a custom middleware between the data storage backend and the visualization platform.
+Afterwards, I designed and implemented an architecture with a gateway that allowed using RapidMiner Server as a data source for Grafana. I extended the built-in SimpleJSON data source plugin with the ability to query the available parameters of an exposed process in order to further increase the level of interactivity on the user side. I also created a component in Python that served as a data source for Grafana, demonstrating the usability and the reasoning of a custom middleware between the data storage backend and the visualization platform.
 
 Furthermore, I introduced some additional enhancements concerning the graphical user interface of Grafana. It consisted of being able to dynamically list the available parameters of a given web service and extended Graph Panel with the ability of displaying time-dependent bar-chart diagrams.
 
 After completing the implementation, I analyzed the properties of the created Gateway component focusing on its advantages and disadvantages. Following that, I revealed some possibilities for future developments concerning the Gateway and even for the graphical interface.
 
-Finally, I ended the thesis work with a brief discussion about related works regarding the functionality of the Gateway component and the user interface.
+Finally, I ended the thesis work with a brief discussion about related works regarding the functionality of the Gateway component and the extended user interface options.
 
-\begin{itemize}
-	\item introduce datasorces, features
-	\item research on Grafana
-	\item interactivty
-	\item integration of RM Server with Grafana
-	\item Python data source between MySQL and Grafana
-	\item additional GUI features to increase interactivity features
-	\item discussing possibilities for further improvements, pros/cons (extendablility, performance, security, usablility aspects)
-	\item research on related works
-\end{itemize}
 
