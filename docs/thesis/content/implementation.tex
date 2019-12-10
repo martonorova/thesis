@@ -48,10 +48,6 @@ For this task, I had two possibilities. One is to use a tool, which defines the 
 
 % https://www.xml.com/articles/2017/02/14/why-you-should-be-using-xslt-30/
 
-\begin{center}
-	=== TODO reference XSLT tutorial
-\end{center}
-
 As it was described in section \ref{proxy-design}, the Gateway component must be able to handle requests from Grafana, as well as be able to forward these requests to the RapidMiner Server after the format translation. 
 
 % https://www.palletsprojects.com/p/flask/
@@ -276,15 +272,13 @@ This means that the user does not have to be familiar with the exact name or amo
 In section \ref{grafana-time-range-controls}, it was already discussed, that it is possible to change the time interval of the whole Dashboard by selecting a time range on a Graph Panel.
 
 % https://grafana.com/docs/grafana/latest/features/panels/graph/
-The Graph Panel offers other display possibilities as well apart from the graph diagram. It can visualize time series data with bar-charts and histograms. I focused on the bar-chart format, which groups the data by series and not time, so with this type of diagram, we can display aggregated information about the series. For example the total value, the average, the maximum or the count of the data points.
+The Graph Panel offers other display possibilities as well apart from the graph diagram. It can visualize time series data with bar-charts and histograms \cite{graph-panel}. I focused on the bar-chart format, which groups the data by series and not time, so with this type of diagram, we can display aggregated information about the series. For example the total value, the average, the maximum or the count of the data points.
 
 However, I noticed, that when I change the time range of the Dashboard, these basic statistical indices do not get refreshed based on the new time interval. They keep their original values that were calculated for the whole time series when Grafana received the information from one of its data sources. This phenomenon can be quite misleading in cases when we have multiple Graph Panels with the same querying settings, but with different visualization modes.
 
 To solve this issue, as a part of my thesis project, I successfully extended the built-in Graph Panel, so it calculates the aggregated values only from the data points that are in the time interval of the dashboard. This feature enables a more interactive and valuable insight of the visualized data.
 
-To accomplish this, I used the source code of the built-in Graph Panel configured with the \texttt{webpack} module bundler which enabled the simple integration of this customized panel as a separate plugin for Grafana.
-
-https://github.com/CorpGlory/grafana-graph-panel
+To accomplish this, I used the source code of the built-in Graph Panel configured with the \texttt{webpack} module bundler which enabled the simple integration of this customized panel as a separate plugin for Grafana. \cite{graph-panel-webpack}
 
 %---
 \section{Grafana Dashboard} \label{final-dashboard}
