@@ -12,9 +12,9 @@ The designed architecture of the project can be observed in the figure \ref{fig:
 
 Each data source accesses the data it provides to Grafana in different ways; through an outside service, from a database or from memory.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=150mm, keepaspectratio]{figures/architecture.png}
+	\includegraphics[width=130mm, keepaspectratio]{figures/architecture.png}
 	\caption{Architecture diagram}
 	\label{fig:arch}
 \end{figure}
@@ -32,7 +32,7 @@ In this section, each component's design is presented, focusing on their respons
 Grafana uses data source plugins to connect to different data storage backends. These components usually poll their backends, sending query requests to acquire the recorded information. Each data source plugin exposes a Grafana specific interface which allows Grafana to communicate with each data source plugin the same way.
 
 % https://github.com/grafana/simple-json-datasource
-The SimpleJSON datasource is made by the Grafana team and is available on GitHub (insert reference HERE).
+The SimpleJSON datasource is made by the Grafana team and is available on GitHub. \cite{simple-json-datasource}
 
 It has two main purposes. One is to act as an example implementation to make writing custom data source plugins easier for the community. The other is to enable Grafana to read data from services that expose data in JSON format (which is widely popular thorough the industry).
 
@@ -95,7 +95,7 @@ After we have the name of the web service and its available parameters, we can f
 \subsection{JSON backend}
 %---
 % https://github.com/bergquist/fake-simple-json-datasource
-This component is a example backend implementation for the SimpleJSON data source plugin. It serves as a base for creating other backends for the data source plugin. It also further expresses the general usability of the SimpleJSON plugin.
+This component is a example backend implementation for the SimpleJSON data source plugin. It serves as a base for creating other backends for the data source plugin. It also further expresses the general usability of the SimpleJSON plugin. \cite{fake-simple-json-datasource}
 
 As this component can work with the SimpleJSON data source plugin out-of-the-box, I used it during the thesis project mainly for testing purposes. For example to check if the connection is still healthy between the components, or to inspect the specific data formats which are sent to or received from the SimpleJSON plugin.
 
@@ -121,15 +121,10 @@ As it was already described in section \ref{case-study-python-source} describing
 
 This component represents the previously mentioned external service. Its responsibility is to expose a service that can be utilized by other softwares in order to acquire additional business-relevant information.
 
-It is worth to mention, that there are already several publicly available APIs that can be used to retrieve weather related data. For example, the API services of OpenWeatherMap or AccuWeather. However, these services are usually not free or only offer a free trial version which lasts just a couple a days long. This is why I decided to make an own API service that can be used during the whole time of preparing the thesis project.
-
-
 % https://openweathermap.org/api
 % https://developer.accuweather.com/
-\begin{center}
-	--- TODO ---
-	references for the weather apis
-\end{center}
+
+It is worth to mention, that there are already several publicly available APIs that can be used to retrieve weather related data. For example, the API services of OpenWeather\cite{openweather} or AccuWeather\cite{accuweather}. However, these services are usually not free or only offer a free trial version which lasts just a couple a days long. This is why I decided to make an own API service that can be used during the whole time of preparing the thesis project.
 
 %---
 \subsection{MySQL database}

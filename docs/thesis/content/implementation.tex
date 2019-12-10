@@ -2,11 +2,7 @@
 
 In this chapter, the previously described components are explained in further details, focusing on how they are implemented, what technologies were used and in addition, some extra fine tunes are presented which demonstrate the extendability of the open source Grafana.
 
-The source code for the thesis project is available and can be viewed in my GitHub repository.
-
-\begin{center}
-	 ==TODO reference REPO==
-\end{center}
+The source code for the thesis project is available and can be viewed in my GitHub repository.\cite{thesis-repo}
 
 \section{Architecture}
 
@@ -19,11 +15,7 @@ Throughout this project, I run the different components using Docker containers.
 
 A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
 
-Container images become containers at runtime and in the case of Docker containers - images become containers when they run on Docker Engine. Available for both Linux and Windows-based applications, containerized software will always run the same, regardless of the infrastructure. Containers isolate software from its environment and ensure that it works uniformly despite differences for instance between development and staging.
-
-\begin{center}
-	=== TODO insert reference of Docker
-\end{center}
+Container images become containers at runtime and in the case of Docker containers - images become containers when they run on Docker Engine. Available for both Linux and Windows-based applications, containerized software will always run the same, regardless of the infrastructure. Containers isolate software from its environment and ensure that it works uniformly despite differences for instance between development and staging.\cite{docker}
 
 
 \subsection{Docker Compose}
@@ -32,7 +24,7 @@ In order to be able to set up an architecture as the one described in section \r
 
 % https://docs.docker.com/compose/
 
-Docker Compose is a tool for defining and running multi-container Docker applications. With Compose, we can use a YAML file to configure application’s services. Then, with a single command, we can create and start all the services from the configuration.
+Docker Compose is a tool for defining and running multi-container Docker applications. With Compose, we can use a YAML file to configure application’s services. Then, with a single command, we can create and start all the services from the configuration.\cite{docker-compose}
 
 The \texttt{docker-compose.yml} file for the project can be found in the GitHub repository of the thesis project. It defines all the necessary components with the appropriate configuration.
 
@@ -48,17 +40,11 @@ The \texttt{docker-compose.yml} file for the project can be found in the GitHub 
 	\end{lstlisting}
 \end{minipage}
 
-\begin{center}
-	\begin{itemize}
-		\item === TODO insert reference of docker compose
-	\end{itemize}
-\end{center}
-
 \section{Proxy (Gateway)} \label{proxy-impl}
 
 It was established in the design section \ref{proxy-design}, that the main responsibility of the Gateway component is to translate between the JSON data formats used by the RapidMiner Server and the Grafana SimpleJSON data source plugin.
 
-For this task, I had two possibilities. One is to use a tool, which defines the transformation in a declarative way. For example, I could use XLST, which is able to convert a JSON format into another. The other option was to implement an own algorithm which handles the transformation of the data format. I chose the latter alternative as the structure of the data was not exceptionally complex, thus it was quite simple to implement a function for this job . The other reason was that this way, I did not have to integrate another tool and call it every time to transform a simple JSON object, which in general reduced the number of possible sources for errors.
+For this task, I had two possibilities. One is to use a tool, which defines the transformation in a declarative way. For example, I could use XLST, which is able to convert a JSON format into another \cite{xslt}. The other option was to implement an own algorithm which handles the transformation of the data format. I chose the latter alternative as the structure of the data was not exceptionally complex, thus it was quite simple to implement a function for this job . The other reason was that this way, I did not have to integrate another tool and call it every time to transform a simple JSON object, which in general reduced the number of possible sources for errors.
 
 % https://www.xml.com/articles/2017/02/14/why-you-should-be-using-xslt-30/
 
@@ -70,7 +56,7 @@ As it was described in section \ref{proxy-design}, the Gateway component must be
 
 % https://www.palletsprojects.com/p/flask/
 % https://realpython.com/python-requests/
-For this task, I implemented the Gateway in Python using the \texttt{flask} and the \texttt{requests} packages and ran it in a Docker container. Flask is a lightweight web application framework library that enables quick and simple development. Requests can be thought of as the de facto standard for making HTTP requests in Python. It abstracts the complexities of making requests behind a simple API.
+For this task, I implemented the Gateway in Python using the \texttt{flask}\cite{flask} and the \texttt{requests}\cite{requests} packages and ran it in a Docker container. Flask is a lightweight web application framework library that enables quick and simple development. Requests can be thought of as the de facto standard for making HTTP requests in Python. It abstracts the complexities of making requests behind a simple API.
 
 %---
 \subsection{Endpoints}
