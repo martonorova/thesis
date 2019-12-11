@@ -1,6 +1,6 @@
 \chapter{Implementation}
 
-In this chapter, the previously described components are explained in further details, focusing on how they are implemented, what technologies were used and in addition, some extra fine tunes are presented which demonstrate the extendability of the open source Grafana.
+In this chapter, the previously described components are explained in further details, focusing on how they are implemented, what technologies were used and in addition, some extra fine tunes are presented, which demonstrate the extendability of the open source Grafana.
 
 The source code for the thesis project is available and can be viewed in my GitHub repository.\cite{thesis-repo}
 
@@ -28,6 +28,7 @@ Docker Compose is a tool for defining and running multi-container Docker applica
 
 The \texttt{docker-compose.yml} file for the project can be found in the GitHub repository of the thesis project. It defines all the necessary components with the appropriate configuration.
 
+\vspace{0.5cm}
 \begin{minipage}{\linewidth}
 	\begin{lstlisting}[language=docker-compose-proxy, caption={Extract of the \texttt{docker-compose.yml}}, label={lst:proxy-docker-compose}]]	
 	  proxy:
@@ -62,6 +63,7 @@ As it was explained in section \ref{proxy-design}, the Gateway component has to 
 
 With the \texttt{requests} package, it is quite convenient to implement these endpoints, since we only have to declare a decorated function for each endpoint, as it is shown in the code snippet \ref{lst:proxy-test-conn}.
 
+\vspace{0.5cm}
 \begin{minipage}{\linewidth}
 \begin{lstlisting}[language=Python, caption={Test the connection to the server}, label={lst:proxy-test-conn}]]
 	@app.route('/')
@@ -127,7 +129,7 @@ Acquiring the parameters is implemented the following way, as in the code snippe
 \end{minipage}
 
 %---
-\subsubsection{Querying the data}
+\subsubsection{Querying the data}\label{impl-qurying}
 %---
 When Grafana sends a request to the Gateway component, it specifies the data format, in which it excepts to receive the results. This can be a time series format or a table format which can be seen in the code snippets below.
 
@@ -140,10 +142,13 @@ When Grafana sends a request to the Gateway component, it specifies the data for
 	    "target":"weather_retrieve_process?city=Vancouver",
 	    "datapoints":[
 	      [284.63, 1573882025382],
-	      [284.62904131, 1573885625382],
-	      [284.626997923, 1573889225382],
-	      [284.624954535, 1573892890284],
-	      [284.622911147, 1573896490284]
+	      [284.629, 1573885625382],
+	      [284.627, 1573889225382],
+	      [284.625, 1573892890284],
+	      [284.623, 1573896490284],
+	      [284.621, 1575746856319],
+	      [284.619, 1575750456319],
+	      [284.617, 1575754056319]
 	    ]
 	 }
 	]
@@ -164,8 +169,7 @@ When Grafana sends a request to the Gateway component, it specifies the data for
 	     ['2012 October', 1],
 	     ['2012 November', 1],
 	     ['2012 December', 0],
-	     ['2013 January', 0],
-	     ['2013 February', 0],
+	     ['2013 January', 0]
 	   ],
 	   "type":"table"
 	 }
@@ -191,6 +195,7 @@ The differing ability of the Python data source compared to the Gateway  compone
 
 Reading the data from the MySQL database is implemented as the following pseudo code shows (\ref{lst:mysql-conn}).
 
+\vspace{0.5cm}
 \begin{minipage}[b]{\linewidth}
 	\centering
 	\begin{lstlisting}[language=Python, frame=single, mathescape,%
@@ -220,6 +225,7 @@ Reading the data from the MySQL database is implemented as the following pseudo 
 
 Getting the recorded information from the 'external' Weather API is much simpler thanks to the level of abstraction the \texttt{requests} package provides. (\ref{lst:weather-conn})
 
+\vspace{0.5cm}
 \begin{minipage}[b]{\linewidth}
 	\centering
 	\begin{lstlisting}[language=Python, frame=single, mathescape,%
