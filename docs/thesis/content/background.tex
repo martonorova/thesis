@@ -7,16 +7,16 @@
 % https://www.talend.com/resources/data-source/
 % https://www.techopedia.com/definition/30323/data-source
 
-As its name suggests, a data source is a location where the data that is being used originates from. A data source can be for example a database or a dynamic stream of data service such as constantly collecting the measured temperature in a room. In the context of this thesis project, we focus on database-like data sources, because in general, a visualization tool needs to be able to read the data to be displayed from a backend storage. \cite{talend-datasource} \cite{techopedia-datasource}
+As its name suggests, a data source is a location, from where the data that is being used originates. A data source can be, for example, a database or a dynamic stream of data service, such as one that is constantly collecting the measured temperature in a room. In the context of this thesis project, we focus on database-like data sources, because in general, a visualization tool needs to be able to read the data to be displayed from a backend storage. \cite{talend-datasource} \cite{techopedia-datasource}
 
-Concerning the types of databases, there are different categories, each with varying features and purposes. In the following sections, I briefly introduce some of the most used types of databases.
+Concerning the types of databases, there are different categories, each with varying features and purposes. In the following sections, I briefly introduce some of the most commonly used types of databases.
 
 %---
 \section{Relational database}
 %---
 
 % https://www.oracle.com/database/what-is-a-relational-database/
-Probably the most popular databases are the relational databases. They store data points that are related to one another. Relational databases are based on a relational model, representing the data in tables. They are widely utilized in cases, when related data points need to be stored and managed in a secure, rules-based, consistent way. \cite{relational-database-oracle}
+The most popular databases are probably the relational databases. They store data points that are related to one another. Relational databases are based on a relational model, representing the data in tables. They are widely utilized in such cases, when related data points need to be stored and managed in a secure, rules-based, consistent way. \cite{relational-database-oracle}
 
 %---
 \section{Time series database}
@@ -24,7 +24,7 @@ Probably the most popular databases are the relational databases. They store dat
 
 %https://www.influxdata.com/time-series-database/
 
-A time series database is optimized for storing time-stamped or time series data. Time series data are measurements that are tracked and aggregated over time. This could be metrics about servers, application performance, network data, etc. A time series database possesses enhanced capabilities to handle the measurement of change over time compared to other types of databases. \cite{timeseries-database-influxdata}
+A time series database is optimized for storing time-stamped or time series data. Time series data are measurements that are tracked and aggregated over time. This could be metrics about servers, application performance, network data, etc. A time series database possesses enhanced capabilities to handle the measurement of change over time, compared to other types of databases. \cite{timeseries-database-influxdata}
 
 %---
 \section{Key-Value database}
@@ -32,7 +32,7 @@ A time series database is optimized for storing time-stamped or time series data
 
 % https://aws.amazon.com/nosql/key-value/
 
-A key-value database is type of nonrelational database that uses a simple key-value method to store data. The data is stored as a collection of key-value pairs in which the key fulfills the role of a unique identifier. Both the keys and the values can have any type, simple objects, like number or string or even complex compound objects. This means that the schema of the data is defined per item, instead of on a collection or table level, like in the case of relational databases. Key-value databases are mostly utilized for cache management or storing information in session-oriented applications. \cite{keyvalue-database-aws}
+A key-value database is a type of nonrelational database that uses a simple key-value method to store data. The data is kept as a collection of key-value pairs, in which the key fulfills the role of a unique identifier. Both the keys and the values can have any type: simple objects, like number or string, or even complex compound objects. This means that the schema of the data is defined per item, instead of on a collection or table level, like in the case of relational databases. Key-value databases are mostly utilized for cache management or storing information in session-oriented applications. \cite{keyvalue-database-aws}
 
 %---
 \section{Document database}
@@ -40,7 +40,7 @@ A key-value database is type of nonrelational database that uses a simple key-va
 
 % https://aws.amazon.com/nosql/document/
 
-Document databases are another type of nonrelational database that are designed to store and query the recorded information as flexible, semistructured JSON-like documents. They make it easier for developers to handle data in the database by using the same document-model format they use in their application code. Document databases allow flexible indexing and powerful ad hoc queries. \cite{document-database-aws}
+Document databases are another type of nonrelational database that are designed to store and query the recorded information as flexible, semistructured, JSON-like documents. They make it easier for developers to handle data in the database by using the same document-model format they use in their application code. Document databases allow flexible indexing and powerful ad hoc queries. \cite{document-database-aws}
 
 %\begin{itemize}
 %	\item data sources and their features, use-cases, pros/cons?
@@ -61,7 +61,7 @@ Document databases are another type of nonrelational database that are designed 
 % from grafana.com
 Grafana is one of the most popular open source analytics and monitoring solution that can be connected to the majority of the main data sources out-of-the-box. It allows its users to query, visualize and alert on the collected metrics. 
 
-Altough Grafana has got plenty of useful features, only those relevant to the scope of the thesis project will be briefly explained here.
+Altough Grafana has got plenty of useful features, only those that are relevant to the scope of the thesis project will be briefly explained here.
 
 %--
 
@@ -71,14 +71,14 @@ Altough Grafana has got plenty of useful features, only those relevant to the sc
 
 Grafana supports many different storage backends (Data Source). Each Data Source has a specific Query Editor (see later in section \ref*{query-editor}) that is customized for the features and capabilities that the particular Data Source exposes. Of course, this leads to the fact that the query language and capacity of each Data Source are obviously very different. \cite{grafana-datasource}
 
-Grafana mainly favors time series data (e.g. from Prometheus or InfluxDB), but it can work with other types of data source (e.g. relational databases (MySQL, PostgreSQL, MSSQL), logging and document databases (Loki, Elasticsearch)).
+Grafana mainly favors time series data, e.g. from Prometheus or InfluxDB, but it can work with other types of data sources as well e.g. relational databases (MySQL, PostgreSQL, MSSQL) or logging and document databases (Loki, Elasticsearch).
 
 % https://grafana.com/docs/guides/basic_concepts/#panel
 \subsection{Panel}
 
 The Panel is the basic visualization building block in Grafana. Each Panel provides a so called Query Editor (dependent on the Data Source selected in the panel) that allows the user to create data source specific queries (e.g. an SQL query for a MySQL data source) in order to extract the desired metrics as precisely as possible. \cite{grafana-panel}
 
-There are multiple built-in Panel types available in Grafana, however, custom panels made by the open source community are also accessible. Probably the most widely used Panel types are the Graph, Table, Singlestat and Gauge. An example of the Graph Panel can be viewed in Figure \ref{fig:graph-panel}.
+There are multiple built-in Panel types available in Grafana, however, custom panels made by the open source community are also accessible. The most widely used Panel types are probably the Graph, Table, Singlestat and Gauge. An example of the Graph Panel can be viewed in Figure \ref{fig:graph-panel}.
 
 \begin{figure}[h]
 	\centering
@@ -90,7 +90,7 @@ There are multiple built-in Panel types available in Grafana, however, custom pa
 %https://grafana.com/docs/grafana/latest/guides/basic_concepts/#query-editor
 \subsection{Query Editor}\label{query-editor}
 
-The Query Editor exposes the capabilities of the Data Source and allows the user to query the metrics that it contains. The queries created in the Query Editor of a panel determine what data will be displayed on the panel. \cite{grafana-queryeditor} An example Query Editor is shown in Figure \ref{fig:query-editor}.
+The Query Editor exposes the capabilities of the Data Source and allows the user to query the metrics that it contains. The queries created in the Query Editor of a panel, determine which data will be displayed on the panel. \cite{grafana-queryeditor} An example Query Editor is shown in Figure \ref{fig:query-editor}.
 
 \begin{figure}[H]
 	\centering
@@ -122,7 +122,7 @@ We can use the Dashboard to visualize different metrics in one, easily manageabl
 %---
 \subsection{Interactivity in general} \label{interactivity-general}
 %---
-When working with and visualizing massive amount of data is a major part of one's profession, it can be quite convenient if the tools can provide the ability to allow some user-interaction. Meaning that the user do not have to work with static diagrams or rewrite complex configurations so that he or she is capable of further analyzing the collected data.
+When working with and visualizing massive amount of data is a major part of one's profession, it can be quite convenient if the tools provide the ability to allow some user interaction. Meaning that the user do not have to work with static diagrams or rewrite complex configurations so that he or she is capable of further analyzing the collected data.
 
 % retelabor2 vizualis adatelemzes (http://docs.inf.mit.bme.hu/remo-jegyzet/vizualis-adatelemzes-konyvfejezet.pdf)
 Commonly available interactivity options can be the followings \cite{visual-analysis}:
@@ -137,7 +137,7 @@ Commonly available interactivity options can be the followings \cite{visual-anal
 \subsection{Interactivity in Grafana}
 %---
 
-While it is hard to find a tool, which possesses all the before-mentioned interactivity capabilities in section \ref{interactivity-general}, Grafana supports certain features to enable efficient user-interaction for the purpose of solid understanding of the data.
+While it is hard to find a tool, which possesses all the before-mentioned interactivity capabilities in section \ref{interactivity-general}, Grafana supports certain features to enable efficient user interaction for the purpose of solid understanding of the data.
 
 
 % https://grafana.com/docs/reference/timerange/
@@ -147,9 +147,9 @@ While it is hard to find a tool, which possesses all the before-mentioned intera
 
 Grafana provides numerous ways to interactively manage the time ranges of the data being visualized. \cite{grafana-time-range-controls}
 
-On the Dashboard-level, the 'Current time range' selector can be used to change the dashboard time. Doing this refreshes the whole dashboard with each panel on it. Those panels, which display time-dependent information, will only show data-points with timestamps that are in the newly set time range.
+On the Dashboard-level, the 'Current time range' selector can be used to change the dashboard time. Doing this refreshes the whole dashboard along with each panel on it. Those panels, which display time-dependent information, will only show data-points with timestamps that are in the newly set time range.
 
-If there is a Graph Panel on the dashboard, there is another possibility to change the Dashboard-level time range. We can select a time range on the Graph Panel with the cursor. This method is quite effective, when we would like to swiftly zoom into the data to review more refined details. An example for that feature is displayed in Figure \ref{fig:select-time}.
+If there is a Graph Panel on the dashboard, there is another possibility to change the Dashboard-level time range: we can select a time range on the Graph Panel with the cursor. This method is quite effective, when we would like to swiftly zoom into the data to review more refined details. An example for that feature is displayed in Figure \ref{fig:select-time}.
 
 \begin{figure}[h]
 	\centering
@@ -165,9 +165,9 @@ If there is a Graph Panel on the dashboard, there is another possibility to chan
 
 Variables in Grafana allow for more interactive and dynamic dashboards. We can use variables in metric queries and in panel titles.
 
-Their role is similar to that of the 'conventional' variables in programming languages. Instead of hard-coding things into the program, we can use them to create algorithms, that operate on a more abstract level, resulting in more effortlessly maintainable softwares.
+Their role is similar to that of the 'conventional' variables in programming languages. Instead of hard-coding things into the program, we can use them to create algorithms, that operate on a more abstract level, resulting more effortlessly maintainable softwares.
 
-In Grafana, we can use the variables to write more generalized metric queries. For example, if we have multiple servers and we collect metric data from all of them, we could store the names or addresses of the servers in a variable, rather than defining numerous queries, which only differ in the server name. Variables are shown as dropdown select boxes at the top of the dashboard. These dropdowns make it easy to change the value of each available variable, thus to adjust the data being displayed in the dashboard \cite{grafana-variables}. An example of that can bee seen in Figure \ref{fig:variable-dropdown}.
+In Grafana, we can use the variables to write more generalized metric queries. For example, if we have multiple servers and we collect metric data from all of them, we could store the names or addresses of the servers in a variable, rather than defining numerous queries, which only differ in the server name. Variables are shown as dropdown select boxes at the top of the dashboard. These dropdowns make it easy to change the value of each available variable, thus to adjust the data being displayed in the dashboard \cite{grafana-variables}. An example of that can be seen in Figure \ref{fig:variable-dropdown}.
 
 \begin{figure}[H]
 	\centering
@@ -179,15 +179,15 @@ In Grafana, we can use the variables to write more generalized metric queries. F
 % https://grafana.com/static/img/docs/v50/variables_dashboard.png
 
 % https://grafana.com/docs/reference/templating/#variable-types
-There are different types of variable that can be used to make dashboards more dynamic. \cite{grafana-variables-types}
+There are different types of variables that can be used to make dashboards more dynamic. \cite{grafana-variables-types}
 \begin{itemize}
-	\item \emph{Query} - This variable type allows for writing a data source query that usually returns a list of metric names. For example, a query that returns a list of server names, sensor ids, or data centers.
+	\item \emph{Query} - This variable type allows for writing a data source query that usually returns a list of metric names. For example, a query that returns a list of server names, sensor ids or data centers.
 	\item \emph{Interval} - This variable can represent time spans. We can use them, when we need to aggregate data-points by time or date.
 	\item \emph{Data source} - This type makes it possible to quickly change the data source for an entire Dashboard. This feature can be quite suitable, when we have multiple instances of a data source in, for example, different environments.
 	\item \emph{Custom} - This variable can be used to manually define the value options for the given variable.
-	\item \emph{Constant} - This variable can be handy for example to easily declare metric path prefixes. 
+	\item \emph{Constant} - This variable can be handy, for example, to easily declare metric path prefixes. 
 	\item \emph{Text box} - This variable type displays as a free text input field with an optional default value.
-	\item \emph{Ad hoc filters} - It is a quite special kind of variable that only works with some data sources (e.g. InfluxDB, Elasticsearch). It allows the user to add key/value filters that will automatically be added to all metric queries the use the specified data source.
+	\item \emph{Ad hoc filters} - It is a quite special kind of variable that only works with some data sources (e.g. InfluxDB, Elasticsearch). It allows the user to add key/value filters that will be automatically added to all metric queries that use the specified data source.
 \end{itemize}
 
 %---
@@ -208,13 +208,13 @@ Statistic indicators were already mentioned above, where we discussed interactiv
 \subsubsection{Data links}
 %---
 
-Data links provide a way to add dynamic links to the visualization. These links can link to either other dashboards or to an external URL. When using data links, additional built-in variables become available that enable creating dynamic links.  \cite{grafana-graph-datalink}
+Data links provide a way to add dynamic links to the visualization. These links can lead to either other dashboards or to an external URL. When using data links, additional built-in variables become available that enable creating dynamic links.  \cite{grafana-graph-datalink}
 
 These variables are:
 \begin{itemize}
-	\item \emph{\char`_\char`_series\char`_name} - the name of the series or the table
-	\item \emph{\char`_\char`_value\char`_time} - the timestamp of the point that is clicked on (in millisecond epoch)
-	\item \emph{\char`_\char`_url\char`_time\char`_range} - the current time range
+	\item \emph{\char`_\char`_series\char`_name} - name of the series or the table
+	\item \emph{\char`_\char`_value\char`_time} - timestamp of the point that is clicked on (in millisecond epoch)
+	\item \emph{\char`_\char`_url\char`_time\char`_range} - current time range
 	\item \emph{\char`_\char`_all\char`_variables} - adds all current variables and their current values to the URL
 \end{itemize}
 
@@ -257,7 +257,7 @@ As Grafana is a fully open source project, it is possible for the community, to 
 
 RapidMiner is a data science software platform that provides an integrated environment for data preparation, machine learning, deep learning, text mining and predictive analytics. \cite{rapidminer-about} \cite{rapidminer-wikipedia}
 
-RapidMiner follows the principle of defining data science workflows in processes. These processes can perform various actions like retrieving or transforming data to build different kinds of models from them. As result of a process, a data set is returned, which can be further utilized according to the business use-case.
+RapidMiner follows the principle of defining data science workflows in processes. These processes can perform various actions, like retrieving or transforming data to build different kinds of models from them. As result of a process, a data set is returned, which can be further utilized according to the business use-case.
 
 RapidMiner includes several components, however, only the ones with relevant features to this thesis project are introduced briefly in this section. \cite{rapidminer-server-arch}
 
@@ -273,14 +273,14 @@ The created processes can be deployed to the RapidMiner Server component.
 \subsection{RapidMiner Server}
 %--- 
 
-RapidMiner Server is the central component in the architecture. Users can interact with it via a web interface or via RapidMiner Studio.
+RapidMiner Server is the central component in the architecture. Users can interact with it via a web interface or RapidMiner Studio.
 
 Its main responsibilities are to store, schedule and expose data science processes that were deployed onto it, like model building, predictions, data ETL (Extract, Transform, Load) operations, etc. Long-running jobs are executed externally via Job Agents. The RapidMiner Server stores its data in an external database.
 
 %---
 \subsubsection{Web services}
 %---
-The Server can expose certain processes that can be invoked via simple HTTP requests. These are the so called web services which can be used to run predictions or any other application of models, where the need for a real-time response is paramount. The result of the exposed processes can be used by any outsider consumer softwares.
+The Server may expose certain processes that can be invoked via simple HTTP requests. These are the so called web services, which can be used to run predictions or any other application of models, where the need for a real-time response is paramount. The result of the exposed processes can be used by any outsider consumer softwares.
 
 In order to make this service more dynamic, additional parameters can be sent with the requests to get more accurate information. The user can acquire the results of these processes through the same API in JSON format.
 
@@ -298,7 +298,7 @@ RapidMiner Server offers a queue system for long-running jobs, which are execute
 
 In this thesis project, I use the JSON data-interchange format to send information between the various components. For this reason, a brief description of the JSON format is appropriate in this chapter.
 
-The JSON stands for Javascript Object Notation and it is a lightweight format for storing and transporting data. We can say that JSON is easily read by both humans and machines, as a JSON object is merely an unordered set of name/value pairs. The name is a string and the values can be different types of data, for example a number, a string, an array or another object. These types are supported in all modern programming languages in one form or another, thus despite what its name suggest, the JSON format can be regarded as an universal data structure \cite{json}.
+The JSON stands for Javascript Object Notation and it is a lightweight format for storing and transporting data. We can say that JSON is easily read by both humans and machines, as a JSON object is merely an unordered set of name/value pairs. The name is a string and the values can be different types of data, like a number, a string, an array or another object. These types are supported in all modern programming languages in one form or another, thus, despite what its name suggests, the JSON format can be regarded as an universal data structure \cite{json}.
  An example JSON object can be seen in the code snippet Listing \ref{lst:json-example}.
 
 \begin{center}
