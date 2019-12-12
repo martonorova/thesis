@@ -39,3 +39,12 @@ There is also a performance issue regarding the Gateway component which does not
 
 I have to mention some security concerns too about the current realization of the Gateway component. In order to be able to query the results of the web services, one must posses the correct credentials to invoke these endpoints on the RapidMiner Server. At the moment, these credentials are hard-coded into the Proxy component, which presents a serious security vulnerability. A possible solution for this problem would be reading these sensitive information from environment variables, which are set on container startup.
 
+%---
+\section{Focus on time series}
+%---
+
+Grafana mainly concentrates on the visualization of time-dependent data. This can be deduced from the fact that the majority of the data sources, which Grafana supports, are storing data time series data or data with a timestamp attribute. However, despite the heavy time series focus, it is capable of working with other data formats as well.
+
+The created Gateway component is able to handle the time series format and also the table format, which is used to display other formats of data in Grafana, for example, recorded information from a relational database.
+
+

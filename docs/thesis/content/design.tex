@@ -29,12 +29,12 @@ In this section, each component's design is presented, focusing on their respons
 \subsection{Extended SimpleJSON datasource plugin} \label{simplejson-design}
 %---
 
-Grafana uses data source plugins to connect to different data storage backends. These components usually poll their backends, sending query requests to acquire the recorded information. Each data source plugin exposes a Grafana specific interface which allows Grafana to communicate with each data source plugin the same way.
+Grafana uses data source plugins to connect to different data storage backends. These components usually poll their backends, sending query requests to acquire the recorded information. Each data source plugin exposes a Grafana specific interface, which allows Grafana to communicate with every data source plugin the same way.
 
 % https://github.com/grafana/simple-json-datasource
 The SimpleJSON data source is made by the Grafana team and is available on GitHub. \cite{simple-json-datasource}
 
-It has two main purposes. One is to act as an example implementation to make writing custom data source plugins easier for the community. The other is to enable Grafana to read data from services that expose data in JSON format (which is widely popular thorough the industry).
+It has two main purposes. One is to act as an example implementation to make writing custom data source plugins easier for the community. The other is to enable Grafana to read data from services that expose data in JSON format (which is widely popular throughout the industry).
 
 For this thesis project, the latter role seems to be more important, as it is possible to create a tool that receives data from different kind of formats and translates them into JSON. This way, we can send the transformed data to Grafana, which as a result, would be able to display the collected data that originally came from various sources in one place.
 
@@ -105,7 +105,7 @@ As this component can work with the SimpleJSON data source plugin out-of-the-box
 
 Although Grafana has multiple built-in plugins to communicate with databases, there exists some use-cases, when having a custom component between the data source and the visualization tool is feasible.
 
-With an additional component in the middle, we have extra control over the data which travels from the data storage backend (in our case, MySQL) to the visualization platform. This means that we do not have to rely solely on the capabilities of the database, which can lead to simpler queries and smaller communication overhead with the database.
+With an additional component in the middle, we have extra control over the data, which travels from the data storage backend (in our case, MySQL) to the visualization platform. This means that we do not have to rely solely on the capabilities of the database, which can lead to simpler queries and smaller communication overhead with the database.
 
 Having a custom middleware also makes it possible to implement the business logic in a separate component and only display business-relevant information with the visualization tool.
 

@@ -45,7 +45,7 @@ The \texttt{docker-compose.yml} file for the project can be found in the GitHub 
 
 It was established in the design section \ref{proxy-design}, that the main responsibility of the Gateway component is to translate between the JSON data formats used by the RapidMiner Server and the Grafana SimpleJSON data source plugin.
 
-For this task, I had two possibilities. One is to use a tool, which defines the transformation in a declarative way. For example, I could use XLST, which is able to convert a JSON format into another \cite{xslt}. The other option was to implement an own algorithm which handles the transformation of the data format. I chose the latter alternative as the structure of the data was not exceptionally complex, thus it was quite simple to implement a function for this job . The other reason was that this way, I did not have to integrate another tool and call it every time to transform a simple JSON object, which in general reduced the number of possible sources for errors.
+For this task, I had two possibilities. One is to use a tool, which defines the transformation in a declarative way. For example, I could use XLST, which is able to convert a JSON format into another \cite{xslt}. The other option was to implement an own algorithm which handles the transformation of the data format. I chose the latter alternative as the structure of the data was not exceptionally complex, thus it was quite simple to implement a function for this job. The other reason was that this way, I did not have to integrate another tool and call it every time to transform a simple JSON object, which in general reduced the number of possible sources for errors.
 
 % https://www.xml.com/articles/2017/02/14/why-you-should-be-using-xslt-30/
 
@@ -78,7 +78,7 @@ With the \texttt{requests} package, it is quite convenient to implement these en
 \subsubsection{Searching the targets}
 %---
 
-To be able to get the names of the available RapidMiner web services, the Gateway component should use the \texttt{/api/rest/service/list} endpoint of the RapidMiner Server. This endpoint returns the names and parameters of the web services in JSON format. The Gateway extracts the names of the services transforms this data into a format that SimpleJSON can understand.
+To be able to get the names of the available RapidMiner web services, the Gateway component should use the \texttt{/api/rest/service/list} endpoint of the RapidMiner Server. This endpoint returns the names and parameters of the web services in JSON format. The Gateway extracts the names of the services and transforms this data into a format that SimpleJSON can understand.
 
 The endpoint is implemented as displayed in the following \ref{lst:proxy-search} code snippet. 
 
@@ -116,7 +116,7 @@ Acquiring the parameters is implemented the following way, as in the code snippe
 	      raise ValueError('No value provided for "webserviceName"')
 	    # get the list of webservices and get the parameters of the one with the name provided in the query
 	    response = requests.get(server_host + '/api/rest/service/list',
-	    auth=('admin', 'changeit'))
+	                            auth=('admin', 'changeit'))
 	    webservices_json_list = json.loads(response.text)
 	    webservice_params = []
 	    for webservice in webservices_json_list:
