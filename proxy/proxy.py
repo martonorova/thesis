@@ -5,10 +5,11 @@ import json
 import time
 import logging
 import re
+import os
 
 app = Flask(__name__)
 
-server_host = 'http://rapidminer-server:8080'
+server_host = f"http://{os.environ['RAPIDMINER_SERVER_HOST']}:{os.environ['RAPIDMINER_SERVER_PORT']}"
 
 
 @app.route('/')
@@ -31,7 +32,7 @@ def query():
         target_name = target['target']
         # response from the RM Webservice containing the values for the given target
         response = requests.get(server_host + '/api/rest/process/{}'.format(target_name),
-                                    auth=('admin', 'changeit'))
+                                    auth=(request.authorization.username, request.authorization.password))
         json_data = json.loads(response.text)
 
         if target_type == 'timeserie':
@@ -52,7 +53,7 @@ def query():
 def search():
 
     response = requests.get(server_host + '/api/rest/service/list',
-                            auth=('admin', 'changeit'))
+                            auth=(request.authorization.username, request.authorization.password))
 
     webservices_json_list = json.loads(response.text)
 
@@ -87,7 +88,7 @@ def parameters():
 
         # get the list of webservices and get the parameters of the one with the name provided in the query
         response = requests.get(server_host + '/api/rest/service/list',
-                                auth=('admin', 'changeit'))
+                                auth=(request.authorization.username, request.authorization.password))
 
         webservices_json_list = json.loads(response.text)
 
