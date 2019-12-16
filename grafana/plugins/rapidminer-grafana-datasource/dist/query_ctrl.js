@@ -61,6 +61,8 @@ var GenericDatasourceQueryCtrl = exports.GenericDatasourceQueryCtrl = function (
 
       var that = this;
 
+      //REWORK here to promise chain
+
       var data = this.datasource.getParameterKeys(this.target.target);
       var parameters = data.then(function (parameterArray) {
 

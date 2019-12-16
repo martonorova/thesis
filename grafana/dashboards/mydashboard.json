@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1575630999575,
+  "iteration": 1576491874172,
   "links": [],
   "panels": [
     {
@@ -285,7 +285,7 @@
         "sort": 0,
         "value_type": "individual"
       },
-      "type": "graph-panel-template-panel",
+      "type": "extended-graph-panel",
       "xaxis": {
         "buckets": null,
         "mode": "series",
@@ -374,7 +374,7 @@
         "sort": 0,
         "value_type": "individual"
       },
-      "type": "graph-panel-template-panel",
+      "type": "extended-graph-panel",
       "xaxis": {
         "buckets": null,
         "mode": "series",
@@ -461,7 +461,7 @@
         "sort": 0,
         "value_type": "individual"
       },
-      "type": "graph-panel-template-panel",
+      "type": "extended-graph-panel",
       "xaxis": {
         "buckets": null,
         "mode": "series",
@@ -548,7 +548,7 @@
         "sort": 0,
         "value_type": "individual"
       },
-      "type": "graph-panel-template-panel",
+      "type": "extended-graph-panel",
       "xaxis": {
         "buckets": null,
         "mode": "series",
@@ -635,7 +635,7 @@
         "sort": 0,
         "value_type": "individual"
       },
-      "type": "graph-panel-template-panel",
+      "type": "extended-graph-panel",
       "xaxis": {
         "buckets": null,
         "mode": "series",
@@ -648,224 +648,6 @@
       "yaxes": [
         {
           "format": "kelvin",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ]
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "RapidMiner",
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 16
-      },
-      "id": 6,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "parameters": [],
-          "refId": "A",
-          "target": "upper_25",
-          "type": "timeserie"
-        },
-        {
-          "parameters": [],
-          "refId": "B",
-          "target": "upper_50",
-          "type": "timeserie"
-        },
-        {
-          "parameters": [],
-          "refId": "C",
-          "target": "upper_75",
-          "type": "timeserie"
-        },
-        {
-          "parameters": [],
-          "refId": "D",
-          "target": "upper_90",
-          "type": "timeserie"
-        },
-        {
-          "parameters": [],
-          "refId": "E",
-          "target": "upper_95",
-          "type": "timeserie"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "JSONbackend",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": true,
-      "cacheTimeout": null,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "RapidMiner",
-      "fill": 1,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 24
-      },
-      "id": 4,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": false,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {},
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "parameters": [],
-          "refId": "A",
-          "target": "upper_25",
-          "type": "timeserie"
-        },
-        {
-          "parameters": [],
-          "refId": "B",
-          "target": "upper_50",
-          "type": "timeserie"
-        },
-        {
-          "parameters": [],
-          "refId": "C",
-          "target": "upper_75",
-          "type": "timeserie"
-        },
-        {
-          "parameters": [],
-          "refId": "D",
-          "target": "upper_90",
-          "type": "timeserie"
-        },
-        {
-          "parameters": [],
-          "refId": "E",
-          "target": "upper_95",
-          "type": "timeserie"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Dynamic bar chart (JSONbackend)",
-      "tooltip": {
-        "shared": false,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph-panel-template-panel",
-      "xaxis": {
-        "buckets": null,
-        "mode": "series",
-        "name": null,
-        "show": true,
-        "values": [
-          "total"
-        ]
-      },
-      "yaxes": [
-        {
-          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -959,5 +741,5 @@
   "timezone": "",
   "title": "Provisioned",
   "uid": "D3VFMGhWz",
-  "version": 18
+  "version": 1
 }

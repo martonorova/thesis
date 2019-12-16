@@ -15,7 +15,7 @@ services:
     - "./grafana/plugins/rapidminer-grafana-datasource:/var/lib/grafana/plugins/rapidminer-grafana-datasource"
     - "./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards"
     - "./grafana/dashboards:/var/lib/grafana/dashboards"
-    - "./grafana/plugins/grafana-graph-panel-master:/var/lib/grafana/plugins/grafana-graph-master"
+    - "./grafana/plugins/extended-graph-panel:/var/lib/grafana/plugins/extended-graph-panel"
     # environment: 
     # - GF_LOG_LEVEL=debug
 
