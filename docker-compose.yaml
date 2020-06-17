@@ -7,7 +7,7 @@ services:
     - 3355:3333
 
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:6.5.2
     ports: 
     - 3000:3000
     volumes: 
@@ -16,8 +16,8 @@ services:
     - "./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards"
     - "./grafana/dashboards:/var/lib/grafana/dashboards"
     - "./grafana/plugins/extended-graph-panel:/var/lib/grafana/plugins/extended-graph-panel"
-    # environment: 
-    # - GF_LOG_LEVEL=debug
+    environment: 
+    - GF_LOG_LEVEL=debug
 
   proxy:
     build: ./proxy
@@ -27,6 +27,7 @@ services:
     environment: 
       - RAPIDMINER_SERVER_HOST=rapidminer-server
       - RAPIDMINER_SERVER_PORT=8080
+      - RAPIDMINER_SERVER_PROTOCOL=http
     volumes: 
       - "./proxy/proxy.py:/code/proxy.py"
 

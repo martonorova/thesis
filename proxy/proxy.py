@@ -9,7 +9,7 @@ import os
 
 app = Flask(__name__)
 
-server_host = f"http://{os.environ['RAPIDMINER_SERVER_HOST']}:{os.environ['RAPIDMINER_SERVER_PORT']}"
+server_host = f"{os.environ['RAPIDMINER_SERVER_PROTOCOL']}://{os.environ['RAPIDMINER_SERVER_HOST']}:{os.environ['RAPIDMINER_SERVER_PORT']}"
 
 
 @app.route('/')
@@ -26,6 +26,9 @@ def query():
     request_json = request.json
     result = []
 
+    print("---------------- REGUEST ---------------")
+    print(request_json)
+
     # Check what the selected metric type is ('timeserie' or 'table') for each target in the request query
     for target in request_json['targets']:
         target_type = target['type']
@@ -34,6 +37,9 @@ def query():
         response = requests.get(server_host + '/api/rest/process/{}'.format(target_name),
                                     auth=(request.authorization.username, request.authorization.password))
         json_data = json.loads(response.text)
+
+        print("JSON DATA --------------------")
+        print(json_data)
 
         if target_type == 'timeserie':
             target_result = convert_to_series(json_data, target_name)
@@ -46,6 +52,8 @@ def query():
         else:
             raise ValueError('Unknown target type: {}'.format(target_type))
 
+    print("RESULT -------------------------------")
+    print(json.dumps(result))
     return json.dumps(result)
 
 
@@ -155,7 +163,7 @@ def convert_to_series(json_data, target_name):
 
     # this is good for many rows
     if type(json_data) == list:
-        r = re.compile("^((?!badword).)*$")
+        r = re.compile("^((?!timestamp).)*$")
         value_name = list(filter(r.match, list(json_data[0].keys())))[0]
         for row in json_data:
             datapoints.append([
