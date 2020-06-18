@@ -19,8 +19,8 @@ pp = pprint.PrettyPrinter(indent=4)
 # ]
 
 old_json = [
-    {'New York': 288.22, 'timestamp': 1592063501770},
-    {'New York': 288.24767617, 'timestamp': 1592067101770}
+    {"New York": 288, "timestamp": 1592063501770},
+    {"New York": 289, "timestamp": 1592067101770}
 ]
 
 new_json = {
@@ -42,7 +42,7 @@ print("DICT\n")
 pp.pprint(data)
 print("\n\n")
 
-xml = dicttoxml.dicttoxml(data, attr_type=False)
+xml = dicttoxml.dicttoxml(data, attr_type=False, item_func=lambda x: 'datapoint')
 dom = parseString(xml)
 print("XML\n")
 print(dom.toprettyxml())
@@ -63,11 +63,11 @@ xslt_root = etree.XML(
 
             <target>weather_retrieve_process</target>
 
-            <xsl:for-each select="root/item">
-                <datapoints>
+            <xsl:for-each select="root/datapoint">
+                <datapoint>
                     <value><xsl:value-of select="New_York"/></value>
                     <value><xsl:value-of select="timestamp"/></value>
-                </datapoints>
+                </datapoint>
             </xsl:for-each>
 
             </root>
@@ -96,7 +96,7 @@ for i in root:
     print(i.tag)
 
 print("FIND ALL\n")
-elements = root.findall("./datapoints/value")
+elements = root.findall("./datapoint/value")
 
 for element in elements:
     print(element.text)
